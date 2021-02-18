@@ -1,16 +1,7 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-* {
-  box-sizing: border-box;
-}
+@import "~bulma/sass/utilities/_all";
+@import "~bulma/sass/grid/_all.sass";
+@import "~bulma/sass/layout/_all.sass";
+@import "~bulma/sass/elements/container.sass";
+@import "~bulma/sass/form/_all.sass";
+@import "~bulma/sass/helpers/_all.sass";
+//@import '~pretty-checkbox/src/pretty-checkbox.scss';
