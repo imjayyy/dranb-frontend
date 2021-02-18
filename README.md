@@ -1,2 +1,1 @@
-# FNOTrader Frontend
-
+# Next.js Starter Project
