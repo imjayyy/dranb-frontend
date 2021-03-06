@@ -1,5 +1,6 @@
 import Document, {Html, Head, Main, NextScript} from "next/document";
 import React from "react";
+import {GA_TRACKING_ID} from "../helpers/gtag";
 
 class MyDocument extends Document {
     static async getInitialProps(ctx) {
@@ -11,39 +12,38 @@ class MyDocument extends Document {
         return (
             <Html>
                 <Head>
-                    <meta charSet="utf-8"/>
-                    <meta httpEquiv="X-UA-Compatible" content="IE=edge"/>
-                    <meta name="description" content="FNOTrader"/>
-                    <meta name="keywords" content="FNO,Trader"/>
-
-                    <link rel="manifest" href="/manifest.json"/>
-                    <meta name="apple-mobile-web-app-title" content="FNOTrader"/>
+                    <script
+                        async
+                        src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
+                    />
+                    <script
+                        dangerouslySetInnerHTML={{
+                            __html: `
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+                    gtag('config', '${GA_TRACKING_ID}');
+                  `
+                        }}
+                    />
+                    <link rel="manifest" href="/static/manifest.json"/>
+                    <meta name="apple-mobile-web-app-title" content="Dranbs"/>
                     <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
                     <meta name="apple-mobile-web-app-capable" content="yes"/>
                     <meta name="mobile-web-app-capable" content="yes"/>
                     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500" rel="stylesheet"
                           type="text/css"/>
 
-                    <link rel="stylesheet" href="/css/style.css" type="text/css"/>
-                    <link rel="stylesheet" href="/fontawesome-pro/css/all.min.css" type="text/css"/>
-                    <link rel="stylesheet" href="/css/ionicons.css" type="text/css"/>
-                    <link rel="stylesheet" href="/css/mqueries.css" type="text/css"/>
+                    <link rel="stylesheet" id="default-style-css" href="/css/style.css" type="text/css"
+                          media="all"/>
+                    <link rel="stylesheet" id="fontawesome-style-css" href="/fontawesome-pro/css/all.min.css"
+                          type="text/css" media="all"/>
+                    <link rel="stylesheet" id="ionic-icons-style-css" href="/css/ionicons.css" type="text/css"
+                          media="all"/>
+                    <link rel="stylesheet" id="responsive-css" href="/css/mqueries.css" type="text/css"
+                          media="all"/>
 
-                    <link
-                        href="/icons/favicon-16x16.png"
-                        rel="icon"
-                        type="image/png"
-                        sizes="16x16"
-                    />
-                    <link
-                        href="/icons/favicon-32x32.png"
-                        rel="icon"
-                        type="image/png"
-                        sizes="32x32"
-                    />
-                    <link rel="apple-touch-icon" href="/apple-icon.png"></link>
-                    <meta name="theme-color" content="#317EFB"/>
-                    <link rel="shortcut icon" href="/favicon.ico"/>
+                    <link rel="shortcut icon" href="/static/uploads/favicon.png"/>
                 </Head>
                 <body>
                 <Main/>

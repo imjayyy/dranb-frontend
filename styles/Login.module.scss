@@ -1,0 +1,10 @@
+.pageBody {
+    margin-top: 40px;
+}
+
+@media (max-width: 769px) {
+    .pageBody {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+}
