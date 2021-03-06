@@ -1,25 +1,35 @@
-.container {
-    display: inline-block;
-    cursor: pointer;
-    width: 30px;
+.header {
+    padding: 10px 80px;
 }
 
-.bar1, .bar2, .bar3 {
-    width: 27px;
-    height: 2px;
-    background-color: #333;
-    margin: 6px 0;
-    transition: 0.4s;
+.brandName {
+    font-size: 55px;
+    font-weight: 400;
+
+    small {
+        font-size: 14px;
+    }
 }
 
-.change .bar1 {
-    transform: rotate(-45deg) translate(-9px, 6px);
+.filter {
+    padding: 16px 80px;
 }
 
-.change .bar2 {
-    opacity: 0;
+.filterTitle {
+    img {
+        height: 12px;
+        margin-right: 6px;
+    }
+
+    font-size: 10px;
 }
 
-.change .bar3 {
-    transform: rotate(45deg) translate(-5px, -3px);
+.filterItem {
+    font-size: 12px;
+    margin-left: 8px;
+    margin-right: 8px;
+
+    a {
+        padding: 8px 25px;
+    }
 }

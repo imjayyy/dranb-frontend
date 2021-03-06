@@ -126,26 +126,6 @@ audio:not([controls]) {
 1. BASICS
 
 ------------------------------------------------*/
-html {
-    height: 100%;
-    font-size: 100%;
-    -webkit-text-size-adjust: 100%; /* Prevent iOS text size adjust on orientation change without disabling user zoom */
-    -ms-text-size-adjust: 100%;
-    position: relative;
-}
-
-body {
-    font-family: 'Poppins', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-weight: 300;
-    font-size: 15px;
-    line-height: 28px;
-    color: rgba(0, 0, 0, 0.6);
-    text-align: left;
-    position: relative;
-    background: #ffffff;
-    min-height: 100%;
-}
-
 .text-light {
     color: rgba(255, 255, 255, 0.7);
 }
@@ -236,21 +216,8 @@ h6, .h6 {
     line-height: 22px;
 }
 
-/* Headers Spacing */
-div h1, div h2, div h3, div h4, div h5, div h6 {
-    margin-top: 30px;
-}
-
 i + h1, i + h2, i + h3, i + h4, i + h5, i + h6 {
     margin-top: 15px;
-}
-
-div h1:first-child, div h2:first-child, div h3:first-child, div h4:first-child, div h5:first-child, div h6:first-child {
-    margin-top: -0.35em;
-}
-
-div h1:last-child, div h2:last-child, div h3:last-child, div h4:last-child, div h5:last-child, div h6:last-child {
-    margin-bottom: -0.35em;
 }
 
 /* delete margin for the big spacings */
@@ -892,7 +859,7 @@ i[class*='ion-'], i[class*='fa-'] {
 3. HEADER
 
 ------------------------------------------------*/
-header {
+.header {
     position: fixed;
     top: 0;
     left: 0;
@@ -918,19 +885,19 @@ header {
     transition-delay: 0.06s;
 }
 
-header.header-right {
+.header.header-right {
     left: auto;
     right: 0;
 }
 
-header.menu-is-open,
-header.action-is-active {
+.header.menu-is-open,
+.header.action-is-active {
     width: 380px;
     transition-delay: 0s;
 }
 
 /* right border instead of normal border because of the button overlay */
-header::after {
+.header::after {
     content: "";
     position: absolute;
     top: 0;
@@ -941,7 +908,7 @@ header::after {
     z-index: 1501;
 }
 
-header.header-right::after {
+.header.header-right::after {
     left: 0;
     right: auto;
 }
@@ -955,8 +922,8 @@ header.header-right::after {
     transition: left 599ms cubic-bezier(0.740, 0.215, 0.125, 1.020), right 599ms cubic-bezier(0.740, 0.215, 0.125, 1.020);
 }
 
-header.menu-is-open ~ #hero-and-body, header.menu-is-open ~ #page-body, header.menu-is-open ~ #hero, header.menu-is-open ~ #footer,
-header.action-is-active ~ #hero-and-body, header.action-is-active ~ #page-body, header.action-is-active ~ #hero, header.action-is-active ~ #footer {
+.header.menu-is-open ~ #hero-and-body, .header.menu-is-open ~ #page-body, .header.menu-is-open ~ #hero, .header.menu-is-open ~ #footer,
+.header.action-is-active ~ #hero-and-body, .header.action-is-active ~ #page-body, .header.action-is-active ~ #hero, .header.action-is-active ~ #footer {
     left: 300px;
     -webkit-transition: left 849ms cubic-bezier(0.740, 0.215, 0.125, 1.020), right 849ms cubic-bezier(0.740, 0.215, 0.125, 1.020);
     -moz-transition: left 849ms cubic-bezier(0.740, 0.215, 0.125, 1.020), right 849ms cubic-bezier(0.740, 0.215, 0.125, 1.020);
@@ -965,12 +932,12 @@ header.action-is-active ~ #hero-and-body, header.action-is-active ~ #page-body, 
     transition-delay: 0.06s;
 }
 
-header.header-right.menu-is-open ~ #hero-and-body, header.header-right.menu-is-open ~ #page-body, header.header-right.menu-is-open ~ #hero, header.header-right.menu-is-open ~ #footer,
-header.header-right.action-is-active ~ #hero-and-body, header.header-right.action-is-active ~ #page-body, header.header-right.action-is-active ~ #hero, header.header-right.action-is-active ~ #footer {
+.header.header-right.menu-is-open ~ #hero-and-body, .header.header-right.menu-is-open ~ #page-body, .header.header-right.menu-is-open ~ #hero, .header.header-right.menu-is-open ~ #footer,
+.header.header-right.action-is-active ~ #hero-and-body, .header.header-right.action-is-active ~ #page-body, .header.header-right.action-is-active ~ #hero, .header.header-right.action-is-active ~ #footer {
     left: -300px;
 }
 
-header .pseudo-close {
+.header .pseudo-close {
     position: fixed;
     width: 100%;
     height: 0;
@@ -980,18 +947,18 @@ header .pseudo-close {
     visibility: hidden;
 }
 
-header.header-right .pseudo-close {
+.header.header-right .pseudo-close {
     right: 380px;
     left: auto;
 }
 
-header.menu-is-open .pseudo-close,
-header.action-is-active .pseudo-close {
+.header.menu-is-open .pseudo-close,
+.header.action-is-active .pseudo-close {
     height: 100%;
     visibility: visible;
 }
 
-header #logo {
+.header #logo {
     position: fixed;
     top: 20px;
     left: calc(80px + 40px);
@@ -999,28 +966,28 @@ header #logo {
     z-index: 1502;
 }
 
-header.header-right #logo {
+.header.header-right #logo {
     right: calc(80px + 40px);
     left: auto;
 }
 
-header #logo.logo-right {
+.header #logo.logo-right {
     right: 40px;
     left: auto;
 }
 
-header.header-right #logo.logo-right {
+.header.header-right #logo.logo-right {
     right: calc(80px + 40px);
     left: auto;
 }
 
-header.header-right #logo.logo-left {
+.header.header-right #logo.logo-left {
     left: 40px;
     right: auto;
 }
 
-header.menu-is-open:not(.header-right) #logo.logo-right,
-header.action-is-active:not(.header-right) #logo.logo-right {
+.header.menu-is-open:not(.header-right) #logo.logo-right,
+.header.action-is-active:not(.header-right) #logo.logo-right {
     right: calc(100% - 80px - 40px);
     left: auto;
     -webkit-transform: translateX(100%);
@@ -1030,8 +997,8 @@ header.action-is-active:not(.header-right) #logo.logo-right {
     transform: translateX(100%);
 }
 
-header.header-right.menu-is-open #logo.logo-left,
-header.header-right.action-is-active #logo.logo-left {
+.header.header-right.menu-is-open #logo.logo-left,
+.header.header-right.action-is-active #logo.logo-left {
     left: calc(100% - 80px - 40px);
     right: auto;
     -webkit-transform: translateX(-100%);
@@ -1041,26 +1008,26 @@ header.header-right.action-is-active #logo.logo-left {
     transform: translateX(-100%);
 }
 
-header.action-is-active #logo {
+.header.action-is-active #logo {
     left: 30px;
 }
 
-header.action-is-active:not(.header-right) #logo.logo-right {
+.header.action-is-active:not(.header-right) #logo.logo-right {
     right: calc(100% - 30px);
 }
 
-header.header-right.action-is-active #logo.logo-right {
+.header.header-right.action-is-active #logo.logo-right {
     right: 30px;
     left: auto;
 }
 
-header.header-right.action-is-active #logo.logo-left {
+.header.header-right.action-is-active #logo.logo-left {
     left: calc(100% - 30px);
     right: auto;
 }
 
 
-header #logo .text-logo {
+.header #logo .text-logo {
     font-weight: 600;
     font-size: 28px;
     text-transform: uppercase;
@@ -1068,37 +1035,37 @@ header #logo .text-logo {
     letter-spacing: 0.05em;
 }
 
-header #logo a {
+.header #logo a {
     display: block;
     width: auto;
     transition: all 0.3s ease;
 }
 
-header #logo.hide-on-hero a {
+.header #logo.hide-on-hero a {
     opacity: 0;
     visibility: hidden;
 }
 
-header.menu-is-open #logo a {
+.header.menu-is-open #logo a {
     opacity: 1;
     visibility: visible;
     transition-delay: 0.8s;
     transition-duration: 0.5s;
 }
 
-header.hero-invisible #logo.hide-on-hero a {
+.header.hero-invisible #logo.hide-on-hero a {
     opacity: 1;
     visibility: visible;
 }
 
-header #logo img {
+.header #logo img {
     width: auto;
     max-width: inherit;
     height: 50px; /* Logo height */
     transition: all 0.3s ease;
 }
 
-header #logo img#dark-logo + img#light-logo {
+.header #logo img#dark-logo + img#light-logo {
     position: absolute;
     top: 0;
     left: 0;
@@ -1117,7 +1084,7 @@ header #logo img#dark-logo + img#light-logo {
     z-index: 1502;
 }
 
-header.action-is-active #header-widget {
+.header.action-is-active #header-widget {
     opacity: 0;
     visibility: hidden;
 }
@@ -1139,7 +1106,7 @@ header.action-is-active #header-widget {
     line-height: 40px;
 }
 
-header.header-right #header-widget.custom {
+.header.header-right #header-widget.custom {
     right: -290px;
     left: auto;
 }
@@ -1155,7 +1122,7 @@ header.header-right #header-widget.custom {
     text-align: center;
 }
 
-header.header-right #header-widget.social {
+.header.header-right #header-widget.social {
     right: 20px;
     left: auto;
 }
@@ -1206,12 +1173,12 @@ header.header-right #header-widget.social {
     transition: all 0.4s ease;
 }
 
-header.header-right #header-actions {
+.header.header-right #header-actions {
     right: 0;
     left: auto;
 }
 
-header.action-is-active #header-actions {
+.header.action-is-active #header-actions {
     opacity: 0;
     visibility: hidden;
 }
@@ -1397,7 +1364,7 @@ header.action-is-active #header-actions {
     margin-left: 82px;
 }
 
-header.header-right .header-share:hover ~ div {
+.header.header-right .header-share:hover ~ div {
     margin-left: -22px;
 }
 
@@ -1415,7 +1382,7 @@ header.header-right .header-share:hover ~ div {
     transition-delay: 0s;
 }
 
-header.header-right .header-share:hover .share-icon {
+.header.header-right .header-share:hover .share-icon {
     margin-left: -22px;
 }
 
@@ -1481,11 +1448,11 @@ header.header-right .header-share:hover .share-icon {
     transition: all 0.4s ease;
 }
 
-header.header-right .header-share .share-content {
+.header.header-right .header-share .share-content {
     left: 101%;
 }
 
-.header-share:hover .share-content, header.header-right .header-share:hover .share-content {
+.header-share:hover .share-content, .header.header-right .header-share:hover .share-content {
     left: 0%;
 }
 
@@ -1507,7 +1474,7 @@ header.header-right .header-share .share-content {
     transition: all 0.3s ease;
 }
 
-header.header-right .share-content .socialmedia-widget li {
+.header.header-right .share-content .socialmedia-widget li {
     margin-left: 10px;
 }
 
@@ -1546,7 +1513,7 @@ header.header-right .share-content .socialmedia-widget li {
     background: #ffffff;
 }
 
-header.action-is-active #header-actions-overlay {
+.header.action-is-active #header-actions-overlay {
     visibility: visible;
     opacity: 1;
 }
@@ -1563,12 +1530,12 @@ header.action-is-active #header-actions-overlay {
     transition: all 0.4s ease;
 }
 
-header.header-right #header-actions-overlay .action-close {
+.header.header-right #header-actions-overlay .action-close {
     left: 20px;
     right: auto;
 }
 
-header.action-is-active #header-actions-overlay .action-close {
+.header.action-is-active #header-actions-overlay .action-close {
     visibility: visible;
     opacity: 1;
     transition-delay: 0.4s;
@@ -1623,26 +1590,26 @@ header.action-is-active #header-actions-overlay .action-close {
     width: calc(100% - 60px);
 }
 
-header.header-right #header-actions-overlay .action-overlay.filter-overlay,
-header.header-right #header-actions-overlay .action-overlay.search-overlay,
-header.header-right #header-actions-overlay .action-overlay.category-overlay {
+.header.header-right #header-actions-overlay .action-overlay.filter-overlay,
+.header.header-right #header-actions-overlay .action-overlay.search-overlay,
+.header.header-right #header-actions-overlay .action-overlay.category-overlay {
     left: auto;
     right: 20px;
     text-align: right;
 }
 
-header.action-is-active.filter-overlay #header-actions-overlay .action-overlay.filter-overlay,
-header.action-is-active.search-overlay #header-actions-overlay .action-overlay.search-overlay,
-header.action-is-active.category-overlay #header-actions-overlay .action-overlay.category-overlay {
+.header.action-is-active.filter-overlay #header-actions-overlay .action-overlay.filter-overlay,
+.header.action-is-active.search-overlay #header-actions-overlay .action-overlay.search-overlay,
+.header.action-is-active.category-overlay #header-actions-overlay .action-overlay.category-overlay {
     visibility: visible;
     opacity: 1;
     left: 30px;
     transition-delay: 0.4s;
 }
 
-header.header-right.action-is-active.filter-overlay #header-actions-overlay .action-overlay.filter-overlay,
-header.header-right.action-is-active.search-overlay #header-actions-overlay .action-overlay.search-overlay,
-header.header-right.action-is-active.category-overlay #header-actions-overlay .action-overlay.category-overlay {
+.header.header-right.action-is-active.filter-overlay #header-actions-overlay .action-overlay.filter-overlay,
+.header.header-right.action-is-active.search-overlay #header-actions-overlay .action-overlay.search-overlay,
+.header.header-right.action-is-active.category-overlay #header-actions-overlay .action-overlay.category-overlay {
     left: auto;
     right: 30px;
 }
@@ -1759,7 +1726,7 @@ header.header-right.action-is-active.category-overlay #header-actions-overlay .a
     margin-left: 80px;
 }
 
-header.header-right ~ #footer {
+.header.header-right ~ #footer {
     margin-left: 0px;
 }
 
@@ -1829,7 +1796,7 @@ header.header-right ~ #footer {
     background: #ffffff; /* needed for mquerries */
 }
 
-header.menu-is-open #menu-inner {
+.header.menu-is-open #menu-inner {
     transition-delay: 0.2s;
     opacity: 1;
     visibility: hidden;
@@ -1868,7 +1835,7 @@ nav#main-nav > ul > li:last-child {
     margin-bottom: 0;
 }
 
-header.header-right nav#main-nav > ul > li {
+.header.header-right nav#main-nav > ul > li {
     -webkit-transform: translateX(50px);
     -moz-transform: translateX(50px);
     -ms-transform: translateX(50px);
@@ -1879,7 +1846,7 @@ header.header-right nav#main-nav > ul > li {
     padding-left: 0;
 }
 
-header.menu-is-open nav#main-nav > ul > li {
+.header.menu-is-open nav#main-nav > ul > li {
     -webkit-transform: translateX(0%);
     -moz-transform: translateX(0%);
     -ms-transform: translateX(0%);
@@ -1889,35 +1856,35 @@ header.menu-is-open nav#main-nav > ul > li {
     visibility: visible;
 }
 
-header.menu-is-open nav#main-nav > ul > li {
+.header.menu-is-open nav#main-nav > ul > li {
     transition-delay: 0.3s;
 }
 
-header.menu-is-open nav#main-nav > ul > li:nth-child(2) {
+.header.menu-is-open nav#main-nav > ul > li:nth-child(2) {
     transition-delay: 0.34s;
 }
 
-header.menu-is-open nav#main-nav > ul > li:nth-child(3) {
+.header.menu-is-open nav#main-nav > ul > li:nth-child(3) {
     transition-delay: 0.38s;
 }
 
-header.menu-is-open nav#main-nav > ul > li:nth-child(4) {
+.header.menu-is-open nav#main-nav > ul > li:nth-child(4) {
     transition-delay: 0.42s;
 }
 
-header.menu-is-open nav#main-nav > ul > li:nth-child(5) {
+.header.menu-is-open nav#main-nav > ul > li:nth-child(5) {
     transition-delay: 0.46s;
 }
 
-header.menu-is-open nav#main-nav > ul > li:nth-child(6) {
+.header.menu-is-open nav#main-nav > ul > li:nth-child(6) {
     transition-delay: 0.50s;
 }
 
-header.menu-is-open nav#main-nav > ul > li:nth-child(7) {
+.header.menu-is-open nav#main-nav > ul > li:nth-child(7) {
     transition-delay: 0.54s;
 }
 
-header.menu-is-open nav#main-nav > ul > li:nth-child(8) {
+.header.menu-is-open nav#main-nav > ul > li:nth-child(8) {
     transition-delay: 0.58s;
 }
 
@@ -1981,7 +1948,7 @@ nav#main-nav.underline.slide ul > li > a::after {
     transform: translateX(-101%);
 }
 
-header.header-right nav#main-nav.underline.slide ul > li > a::after {
+.header.header-right nav#main-nav.underline.slide ul > li > a::after {
     left: auto;
     right: -120px;
     -webkit-transform: translateX(101%);
@@ -2000,7 +1967,7 @@ nav#main-nav.underline.slide ul > li > a:hover::after, nav#main-nav.underline.sl
     transform: translateX(0%);
 }
 
-header.header-right nav#main-nav.underline.slide ul > li > a:hover::after, header.header-right nav#main-nav.underline.slide ul > li.current_page_item > a::after {
+.header.header-right nav#main-nav.underline.slide ul > li > a:hover::after, .header.header-right nav#main-nav.underline.slide ul > li.current_page_item > a::after {
     left: auto;
     right: 0px;
     -webkit-transform: translateX(0%);
@@ -2023,7 +1990,7 @@ nav#main-nav ul.sub-menu ul.sub-menu {
     display: none;
 }
 
-header:not(.menu-open) nav#main-nav ul.sub-menu li:last-child > ul.sub-menu {
+.header:not(.menu-open) nav#main-nav ul.sub-menu li:last-child > ul.sub-menu {
     padding-bottom: 0;
 }
 
@@ -2052,11 +2019,11 @@ nav#main-nav ul.sub-menu > li > a {
     width: 80px;
 }
 
-header.header-right .menu-actions {
+.header.header-right .menu-actions {
     float: right;
 }
 
-header.action-is-active .menu-actions {
+.header.action-is-active .menu-actions {
     opacity: 0;
     visibility: hidden;
 }
@@ -2112,18 +2079,18 @@ header.action-is-active .menu-actions {
     top: 0;
 }
 
-header:not(.menu-is-open) .menu-toggle:hover span.hamburger {
+.header:not(.menu-is-open) .menu-toggle:hover span.hamburger {
     width: 18px;
     margin-left: -9px;
 }
 
-header.menu-is-open .menu-toggle span.hamburger {
+.header.menu-is-open .menu-toggle span.hamburger {
     background: transparent !important;
     transition-delay: 0.1s;
     transition-duration: 0.2s;
 }
 
-header.menu-is-open .menu-toggle span.hamburger:before {
+.header.menu-is-open .menu-toggle span.hamburger:before {
     -webkit-transform: rotate(135deg);
     -moz-transform: rotate(135deg);
     -o-transform: rotate(135deg);
@@ -2131,7 +2098,7 @@ header.menu-is-open .menu-toggle span.hamburger:before {
     margin-top: 0px;
 }
 
-header.menu-is-open .menu-toggle span.hamburger:after {
+.header.menu-is-open .menu-toggle span.hamburger:after {
     -webkit-transform: rotate(-135deg);
     -moz-transform: rotate(-135deg);
     -o-transform: rotate(-135deg);
@@ -2148,46 +2115,46 @@ header.menu-is-open .menu-toggle span.hamburger:after {
 ------------------------------------------------*/
 
 /* dark header */
-header.text-light {
+.header.text-light {
     background: #000000;
     border-color: rgba(255, 255, 255, 0.21);
 }
 
-header.text-light::after {
+.header.text-light::after {
     background: rgba(255, 255, 255, 0.21);
 }
 
-header.text-light nav#main-nav ul > li > a {
+.header.text-light nav#main-nav ul > li > a {
     color: #ffffff;
 }
 
-header.text-light nav#main-nav:not(.underline) ul > li > a:hover, header.text-light nav#main-nav:not(.underline) ul > li.current_page_item > a {
+.header.text-light nav#main-nav:not(.underline) ul > li > a:hover, .header.text-light nav#main-nav:not(.underline) ul > li.current_page_item > a {
     color: rgba(255, 255, 255, 0.75);
 }
 
-header.text-light nav#main-nav ul > li > a::after {
+.header.text-light nav#main-nav ul > li > a::after {
     background: #ffffff;
 }
 
-header.text-light .menu-toggle span.hamburger, header.text-light .menu-toggle span.hamburger:after, header.text-light .menu-toggle span.hamburger:before {
+.header.text-light .menu-toggle span.hamburger, .header.text-light .menu-toggle span.hamburger:after, .header.text-light .menu-toggle span.hamburger:before {
     background: #ffffff;
 }
 
-header.text-light #menu-inner {
+.header.text-light #menu-inner {
     background: #000000;
 }
 
-header.text-light #header-actions-overlay {
+.header.text-light #header-actions-overlay {
     background: #000000;
 }
 
 /* switch logo appearance */
-.loading-end header:not(.hero-invisible) #logo.text-light:not(.hide-on-hero) img#dark-logo {
+.loading-end .header:not(.hero-invisible) #logo.text-light:not(.hide-on-hero) img#dark-logo {
     opacity: 0;
     visibility: hidden;
 }
 
-.loading-end header:not(.hero-invisible) #logo.text-light:not(.hide-on-hero) img#dark-logo + img#light-logo {
+.loading-end .header:not(.hero-invisible) #logo.text-light:not(.hide-on-hero) img#dark-logo + img#light-logo {
     opacity: 1;
     visibility: visible;
 }
@@ -2213,26 +2180,26 @@ body #logo.bg-dark img#dark-logo + img#light-logo {
     visibility: visible;
 }
 
-header.menu-is-open #logo img#dark-logo,
-header.action-is-active #logo img#dark-logo {
+.header.menu-is-open #logo img#dark-logo,
+.header.action-is-active #logo img#dark-logo {
     opacity: 1 !important;
     visibility: visible !important;
 }
 
-header.menu-is-open #logo img#dark-logo + img#light-logo,
-header.action-is-active #logo img#dark-logo + img#light-logo {
+.header.menu-is-open #logo img#dark-logo + img#light-logo,
+.header.action-is-active #logo img#dark-logo + img#light-logo {
     opacity: 0 !important;
     visibility: hidden !important;
 }
 
-header.text-light.menu-is-open #logo img#dark-logo,
-header.text-light.action-is-active #logo img#dark-logo {
+.header.text-light.menu-is-open #logo img#dark-logo,
+.header.text-light.action-is-active #logo img#dark-logo {
     opacity: 0 !important;
     visibility: hidden !important;
 }
 
-header.text-light.menu-is-open #logo img#dark-logo + img#light-logo,
-header.text-light.action-is-active #logo img#dark-logo + img#light-logo {
+.header.text-light.menu-is-open #logo img#dark-logo + img#light-logo,
+.header.text-light.action-is-active #logo img#dark-logo + img#light-logo {
     opacity: 1 !important;
     visibility: visible !important;
 }
@@ -2434,12 +2401,9 @@ header.text-light.action-is-active #logo img#dark-logo + img#light-logo {
 /* side hero */
 #hero-and-body {
     position: relative;
-    width: calc(100% - 80px);
-    margin-left: 80px;
-    overflow: hidden;
 }
 
-header.header-right ~ #hero-and-body {
+.header.header-right ~ #hero-and-body {
     margin-left: 0;
 }
 
@@ -2482,8 +2446,8 @@ header.header-right ~ #hero-and-body {
 
 
 /* animation */
-header.menu-is-open ~ #hero-and-body #hero[class*='side-right'].is_stuck:not(.sticky_bottom),
-header.action-is-active ~ #hero-and-body #hero[class*='side-right'].is_stuck:not(.sticky_bottom) {
+.header.menu-is-open ~ #hero-and-body #hero[class*='side-right'].is_stuck:not(.sticky_bottom),
+.header.action-is-active ~ #hero-and-body #hero[class*='side-right'].is_stuck:not(.sticky_bottom) {
     right: -300px;
     -webkit-transition: left 849ms cubic-bezier(0.740, 0.215, 0.125, 1.020), right 849ms cubic-bezier(0.740, 0.215, 0.125, 1.020);
     -moz-transition: left 849ms cubic-bezier(0.740, 0.215, 0.125, 1.020), right 849ms cubic-bezier(0.740, 0.215, 0.125, 1.020);
@@ -2492,13 +2456,13 @@ header.action-is-active ~ #hero-and-body #hero[class*='side-right'].is_stuck:not
     transition-delay: 0.06s;
 }
 
-header.header-right.menu-is-open ~ #hero-and-body #hero[class*='side-right'].is_stuck:not(.sticky_bottom),
-header.header-right.action-is-active ~ #hero-and-body #hero[class*='side-right'].is_stuck:not(.sticky_bottom) {
+.header.header-right.menu-is-open ~ #hero-and-body #hero[class*='side-right'].is_stuck:not(.sticky_bottom),
+.header.header-right.action-is-active ~ #hero-and-body #hero[class*='side-right'].is_stuck:not(.sticky_bottom) {
     right: 300px;
 }
 
-header.menu-is-open ~ #hero-and-body #hero[class*='side-left'].is_stuck:not(.sticky_bottom),
-header.action-is-active ~ #hero-and-body #hero[class*='side-left'].is_stuck:not(.sticky_bottom) {
+.header.menu-is-open ~ #hero-and-body #hero[class*='side-left'].is_stuck:not(.sticky_bottom),
+.header.action-is-active ~ #hero-and-body #hero[class*='side-left'].is_stuck:not(.sticky_bottom) {
     left: 300px;
     -webkit-transition: left 849ms cubic-bezier(0.740, 0.215, 0.125, 1.020), right 849ms cubic-bezier(0.740, 0.215, 0.125, 1.020);
     -moz-transition: left 849ms cubic-bezier(0.740, 0.215, 0.125, 1.020), right 849ms cubic-bezier(0.740, 0.215, 0.125, 1.020);
@@ -2507,12 +2471,12 @@ header.action-is-active ~ #hero-and-body #hero[class*='side-left'].is_stuck:not(
     transition-delay: 0.06s;
 }
 
-header.header-right.menu-is-open ~ #hero-and-body #hero[class*='side-left'].is_stuck:not(.sticky_bottom),
-header.header-right.action-is-active ~ #hero-and-body #hero[class*='side-left'].is_stuck:not(.sticky_bottom) {
+.header.header-right.menu-is-open ~ #hero-and-body #hero[class*='side-left'].is_stuck:not(.sticky_bottom),
+.header.header-right.action-is-active ~ #hero-and-body #hero[class*='side-left'].is_stuck:not(.sticky_bottom) {
     left: -300px;
 }
 
-.is-scrolling header.menu-is-open ~ #hero-and-body #hero[class*='side-'] {
+.is-scrolling .header.menu-is-open ~ #hero-and-body #hero[class*='side-'] {
     transition: none !important;
 }
 
@@ -2970,7 +2934,7 @@ body:not(.loaded) #page-loader.show-logo + #page-content #logo {
     left: 50%;
 }
 
-body:not(.loaded) #page-loader.show-logo + #page-content header #logo.logo-right {
+body:not(.loaded) #page-loader.show-logo + #page-content .header #logo.logo-right {
     -webkit-transform: translateX(50%);
     -moz-transform: translateX(50%);
     -ms-transform: translateX(50%);
@@ -2980,7 +2944,7 @@ body:not(.loaded) #page-loader.show-logo + #page-content header #logo.logo-right
     right: 50%;
 }
 
-body:not(.loaded) #page-loader.show-logo + #page-content header.header-right #logo {
+body:not(.loaded) #page-loader.show-logo + #page-content .header.header-right #logo {
     -webkit-transform: translateX(50%);
     -moz-transform: translateX(50%);
     -ms-transform: translateX(50%);
@@ -2990,7 +2954,7 @@ body:not(.loaded) #page-loader.show-logo + #page-content header.header-right #lo
     right: 50%;
 }
 
-body:not(.loaded) #page-loader.show-logo + #page-content header.header-right #logo.logo-left {
+body:not(.loaded) #page-loader.show-logo + #page-content .header.header-right #logo.logo-left {
     -webkit-transform: translateX(-50%);
     -moz-transform: translateX(-50%);
     -ms-transform: translateX(-50%);
@@ -3000,21 +2964,21 @@ body:not(.loaded) #page-loader.show-logo + #page-content header.header-right #lo
     left: 50%;
 }
 
-#page-loader + #page-content header {
+#page-loader + #page-content .header {
     left: -81px;
     transition-duration: 0.7s;
 }
 
-#page-loader + #page-content header.header-right {
+#page-loader + #page-content .header.header-right {
     right: -81px;
     left: auto;
 }
 
-.loaded #page-loader + #page-content header {
+.loaded #page-loader + #page-content .header {
     left: 0;
 }
 
-.loaded #page-loader + #page-content header.header-right {
+.loaded #page-loader + #page-content .header.header-right {
     right: 0;
     left: auto;
 }
@@ -5509,11 +5473,11 @@ div .socialmedia-widget:first-child {
 22. CUSTOM STYLE
 
 ------------------------------------------------*/
-header #logo .text-logo {
+.header #logo .text-logo {
     line-height: 50px;
 }
 
-header #logo img {
+.header #logo img {
     height: 50px;
 }
 

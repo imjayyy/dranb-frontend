@@ -1,162 +1,134 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import Link from 'next/link'
-import {useRouter, withRouter} from 'next/router';
-import {FaArrowLeft} from 'react-icons/fa';
-import Router from 'next/router'
-import {useStore, store} from "../../hooks/currentUser";
-import axios from "axios";
-import config from "../../config";
 import styles from "./layout.module.scss"
-import {getUser} from "../../services";
+import {connect} from "react-redux";
+import {withRouter} from "next/router";
+import {setAuth} from "../../redux/actions";
 
-const showOnArrow = ["/my-brands"]
+class Layout extends React.Component {
+    constructor(props) {
+        super(props);
+    }
 
+    handleLogout = () => {
+        this.props.setAuth(false)
+        this.props.router.push('/login')
+    }
 
-const getName = (props) => {
-    if (props.router.asPath === "/my-brands") {
-        return "my Brands"
-    } else if (props.brandName) {
-        return props.brandName
+    render() {
+        const router = this.props.router
+        return (
+            <>
+                <header className={styles.header}>
+                    <nav className="navbar">
+                        <div className="navbar-menu">
+                            <div className="navbar-start is-flex-direction-column">
+                                <Link href={"/"}>
+                                    <h1 className={styles.brandName}>DRANBS<small>/ inspire your styles</small></h1>
+                                </Link>
+                                <div className="is-flex">
+                                    <Link href="/">
+                                        <a className={`navbar-item p-0 mx-2 ${router.pathname == '/' ? 'is-active' : ''}`}>new
+                                            arrivals</a>
+                                    </Link>
+                                    <Link href="/sale">
+                                        <a className={`navbar-item p-0 mx-2 ${router.pathname == '/sale' ? 'is-active' : ''}`}>sale</a>
+                                    </Link>
+                                    <Link href="/boards">
+                                        <a className={`navbar-item p-0 mx-2 ${router.pathname == '/boards' ? 'is-active' : ''}`}>boards</a>
+                                    </Link>
+                                </div>
+                            </div>
+                            <div className="navbar-end">
+                                <div className="navbar-item">
+                                    <div className="field">
+                                        <p className="control has-icons-right">
+                                            <input className="input" type="text" placeholder="Search"/>
+                                            <span className="icon is-small is-right">
+                                            <i className="fa fa-search"/>
+                                        </span>
+                                        </p>
+                                    </div>
+                                </div>
+                                {this.props.auth ? (
+                                    <>
+                                        <Link href="/loves">
+                                            <a className="navbar-item">
+                                                <i className="fa fa-heart"/>
+                                                I love
+                                            </a>
+                                        </Link>
+                                        <Link href="/following">
+                                            <a className="navbar-item">
+                                                <img src="/icons/follow-icon.svg"/>
+                                                I follow
+                                            </a>
+                                        </Link>
+                                        <div className="navbar-item has-dropdown is-hoverable">
+                                            <a className="navbar-link">
+                                                {this.props.auth.user.username}
+                                            </a>
+
+                                            <div className="navbar-dropdown">
+                                                <a className="navbar-item">
+                                                    My boards
+                                                </a>
+                                                <Link href="/my-profile">
+                                                    <a className="navbar-item">
+                                                        my profile
+                                                    </a>
+                                                </Link>
+                                                <Link href="/contact">
+                                                    <a className="navbar-item">
+                                                        contact us
+                                                    </a>
+                                                </Link>
+                                                <a className="navbar-item" onClick={this.handleLogout}>
+                                                    log out
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <Link href="/login">
+                                        <a className="navbar-item">login / sign up</a>
+                                    </Link>
+                                )}
+
+                            </div>
+                        </div>
+                    </nav>
+                </header>
+                <section className={styles.filter}>
+                    <div className="is-flex">
+                        <div className={styles.filterTitle}>
+                            <img src="/icons/slider.svg"/>
+                            filters
+                        </div>
+                        <div className={styles.filterItem}>
+                            <a href="">explore</a>
+                            <a href="">my selection</a>
+                        </div>
+                        <div className={styles.filterItem}>
+                            <a href="">all</a>
+                            <a href="">women</a>
+                            <a href="">men</a>
+                        </div>
+                        <div className={styles.filterItem}>
+                            <a href="">all</a>
+                            <a href="">today</a>
+                            <a href="">one week</a>
+                        </div>
+                    </div>
+                </section>
+                {this.props.children}
+            </>
+        )
     }
 }
 
-function getCookie(name) {
-    var value = "; " + document.cookie;
-    var parts = value.split("; " + name + "=");
-    if (parts.length == 2) return parts.pop().split(";").shift();
+const mapStateToProps = state => {
+    return state.auth
 }
 
-const Layout = props => {
-    const [isOpen, toggleMenu] = useState(false);
-    const [user, updateUser] = useStore();
-    const router = useRouter();
-
-    useEffect(() => {
-        let didCancel = false;
-
-        async function fetchData() {
-            let data
-            try {
-                data = await getUser()
-                if (props.updateUser) {
-                    props.updateUser(data.data)
-                }
-                updateUser(data.data);
-            } catch (e) {
-                console.log(531, e)
-                updateUser(false)
-            }
-        }
-
-        fetchData()
-        return () => {
-            didCancel = true;
-        };
-    }, []);
-    return (
-        <div>
-            <header id="header" className={`header-left ${isOpen ? 'menu-is-open' : ''}`}
-                    style={{zIndex: '9999999 !important'}}>
-
-                <div className="header-inner clearfix">
-                    {(showOnArrow.includes(props.router.asPath) || props.router.asPath.includes("/brand/")) &&
-                    <div className="is-hidden-tablet">
-                        <Link href={"/new-arrivals"}><span
-                            style={{position: 'absolute', top: '20px', left: '30px'}}><FaArrowLeft size={'1.6em'}
-                                                                                                   color={'#64F0E7'}/></span></Link>
-                        <div className="has-text-weight-bold"
-                             style={{position: 'absolute', top: '17px', left: '60px'}}>{getName(props)}</div>
-                    </div>}
-                    {props.router.asPath === "/" &&
-                    <div className="is-hidden-tablet">
-                        <div className="has-text-weight-bold"
-                             style={{position: 'absolute', top: '17px', left: '40px'}}>Dranbs
-                        </div>
-                    </div>}
-                    {/* MAIN NAVIGATION */}
-                    <div id="menu" className="clearfix">
-                        <div className="menu-actions">
-
-                            <div className="menu-toggle" style={{overflow: 'inherit'}}>
-
-                                <div className="is-hidden-tablet">
-                                    <Link href={'/new-arrivals'}>
-                                        <a className="is-hidden-mobile" style={{
-                                            fontSize: '3rem',
-                                            paddingTop: '5px',
-                                            fontWeight: 500,
-                                            color: 'black'
-                                        }}>{isOpen ? 'Dranbs' : 'D'}</a>
-                                    </Link>
-                                </div>
-
-                                <div className="is-hidden-mobile" style={{paddingBottom: '30px'}}>
-                                    <Link href={'/new-arrivals'}>
-                                        <a className="is-hidden-mobile" style={{
-                                            fontSize: '3rem',
-                                            paddingTop: '5px',
-                                            fontWeight: 500,
-                                            color: 'black'
-                                        }}>{isOpen ? 'Dranbs' : 'D'}</a>
-                                    </Link>
-                                </div>
-
-                                <div onClick={() => toggleMenu(!isOpen)}
-                                     className={`${styles.container} ${isOpen ? 'change' : ''}`}>
-                                    <div className={styles.bar1}></div>
-                                    <div className={styles.bar2}></div>
-                                    <div className={styles.bar3}></div>
-                                </div>
-                            </div>
-                        </div>
-                        {/* END .menu-actions */}
-                        <div id="menu-inner" style={{visibility: 'visible'}}>
-                            <nav id="main-nav">
-
-                                <ul>
-                                    <li style={{paddingRight: '20px'}}>We embrace styles diversity. Follow all your
-                                        favorite fashion brands in one place.
-                                    </li>
-                                </ul>
-                                <br/>
-                                <ul>
-                                    <li><Link href={"/new-arrivals"}><a>Home</a></Link></li>
-                                    <li><Link href={"/my-profile"}><a>My Profile</a></Link></li>
-                                    <li><Link href={"/my-brands"}><a>My Brands</a></Link></li>
-
-                                    <li><Link href={"/contact"}><a>Contact</a></Link></li>
-                                    {user ? <li onClick={() => {
-                                            var cookies = document.cookie.split(";");
-
-                                            for (var i = 0; i < cookies.length; i++) {
-                                                var cookie = cookies[i];
-                                                var eqPos = cookie.indexOf("=");
-                                                var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-                                                document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-                                            }
-                                            Router.push("/")
-                                            window.location.reload()
-                                        }}><a>Logout</a></li> :
-                                        <li><Link href={"/login"}><a>Login</a></Link></li>
-
-                                    }
-                                </ul>
-                            </nav>
-                        </div>
-                        {/* END #menu-inner */}
-                    </div>
-                    {/* END #menu */}
-
-                    <div id="header-widget" className="custom">
-                        {/*<div className="copyright">Copyright by <a href="http://g-nesia.com">G-nesia</a></div>*/}
-                    </div>
-                </div>
-                {/* END .header-inner */}
-                <span className="pseudo-close header-close"/>
-            </header>
-            {props.children}
-        </div>
-    )
-}
-
-export default withRouter(Layout)
+export default connect(mapStateToProps, {setAuth})(withRouter(Layout))

@@ -1,11 +1,13 @@
 import {Component} from 'react'
 import Layout from '../components/layout'
-import {login} from '../utils/auth'
 import React from "react";
 import {Radio} from 'pretty-checkbox-react';
 import Select from 'react-select';
 import styles from '../styles/Login.module.scss'
 import {loginUser, registerUser} from "../services";
+import {connect} from "react-redux";
+import {setAuth} from "../redux/actions";
+import {withRouter} from "next/router";
 
 const countriesNames = require('countries-names');
 const countries = countriesNames.all().map(x => ({value: x.name, label: x.name}))
@@ -48,8 +50,8 @@ class Login extends Component {
                 username: username,
                 password: password
             })
-            const {meta: {token}, data} = response.data
-            await login({token})
+            this.props.setAuth(response.data)
+            await this.props.router.push("/")
         } catch (error) {
             console.error(
                 'You have an error in your code or there are Network issues.',
@@ -294,4 +296,4 @@ class Login extends Component {
     }
 }
 
-export default Login
+export default connect(null, {setAuth})(withRouter(Login))

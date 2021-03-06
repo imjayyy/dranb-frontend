@@ -12,7 +12,6 @@ import Layout from '../components/layout'
 import nextCookie from "next-cookies";
 import Sticky from 'react-stickynode';
 import Router from "next/dist/client/router";
-import {withAuthSync} from "../utils/auth";
 import cookie from "js-cookie";
 import {getHomeData, getSites} from "../services";
 

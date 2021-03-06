@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import Router from 'next/router'
 import nextCookie from 'next-cookies'
 import Layout from '../components/layout'
-import {withAuthSync} from '../utils/auth'
 import {Checkbox, Radio} from 'pretty-checkbox-react';
 import {getMyProfile, toggleUsersSites} from "../services";
 

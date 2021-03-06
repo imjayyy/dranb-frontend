@@ -7,7 +7,6 @@ const countriesNames = require('countries-names');
 import Select from 'react-select';
 
 const countries = countriesNames.all().map(x => ({value: x.name, label: x.name}))
-import {withAuthSync} from '../utils/auth'
 import {getUser, patchProfile} from "../services";
 
 

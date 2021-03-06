@@ -6,3 +6,56 @@
 //@import "~bulma/sass/helpers/_all.sass";
 @import "~bulma/bulma.sass";
 @import '~pretty-checkbox/src/pretty-checkbox.scss';
+
+body {
+    font-family: 'Poppins', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.navbar-menu {
+    align-items: center;
+}
+
+.navbar-menu .navbar-start .navbar-item {
+    font-size: 18px;
+    font-weight: 400;
+
+    &.is-active {
+        border-bottom: 1px solid black;
+    }
+}
+
+.navbar-menu .navbar-end {
+    .input {
+        font-size: 14px;
+        font-weight: 400;
+        border-radius: 0;
+        border: unset;
+        box-shadow: unset;
+        border-bottom: 1px solid black;
+    }
+
+    .control .icon {
+        color: #dadada;
+        width: 35px;
+        height: 35px;
+    }
+
+    .navbar-item {
+        font-size: 14px;
+
+        .fa, .fas, img {
+            display: inline-block;
+            margin-right: 4px;
+
+            &.fa-heart {
+                color: #FF3366;
+            }
+        }
+    }
+
+    .navbar-dropdown {
+        border-top: unset;
+        background-color: #f7f7f7;
+        border-radius: 0;
+    }
+}
