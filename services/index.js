@@ -7,11 +7,11 @@ function getCookie(name) {
     if (parts.length == 2) return parts.pop().split(";").shift();
 }
 
-export const getUser = async () => {
+export const getUser = async (token) => {
     const response = await axios.get(`${config.domain}/api/me`, {
         headers: {
             'Content-Type': 'application/json',
-            Authorization: 'Token ' + getCookie("token"),
+            Authorization: `Token ${token}`,
         }
     })
     return response.data

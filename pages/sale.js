@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import axios from 'axios'
 import Switch from 'react-switch';
 import config from '../config/index'
 import Link from 'next/link'
@@ -14,29 +13,30 @@ import Sticky from 'react-stickynode';
 import Router from "next/dist/client/router";
 import cookie from "js-cookie";
 import {getHomeData, getSites} from "../services";
+import {connect} from "react-redux";
+import {withRouter} from "next/router";
 
-class Homepage extends Component {
-    state = {
-        originalData: [],
-        dataLeft: [],
-        sites: [],
-        data: [],
-        hasMore: true,
-        width: '300px',
-        filterBy: 1,
-        stickyNav: true,
-        fullyMounted: false,
-        exploreAll: false
-    }
+class SalePage extends Component {
+    constructor(props) {
+        super(props);
 
-    static async getInitialProps(ctx) {
-        const {token} = nextCookie(ctx)
-        return {token}
+        this.state = {
+            originalData: [],
+            dataLeft: [],
+            sites: [],
+            data: [],
+            hasMore: true,
+            width: '300px',
+            filterBy: 1,
+            stickyNav: true,
+            fullyMounted: false,
+            exploreAll: false
+        }
     }
 
     async fetchData() {
         try {
-            const response = await getHomeData(this.props.token, 0, 2, this.state.exploreAll)
+            const response = await getHomeData(this.props.auth.meta.token, 0, 2, this.state.exploreAll)
             let data = shuffle(response.data)
             let dataLeft = [] // not used but i wont go trhough the code and check what would it broke
             const response2 = await getSites()
@@ -121,7 +121,7 @@ class Homepage extends Component {
         this.setState({isLoadingData: true}, this.mount)
 
         try {
-            const response = await getHomeData(this.props.token, this.state.dataPage, 2, this.state.exploreAll)
+            const response = await getHomeData(this.props.auth.meta.token, this.state.dataPage, 2, this.state.exploreAll)
             let data = shuffle(response.data)
 
             this.setState({
@@ -486,4 +486,8 @@ class Homepage extends Component {
     }
 }
 
-export default withAuthSync(Homepage)
+const mapStateToProps = state => {
+    return state.auth
+}
+
+export default connect(mapStateToProps)(withRouter(SalePage))

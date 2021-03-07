@@ -41,6 +41,7 @@ class IndexPage extends Component {
             this.setState({originalData: data, dataLeft, sites, dataPage: 1}, this.loadMoreImages)
         } catch (e) {
             console.error(e)
+            this.props.router.push('/login')
         }
         this.props.toggleLoaded(true)
     }
