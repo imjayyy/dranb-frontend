@@ -275,4 +275,4 @@ class MyBrands extends Component {
     }
 }
 
-export default withAuthSync(MyBrands)
+export default MyBrands

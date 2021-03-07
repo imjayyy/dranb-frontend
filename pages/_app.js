@@ -13,16 +13,6 @@ Router.events.on('routeChangeComplete', url => gtag.pageview(url))
 class MyApp extends App {
     state = {loaded: false}
 
-    static async getInitialProps({Component, ctx}) {
-        let pageProps = {}
-
-        if (Component.getInitialProps) {
-            pageProps = await Component.getInitialProps(ctx)
-        }
-
-        return {pageProps}
-    }
-
     toggleLoaded = (neww) => {
         this.setState({loaded: neww})
     }
