@@ -6,7 +6,7 @@ import AwesomeDebouncePromise from 'awesome-debounce-promise';
 
 const repackDebounced = AwesomeDebouncePromise(() => (true), 50);
 import Layout from '../components/layout'
-import {getHomeData, getSites} from "../services";
+import {getHomeData} from "../services";
 import {connect} from "react-redux";
 import {withRouter} from "next/router";
 
@@ -190,7 +190,6 @@ class IndexPage extends Component {
 
 
                                         {this.state.data.map((product, i) => {
-                                                // let height = i % 2 === 0 ? 200 : 100;
                                                 return (
                                                     <div
                                                         className="blog-media"
@@ -205,12 +204,15 @@ class IndexPage extends Component {
                                                             // background: 'rgba(0,0,0,0.7)'
                                                         }}>
                                                         <a href={product.product_link} target={"_blank"}
-                                                           className="thumb-hover scale">
+                                                           className={`thumb-hover scale ${styles.thumbnail}`}>
                                                             <img
                                                                 onLoad={() => this.debounce()}
                                                                 style={{objectFit: 'contain', width: '100%'}}
                                                                 src={`${config.domain}/images/${product.image_filename}`}
                                                             />
+                                                            <span className={styles.shopNow}>
+                                                                shop now
+                                                            </span>
                                                         </a>
                                                         <div className="blog-info">
                                                             <div className="post-meta clearfix">

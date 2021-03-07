@@ -48,3 +48,23 @@
         margin-top: 30px;
     }
 }
+
+.thumbnail {
+    position: relative;
+}
+
+.shopNow {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    bottom: 10px;
+    background: rgba(0, 0, 0, .5);
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 12px;
+    padding: 4px 16px;
+
+    &:hover {
+        background: rgba(0, 0, 0, .8);
+    }
+}

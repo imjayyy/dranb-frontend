@@ -5497,15 +5497,3 @@ div .socialmedia-widget:first-child {
 #hero:not(.hero-big):not(.hero-full) #page-title:not(.title-bottom) {
     padding-bottom: calc(100px + 50px);
 }
-
-/*.itemx {*/
-/*overflow: hidden;*/
-/*display: inline-block;*/
-/*}*/
-/*img:hover {*/
-/*transform:scale(1.5);*/
-/*-ms-transform:scale(1.5); !* IE 9 *!*/
-/*-moz-transform:scale(1.5); !* Firefox *!*/
-/*-webkit-transform:scale(1.5); !* Safari and Chrome *!*/
-/*-o-transform:scale(1.5); !* Opera *!*/
-/*}*/
