@@ -1,60 +1,83 @@
 import React, {Component} from 'react'
-import Switch from 'react-switch';
 import config from '../config/index'
 import Link from 'next/link'
-import {shuffle} from "../helpers";
 import MasonryLayout from 'react-masonry-layout'
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
-import cookie from 'js-cookie';
 
 const repackDebounced = AwesomeDebouncePromise(() => (true), 50);
 import Layout from '../components/layout'
-import Router from "next/dist/client/router";
 import {getHomeData, getSites} from "../services";
 import {connect} from "react-redux";
 import {withRouter} from "next/router";
+import {setSiteType} from "../redux/actions";
+
+import styles from '../styles/Home.module.scss'
 
 class IndexPage extends Component {
+    constructor(props) {
+        super(props);
 
-    state = {
-        originalData: [],
-        dataLeft: [],
-        sites: [],
-        data: [],
-        hasMore: true,
-        width: '300px',
-        filterBy: 1,
-        stickyNav: true,
-        fullyMounted: false,
-        exploreAll: false
-    }
-
-    async fetchData() {
-        try {
-            const response = await getHomeData(this.props.auth.meta.token, 0, 1, this.state.exploreAll)
-            let data = shuffle(response.data)
-            let dataLeft = [] // not used but i wont go trhough the code and check what would it broke
-
-            const response2 = await getSites()
-            const sites = response2.data
-
-            this.setState({originalData: data, dataLeft, sites, dataPage: 1}, this.loadMoreImages)
-        } catch (e) {
-            console.error(e)
-            this.props.router.push('/login')
+        this.state = {
+            originalData: [],
+            dataLeft: [],
+            sites: [],
+            data: [],
+            hasMore: true,
+            width: '300px',
+            filterBy: 1,
+            stickyNav: true,
+            fullyMounted: false,
+            exploreAll: false,
         }
-        this.props.toggleLoaded(true)
     }
 
     async componentDidMount() {
         this.props.toggleLoaded(false)
-        let exploreAll = cookie.get('exploreall');
-        console.log('ComponentDidMount', exploreAll === 'true');
-        this.setState({
-            exploreAll: exploreAll === 'true'
-        }, async () => {
-            await this.fetchData()
-        })
+        await this.getInitialProducts()
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.handleResize);
+        this.props.toggleLoaded(false)
+    }
+
+    async componentDidUpdate(prevProps, prevState, snapshot) {
+        if ((prevState.width !== this.state.width)) {
+            this.repackItems()
+        }
+        if (this.props.siteType !== prevProps.siteType) {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+            await this.getInitialProducts()
+        }
+    }
+
+    getInitialProducts = async () => {
+        try {
+            const response = await getHomeData(this.props.auth.meta.token, 0, this.props.siteType, true)
+            this.setState({
+                data: response.data,
+                dataPage: 1
+            }, this.loadMoreProducts)
+        } catch (e) {
+            console.error(e)
+            await this.props.router.push('/login')
+        }
+        this.props.toggleLoaded(true)
+    }
+
+    loadMoreProducts = async () => {
+        try {
+            const response = await getHomeData(this.props.auth.meta.token, this.state.dataPage, this.props.siteType, true)
+            let data = response.data
+
+            this.setState({
+                data: this.state.data.concat(data),
+                dataPage: this.state.dataPage + 1,
+                isLoadingData: false
+            }, this.mount)
+        } catch (e) {
+            console.error(e)
+        }
     }
 
     mount = () => {
@@ -65,52 +88,6 @@ class IndexPage extends Component {
             this.props.toggleLoaded(true)
             this.setState({fullyMounted: true}, this.handleResize)
         }
-    }
-
-    loadMoreImages = async () => {
-        let data = this.getNextImageBatch()
-
-        if (this.state.originalData.length <= this.state.data.length + 20) {
-            await this.loadMoreData()
-            data = this.getNextImageBatch()
-        }
-
-        this.setState({data: this.state.data.concat(data.slice(this.state.data.length, this.state.data.length + 20))}, this.mount)
-    }
-
-    getNextImageBatch = () => {
-        // return this.state.originalData.filter(x => {
-        //     const site = this.state.sites.find(y => (y.id === x.site_id))
-        //     return site.type === this.state.filterBy
-        // })
-        return this.state.originalData
-    }
-
-    loadMoreData = async () => {
-        if (this.state.isLoadingData)
-            return
-
-        this.setState({isLoadingData: true}, this.mount)
-
-        let exploreAll = cookie.get('exploreall');
-        console.log('loadMoreData', exploreAll === 'true');
-        try {
-            const response = await getHomeData(this.props.auth.meta.token, this.state.dataPage, 1, this.state.exploreAll)
-            let data = shuffle(response.data)
-
-            this.setState({
-                originalData: this.state.originalData.concat(data),
-                dataPage: this.state.dataPage + 1,
-                isLoadingData: false
-            }, this.mount)
-        } catch (e) {
-            console.error(e)
-        }
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.handleResize);
-        this.props.toggleLoaded(false)
     }
 
 
@@ -142,40 +119,10 @@ class IndexPage extends Component {
         bricksInstance.pack()
     }
 
-    async componentDidUpdate(prevProps, prevState, snapshot) {
-        if ((prevState.width !== this.state.width)) {
-            this.repackItems()
-        }
-        if (prevState.filterBy !== this.state.filterBy) {
-            window.scrollTo({top: 0, behavior: 'smooth'});
-            await this.fetchData()
-            await this.loadMoreImages()
-        }
-    }
-
     debounce = async () => {
         await repackDebounced()
         this.repackItems()
     }
-
-    updateUser = (user) => {
-        this.setState({user})
-    }
-
-    handleSelection = (exploreAll) => {
-
-        this.setState({exploreAll: exploreAll, data: []}, async () => {
-            cookie.set('exploreall', exploreAll);
-            this.props.toggleLoaded(false)
-            await this.fetchData()
-        });
-    }
-
-    reachedBottom = () => {
-        const end = (document.body.scrollHeight - document.body.offsetHeight);
-        return document.body.scrollTop >= end;
-    }
-
 
     render() {
         if (!this.props.loaded) {
@@ -185,92 +132,14 @@ class IndexPage extends Component {
         }
 
         return (
-            <Layout updateUser={this.updateUser}>
+            <Layout>
                 <div>
 
                     <div id="page-content">
                         <div id="hero-and-body">
-                            <section id="page-body" className="brand-body is-hidden-tablet">
-                                <div className="columns is-multiline is-mobile is-hidden-tablet">
-                                    <Link href={"/"}>
-                                        <a className="is-hidden-mobile column is-narrow is-marginless">
-                                            <img style={{border: '1px solid #64F0E7', padding: '17px'}}
-                                                 src={'../static/assets/arrow_back.png'}/>
-                                        </a>
-                                    </Link>
-                                    <div style={{marginLeft: '10px', marginTop: '15px'}}
-                                         className="column is-paddingless brand-text">
-                                        <div style={{
-                                            display: 'flex',
-                                            justifyContent: 'center',
-                                            paddingTop: '10px',
-                                            paddingBottom: '20px'
-                                        }}>
-                                            <span
-                                                onClick={() => {
-                                                    if (Router.pathname !== 'new-arrivals') {
-                                                        Router.push('/new-arrivals')
-                                                    }
-                                                }
-                                                }
-                                                style={{
-                                                    cursor: 'pointer',
-                                                    marginRight: '10px',
-                                                    fontSize: '20px',
-                                                    color: 'black',
-                                                    fontWeight: '500'
-                                                }}
-                                                // className={`${this.state.filterBy === 1 && "has-text-weight-semibold"}`}
-                                            >
-                                                New Arrivals</span>
-
-                                            <span
-                                                onClick={() => {
-                                                    if (Router.pathname !== 'sale') {
-                                                        Router.push('/sale')
-                                                    }
-                                                }
-                                                }
-                                                style={{
-                                                    cursor: 'pointer',
-                                                    marginRight: '10px',
-                                                    fontSize: '20px',
-                                                    color: 'black'
-                                                }}
-                                                // className={`${this.state.filterBy === 2 && "has-text-weight-semibold"}`}
-                                            >Sale</span>
-                                            <span>{' | '}</span>
-                                            <span><Link href="/my-brands"><a style={{
-                                                color: '#64F0E7',
-                                                marginRight: '10px',
-                                                fontSize: '20px',
-                                                marginLeft: '10px'
-                                            }}>my Brands</a></Link></span>
-                                        </div>
-                                        <div style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            marginBottom: '20px'
-                                        }}>
-                                            <span style={{marginLeft: '10px', marginRight: '10px'}}>My Selection</span>
-                                            <Switch onChange={this.handleSelection}
-                                                    checked={this.state.exploreAll}
-                                                    checkedIcon={false}
-                                                    uncheckedIcon={false}
-                                                    height={14}
-                                                    width={28}
-                                                    onColor={'#737373'}
-                                                    offColor={'#737373'}
-                                            />
-                                            <span style={{marginLeft: '10px', marginRight: '10px'}}>Explore</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
                             {/* PAGEBODY */}
                             {this.props.loaded && ((this.state.data.length === 0 && this.props.loaded && this.state.fullyMounted && this.state.user) &&
-                                <div className="after-register">
+                                <div className={styles.afterRegister}>
                                     {this.state.filterBy === 1 ? <div>
                                             <h2>Follow your favorite brands.</h2>
                                             <h3><Link href={'/my-brands'}><a style={{textDecoration: 'underline'}}>Click on
@@ -285,7 +154,7 @@ class IndexPage extends Component {
                                 </div>)}
 
                             {this.props.loaded && ((this.state.data.length === 0 && this.props.loaded && this.state.fullyMounted && !this.state.user) &&
-                                <div className="after-register">
+                                <div className={styles.afterRegister}>
                                     {this.state.filterBy === 1 ? <div>
                                             <h2>There are no sale styles.</h2>
                                         </div> :
@@ -307,7 +176,7 @@ class IndexPage extends Component {
                                             gutter: 20
                                         }, {mq: '1025px', columns: 6, gutter: 20}]}
                                         infiniteScroll={async () => {
-                                            await this.loadMoreImages()
+                                            await this.loadMoreProducts()
                                         }}
                                         infiniteScrollDistance={400}
                                     >
@@ -374,25 +243,6 @@ class IndexPage extends Component {
 
                     </div>
                 </div>
-
-                {/*eslint-disable */}
-                {/* language=CSS */}
-                <style jsx>{`
-                    @media (min-width: 769px) {
-                        .after-register {
-                            margin-top: 80px;
-                            margin-left: 70px;
-                        }
-                    }
-
-                    @media (max-width: 768px) {
-                        .after-register {
-                            margin-top: 30px;
-                        }
-                    }
-
-                `}</style>
-                {/* eslint-enable */}
             </Layout>
 
         )
@@ -400,7 +250,10 @@ class IndexPage extends Component {
 }
 
 const mapStateToProps = state => {
-    return state.auth
+    return {
+        auth: state.auth.auth,
+        siteType: state.siteType.siteType
+    }
 }
 
-export default connect(mapStateToProps)(withRouter(IndexPage))
+export default connect(mapStateToProps, {setSiteType})(withRouter(IndexPage))

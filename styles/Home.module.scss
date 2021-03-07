@@ -31,3 +31,20 @@
     border-radius: 10px;
     display: inline-block;
 }
+
+.afterRegister {
+
+}
+
+@media (min-width: 769px) {
+    .afterRegister {
+        margin-top: 80px;
+        margin-left: 70px;
+    }
+}
+
+@media (max-width: 768px) {
+    .afterRegister {
+        margin-top: 30px;
+    }
+}

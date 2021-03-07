@@ -3,7 +3,7 @@ import Link from 'next/link'
 import styles from "./layout.module.scss"
 import {connect} from "react-redux";
 import {withRouter} from "next/router";
-import {setAuth} from "../../redux/actions";
+import {setAuth, setSiteType} from "../../redux/actions";
 import Sticky from "react-stickynode";
 
 class Layout extends React.Component {
@@ -34,13 +34,10 @@ class Layout extends React.Component {
                                         <h1 className="brand">DRANBS<small>/ inspire your styles</small></h1>
                                     </Link>
                                     <div className="is-flex">
-                                        <Link href="/">
-                                            <a className={`navbar-item p-0 mx-2 ${router.pathname == '/' ? 'is-active' : ''}`}>new
-                                                arrivals</a>
-                                        </Link>
-                                        <Link href="/sale">
-                                            <a className={`navbar-item p-0 mx-2 ${router.pathname == '/sale' ? 'is-active' : ''}`}>sale</a>
-                                        </Link>
+                                        <a className={`navbar-item p-0 mx-2 ${this.props.siteType == 1 ? 'is-active' : ''}`} onClick={() => this.props.setSiteType(1)}>
+                                            new arrivals
+                                        </a>
+                                        <a className={`navbar-item p-0 mx-2 ${this.props.siteType == 2 ? 'is-active' : ''}`} onClick={() => this.props.setSiteType(2)}>sale</a>
                                         <Link href="/boards">
                                             <a className={`navbar-item p-0 mx-2 ${router.pathname == '/boards' ? 'is-active' : ''}`}>boards</a>
                                         </Link>
@@ -136,7 +133,10 @@ class Layout extends React.Component {
 }
 
 const mapStateToProps = state => {
-    return state.auth
+    return {
+        auth: state.auth.auth,
+        siteType: state.siteType.siteType
+    }
 }
 
-export default connect(mapStateToProps, {setAuth})(withRouter(Layout))
+export default connect(mapStateToProps, {setAuth, setSiteType})(withRouter(Layout))
