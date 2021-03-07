@@ -9,7 +9,6 @@ import Layout from '../components/layout'
 import {getHomeData, getSites} from "../services";
 import {connect} from "react-redux";
 import {withRouter} from "next/router";
-import {setSiteType} from "../redux/actions";
 
 import styles from '../styles/Home.module.scss'
 
@@ -49,11 +48,19 @@ class IndexPage extends Component {
             window.scrollTo({top: 0, behavior: 'smooth'});
             await this.getInitialProducts()
         }
+        if (this.props.exploreType !== prevProps.exploreType) {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+            await this.getInitialProducts()
+        }
+        if (this.props.gender !== prevProps.gender) {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+            await this.getInitialProducts()
+        }
     }
 
     getInitialProducts = async () => {
         try {
-            const response = await getHomeData(this.props.auth.meta.token, 0, this.props.siteType, true)
+            const response = await getHomeData(this.props.auth.meta.token, 0, this.props.siteType, this.props.exploreType, this.props.gender)
             this.setState({
                 data: response.data,
                 dataPage: 1
@@ -67,7 +74,7 @@ class IndexPage extends Component {
 
     loadMoreProducts = async () => {
         try {
-            const response = await getHomeData(this.props.auth.meta.token, this.state.dataPage, this.props.siteType, true)
+            const response = await getHomeData(this.props.auth.meta.token, this.state.dataPage, this.props.siteType, this.props.exploreType, this.props.gender)
             let data = response.data
 
             this.setState({
@@ -252,8 +259,10 @@ class IndexPage extends Component {
 const mapStateToProps = state => {
     return {
         auth: state.auth.auth,
-        siteType: state.siteType.siteType
+        siteType: state.siteType.siteType,
+        exploreType: state.exploreType.exploreType,
+        gender: state.gender.gender
     }
 }
 
-export default connect(mapStateToProps, {setSiteType})(withRouter(IndexPage))
+export default connect(mapStateToProps)(withRouter(IndexPage))

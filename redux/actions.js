@@ -1,5 +1,5 @@
 import {
-    SET_AUTH, SET_FILTERS, SET_SITE_TYPE
+    SET_AUTH, SET_EXPLORE_TYPE, SET_GENDER, SET_PERIOD, SET_SITE_TYPE
 } from "./actionTypes";
 
 export const setAuth = payload => ({
@@ -12,7 +12,17 @@ export const setSiteType = payload => ({
     payload: payload
 })
 
-export const setFilters = payload => ({
-    type: SET_FILTERS,
+export const setExploreType = payload => ({
+    type: SET_EXPLORE_TYPE,
+    payload: payload
+})
+
+export const setGender = payload => ({
+    type: SET_GENDER,
+    payload: payload
+})
+
+export const setPeriod = payload => ({
+    type: SET_PERIOD,
     payload: payload
 })

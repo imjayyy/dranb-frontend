@@ -67,6 +67,21 @@ header {
 .filter {
     padding: 24px 80px;
     margin-bottom: 8px;
+
+    .filter-item {
+        font-size: 12px;
+        margin-left: 8px;
+        margin-right: 8px;
+
+        a {
+            padding: 8px 25px;
+            color: black;
+
+            &.is-active {
+                border-bottom: solid 1px black;
+            }
+        }
+    }
 }
 
 .brand {

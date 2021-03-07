@@ -1,12 +1,6 @@
 import axios from "axios";
 import config from "../config";
 
-function getCookie(name) {
-    var value = "; " + document.cookie;
-    var parts = value.split("; " + name + "=");
-    if (parts.length == 2) return parts.pop().split(";").shift();
-}
-
 export const getUser = async (token) => {
     const response = await axios.get(`${config.domain}/api/me`, {
         headers: {
@@ -25,8 +19,8 @@ export const loginUser = async (payload) => {
     return await axios.post(`${config.domain}/api/sessions`, payload)
 }
 
-export const getHomeData = async (token, page, siteType, isAll) => {
-    const response = await axios.get(`${config.domain}/api/homepage-data?page=${page}&site_type=${siteType}&all=${isAll}`, {
+export const getHomeData = async (token, page, siteType, isAll, gender) => {
+    const response = await axios.get(`${config.domain}/api/homepage-data?page=${page}&site_type=${siteType}&all=${isAll}&gender=${gender}`, {
         headers: {
             'Authorization': `Token ${token}`
         }
