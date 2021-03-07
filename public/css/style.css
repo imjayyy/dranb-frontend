@@ -5509,36 +5509,3 @@ div .socialmedia-widget:first-child {
 /*-webkit-transform:scale(1.5); !* Safari and Chrome *!*/
 /*-o-transform:scale(1.5); !* Opera *!*/
 /*}*/
-
-
-.sticky-outer-wrapper:not(.sticky-active) {
-    margin-left: 40px;
-    padding-top: 50px;
-    padding-bottom: 20px;
-}
-
-
-.sticky-active {
-    line-height: 50px;
-    margin-left: 20px;
-}
-
-.brand-body .sticky-active {
-    line-height: 30px;
-    margin-left: 20px;
-}
-
-.brand-body .sticky-active .sticky-container {
-    padding-top: 20px;
-}
-
-.sticky-active .brand-text {
-    margin-top: 30px;
-}
-
-
-.sticky-active .sticky-container {
-    -webkit-box-shadow: 0 6px 4px -4px #0000001f;
-    -moz-box-shadow: 0 6px 4px -4px #0000001f;
-    box-shadow: 0 6px 4px -4px #0000001f;
-}

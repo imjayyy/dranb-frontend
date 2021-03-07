@@ -57,32 +57,8 @@ class IndexPage extends Component {
         })
     }
 
-
-    initOwlCarousel() {
-        var timer = setInterval(function () {
-            if (jQuery().owlCarousel) {
-                jQuery(".owl-slider").owlCarousel({
-                    items: 1,
-                    nav: false,
-                    navText: false,
-                    dots: true,
-                    smartSpeed: 600,
-                    singleItem: true,
-                    autoHeight: true,
-                    loop: false,
-                    autoplay: false,
-                    autoplayHoverPause: true,
-                    navRewind: false
-                });
-
-                clearInterval(timer)
-            }
-        }, 200);
-    }
-
     mount = () => {
         if (!this.state.fullyMounted) {
-            this.initOwlCarousel()
             window.addEventListener('resize', this.handleResize);
             const event = new Event('load');
             window.dispatchEvent(event)
@@ -171,7 +147,6 @@ class IndexPage extends Component {
             this.repackItems()
         }
         if (prevState.filterBy !== this.state.filterBy) {
-            this.initOwlCarousel()
             window.scrollTo({top: 0, behavior: 'smooth'});
             await this.fetchData()
             await this.loadMoreImages()

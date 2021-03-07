@@ -59,3 +59,36 @@ body {
         border-radius: 0;
     }
 }
+
+header {
+    padding: 10px 80px;
+}
+
+.filter {
+    padding: 24px 80px;
+    margin-bottom: 8px;
+}
+
+.brand {
+    font-size: 55px;
+    font-weight: 400;
+
+    small {
+        font-size: 14px;
+    }
+}
+
+.sticky-active {
+    header {
+        background-color: white;
+    }
+
+    .brand {
+        display: none;
+    }
+
+    .filter {
+        background-color: #f7f7f7;
+        padding: 8px 80px;
+    }
+}

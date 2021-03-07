@@ -8,8 +8,6 @@ import AwesomeDebouncePromise from 'awesome-debounce-promise';
 
 const repackDebounced = AwesomeDebouncePromise(() => (true), 50);
 import Layout from '../components/layout'
-import nextCookie from "next-cookies";
-import Sticky from 'react-stickynode';
 import Router from "next/dist/client/router";
 import cookie from "js-cookie";
 import {getHomeData, getSites} from "../services";
@@ -62,31 +60,31 @@ class SalePage extends Component {
     }
 
 
-    initOwlCarousel() {
-        var timer = setInterval(function () {
-            if (jQuery().owlCarousel) {
-                jQuery(".owl-slider").owlCarousel({
-                    items: 1,
-                    nav: false,
-                    navText: false,
-                    dots: true,
-                    smartSpeed: 600,
-                    singleItem: true,
-                    autoHeight: true,
-                    loop: false,
-                    autoplay: false,
-                    autoplayHoverPause: true,
-                    navRewind: false
-                });
-
-                clearInterval(timer)
-            }
-        }, 200);
-    }
+    // initOwlCarousel() {
+    //     var timer = setInterval(function () {
+    //         if (jQuery().owlCarousel) {
+    //             jQuery(".owl-slider").owlCarousel({
+    //                 items: 1,
+    //                 nav: false,
+    //                 navText: false,
+    //                 dots: true,
+    //                 smartSpeed: 600,
+    //                 singleItem: true,
+    //                 autoHeight: true,
+    //                 loop: false,
+    //                 autoplay: false,
+    //                 autoplayHoverPause: true,
+    //                 navRewind: false
+    //             });
+    //
+    //             clearInterval(timer)
+    //         }
+    //     }, 200);
+    // }
 
     mount = () => {
         if (!this.state.fullyMounted) {
-            this.initOwlCarousel()
+            // this.initOwlCarousel()
             window.addEventListener('resize', this.handleResize);
             const event = new Event('load');
             window.dispatchEvent(event)
@@ -173,7 +171,7 @@ class SalePage extends Component {
             this.repackItems()
         }
         if (prevState.filterBy !== this.state.filterBy) {
-            this.initOwlCarousel()
+            // this.initOwlCarousel()
             window.scrollTo({top: 0, behavior: 'smooth'});
             await this.fetchData()
             await this.loadMoreImages()
@@ -321,68 +319,6 @@ class SalePage extends Component {
                                     }
                                 </div>)}
                             <section id="page-body">
-                                <div className="is-hidden-mobile">
-                                    <Sticky enabled={this.state.stickyNav} top={0} bottomBoundary={0} innerZ={1500}
-                                            activeClass={'sticky-active'} releasedClass={'sticky-released'}>
-                                        <div className="sticky-container"
-                                             style={{backgroundColor: 'white', width: '98%'}}>
-                                            <span
-                                                onClick={() => {
-                                                    if (Router.pathname !== 'new-arrivals') {
-                                                        Router.push('/new-arrivals')
-                                                    }
-                                                }
-                                                }
-                                                style={{
-                                                    cursor: 'pointer',
-                                                    marginRight: '10px',
-                                                    fontSize: '20px',
-                                                    color: 'black'
-                                                }}
-                                            >New Arrivals</span>
-
-                                            <span
-                                                onClick={() => {
-                                                    if (Router.pathname !== 'sale') {
-                                                        Router.push('/sale')
-                                                    }
-                                                }
-                                                }
-                                                style={{
-                                                    cursor: 'pointer',
-                                                    marginRight: '10px',
-                                                    fontSize: '20px',
-                                                    color: 'black'
-                                                }}
-                                                className={"has-text-weight-bold"}
-                                            >Sale</span>
-
-                                            <span>{' | '}</span>
-                                            <span><Link href="/my-brands"><a style={{
-                                                color: '#64F0E7',
-                                                marginRight: '10px',
-                                                fontSize: '20px',
-                                                marginLeft: '10px'
-                                            }}>my Brands</a></Link></span>
-                                            {/*<hr/>*/}
-                                            <span>{' | '}</span>
-                                            <span>
-                                                <span style={{marginLeft: '10px', marginRight: '10px'}}>My Selection</span>
-                                                <Switch onChange={this.handleSelection}
-                                                        checked={this.state.exploreAll}
-                                                        checkedIcon={false}
-                                                        uncheckedIcon={false}
-                                                        height={14}
-                                                        width={28}
-                                                        onColor={'#737373'}
-                                                        offColor={'#737373'}
-                                                />
-                                                <span style={{marginLeft: '10px', marginRight: '10px'}}>Explore</span>
-                                            </span>
-                                        </div>
-                                    </Sticky>
-                                </div>
-                                <div className="is-hidden-tablet" style={{height: '20px'}}/>
                                 <div className="wrapper">
 
                                     <MasonryLayout
