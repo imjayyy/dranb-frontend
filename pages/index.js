@@ -215,27 +215,36 @@ class IndexPage extends Component {
                                                             </span>
                                                         </a>
                                                         <div className="blog-info">
-                                                            <div className="post-meta clearfix">
-                                                            <span className="post-cat">
-                                                                <Link href={`brand?name=${product.name}`}
-                                                                      as={`brand/${product.name}`}>
-                                                                    <a>{product.display_name} <span style={{
-                                                                        color: '#64F0E7',
-                                                                        marginLeft: '10px'
-                                                                    }}>more...</span></a>
-                                                                </Link>
-                                                            </span>
+                                                            <div className="is-flex is-justify-content-center mb-2">
+                                                                <div className={styles.action}>
+                                                                    <i className="fa fa-heart"/><br/>
+                                                                    <span>love</span>
+                                                                </div>
+                                                                <div className={styles.action}>
+                                                                    <img src="/icons/board-icon.svg"/><br/>
+                                                                    <span>+ board</span>
+                                                                </div>
                                                             </div>
-                                                            <h4 className="post-name" style={{marginTop: '0px'}}>
-                                                                <a href={product.product_link}
-                                                                   target={"_blank"}>{product.title}</a>
-                                                            </h4>
-                                                            {product.sale_price ? <div>
-                                                                    <span className="post-pricebar">{product.price}</span>
-                                                                    <span className="post-pricesale">{product.sale_price}</span>
-                                                                </div> :
-                                                                <span className="post-price">{product.price}</span>
-                                                            }
+                                                            <Link href={product.product_link}>
+                                                                <a target="_blank" className={styles.productDetail}>
+                                                                    <p className={styles.productTitle}>{product.title}</p>
+                                                                    {
+                                                                        product.sale_price ? (
+                                                                            <p className={styles.price}>
+                                                                                <span className={styles.salePrice}>{product.sale_price}</span>
+                                                                                <span className={styles.oldPrice}>{product.price}</span>
+                                                                            </p>
+                                                                        ) : (
+                                                                            <p className={styles.price}>{product.price}</p>
+                                                                        )
+                                                                    }
+                                                                </a>
+                                                            </Link>
+                                                            <Link href={`brand/${product.name}`}>
+                                                                <a>
+                                                                    <p className={styles.brandName}>{product.display_name} ></p>
+                                                                </a>
+                                                            </Link>
                                                         </div>
                                                     </div>
                                                 )

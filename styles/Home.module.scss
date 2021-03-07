@@ -68,3 +68,65 @@
         background: rgba(0, 0, 0, .8);
     }
 }
+
+.action {
+    text-align: center;
+    line-height: 12px;
+    margin-right: 24px;
+
+    &:last-child {
+        margin-right: 0;
+    }
+
+    i {
+        font-size: 12px;
+    }
+
+    img {
+        height: 12px;
+    }
+
+    span {
+        font-size: 10px;
+        line-height: 15px;
+    }
+}
+
+.productDetail {
+    color: black;
+
+    &:hover {
+        color: #9E9E9E;
+    }
+}
+
+.productTitle {
+    text-align: center;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.price  {
+    text-align: center;
+    font-size: 12px;
+    line-height: 22px;
+}
+
+.salePrice {
+
+}
+
+.oldPrice {
+
+}
+
+.brandName {
+    text-align: center;
+    font-size: 10px;
+    color: black;
+    line-height: 18px;
+
+    &:hover {
+        color: #9E9E9E;
+    }
+}
