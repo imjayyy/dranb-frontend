@@ -2,11 +2,11 @@ import React, {Component} from 'react'
 import axios from 'axios'
 import config from '../config/index'
 import Link from 'next/link'
-import {shuffle} from "../src/helpers";
+import {shuffle} from "../helpers";
 import MasonryLayout from 'react-masonry-layout'
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
 const repackDebounced = AwesomeDebouncePromise(() => (true), 50);
-import Layout from '../src/layout'
+import Layout from '../components/layout'
 
 export default class ProfileBrands extends Component {
     state = {data: [], hasMore: true, width: '300px'}
