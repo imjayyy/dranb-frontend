@@ -63,6 +63,7 @@
     color: #ffffff;
     font-size: 12px;
     padding: 4px 16px;
+    white-space: nowrap;
 
     &:hover {
         background: rgba(0, 0, 0, .8);
@@ -73,6 +74,13 @@
     text-align: center;
     line-height: 12px;
     margin-right: 24px;
+
+    button {
+        background: transparent;
+        border: unset;
+        padding: unset;
+        cursor: pointer;
+    }
 
     &:last-child {
         margin-right: 0;
@@ -113,11 +121,12 @@
 }
 
 .salePrice {
-
+    margin-right: 10px;
+    color: #FF3366;
 }
 
 .oldPrice {
-
+    text-decoration: line-through;
 }
 
 .brandName {

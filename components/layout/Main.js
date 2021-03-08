@@ -7,7 +7,7 @@ import {setAuth, setExploreType, setGender, setPeriod, setSiteType} from "../../
 import Sticky from "react-stickynode";
 import {getUser} from "../../services";
 
-class Layout extends React.Component {
+class Main extends React.Component {
     constructor(props) {
         super(props);
 
@@ -172,4 +172,4 @@ export default connect(mapStateToProps, {
     setExploreType,
     setGender,
     setPeriod
-})(withRouter(Layout))
+})(withRouter(Main))

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Router from 'next/router'
 import nextCookie from 'next-cookies'
-import Layout from '../components/layout'
+import Main from '../components/layout/Main'
 import {Checkbox, Radio} from 'pretty-checkbox-react';
 import {getMyProfile, toggleUsersSites} from "../services";
 
@@ -114,7 +114,7 @@ class MyBrands extends Component {
     render() {
         const {data} = this.state
         return (
-            <Layout>
+            <Main>
                 <div id="page-content">
                     <div id="hero-and-body">
                         <div id="page-body">
@@ -270,7 +270,7 @@ class MyBrands extends Component {
                         </div>
                     </div>
                 </div>
-            </Layout>
+            </Main>
         )
     }
 }

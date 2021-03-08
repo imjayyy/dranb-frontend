@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import Layout from '../components/layout'
+import Main from '../components/layout/Main'
 import React from "react";
 import {Radio} from 'pretty-checkbox-react';
 import Select from 'react-select';
@@ -93,7 +93,7 @@ class Login extends Component {
         const disable = !!this.validator()
         // console.log(55, disable)
         return (
-            <Layout>
+            <Main>
                 <div className="container">
                     <div id="page-content">
                         <div id="hero-and-body">
@@ -291,7 +291,7 @@ class Login extends Component {
                         </div>
                     </div>
                 </div>
-            </Layout>
+            </Main>
         )
     }
 }

@@ -6,7 +6,7 @@ import {shuffle} from "../helpers";
 import MasonryLayout from 'react-masonry-layout'
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
 const repackDebounced = AwesomeDebouncePromise(() => (true), 50);
-import Layout from '../components/layout'
+import Main from '../components/layout/Main'
 
 export default class ProfileBrands extends Component {
     state = {data: [], hasMore: true, width: '300px'}
@@ -97,7 +97,7 @@ export default class ProfileBrands extends Component {
     render() {
         const data = this.state.data.length >= 1 ? this.state.data : this.props.data.slice(0,20)
         return(
-            <Layout>
+            <Main>
                 <div>
                     {/* PAGE LOADER */}
                     {!this.props.loaded && <div id="page-loader" className="show-logo">
@@ -191,7 +191,7 @@ export default class ProfileBrands extends Component {
 
                 {/*`}</style>*/}
                 {/* eslint-enable */}
-            </Layout>
+            </Main>
 
         )
     }

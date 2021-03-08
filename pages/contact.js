@@ -1,5 +1,5 @@
 import React from 'react'
-import Layout from "../components/layout";
+import Main from "../components/layout/Main";
 
 class Contact extends React.Component {
     constructor(props) {
@@ -24,7 +24,7 @@ class Contact extends React.Component {
 
     render() {
         return (
-            <Layout>
+            <Main>
                 <div id="hero-and-body">
                     <section id="page-body">
                         <div className="wrapper">
@@ -75,7 +75,7 @@ class Contact extends React.Component {
                         </div>
                     </section>
                 </div>
-            </Layout>
+            </Main>
         )
     }
 }

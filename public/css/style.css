@@ -5497,3 +5497,55 @@ div .socialmedia-widget:first-child {
 #hero:not(.hero-big):not(.hero-full) #page-title:not(.title-bottom) {
     padding-bottom: calc(100px + 50px);
 }
+
+.brand-name {
+    margin-bottom: 35px;
+}
+
+.brand-name .go-back {
+    border: 0;
+    background: black;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 12px;
+    height: 22px;
+}
+
+.brand-name span {
+    font-size: 30px;
+    line-height: 22px;
+    vertical-align: middle;
+}
+
+.sticky-active .filter {
+    display: flex;
+    align-items: center;
+}
+
+.sticky-active .filter .brand-name {
+    margin-bottom: 0;
+    margin-right: 50px;
+}
+
+.sticky-active .filter .brand-name span {
+    font-size: 20px;
+}
+
+.filter-item .follow, .filter-item .unfollow {
+    border: 0;
+    height: 30px;
+    width: 120px;
+    border-radius: 10px;
+}
+
+.filter-item .follow {
+    color: white;
+    background: black;
+}
+
+.filter-item .unfollow {
+    color: black;
+    background: white;
+    border: solid 1px black;
+}

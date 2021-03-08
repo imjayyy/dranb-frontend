@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import Layout from '../components/layout'
+import Main from '../components/layout/Main'
 import React from "react";
 import {Radio} from 'pretty-checkbox-react';
 
@@ -103,7 +103,7 @@ class MyProfile extends Component {
 
     render() {
         return (
-            <Layout>
+            <Main>
                 <div className="container">
                     <div id="page-content">
                         <div id="hero-and-body">
@@ -263,7 +263,7 @@ class MyProfile extends Component {
                         </div>
                     </div>
                 </div>
-            </Layout>
+            </Main>
         )
     }
 }

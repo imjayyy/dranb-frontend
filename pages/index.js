@@ -5,7 +5,7 @@ import MasonryLayout from 'react-masonry-layout'
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
 
 const repackDebounced = AwesomeDebouncePromise(() => (true), 50);
-import Layout from '../components/layout'
+import Main from '../components/layout/Main'
 import {getHomeData} from "../services";
 import {connect} from "react-redux";
 import {withRouter} from "next/router";
@@ -17,16 +17,11 @@ class IndexPage extends Component {
         super(props);
 
         this.state = {
-            originalData: [],
-            dataLeft: [],
-            sites: [],
             data: [],
-            hasMore: true,
             width: '300px',
             filterBy: 1,
             stickyNav: true,
             fullyMounted: false,
-            exploreAll: false,
         }
     }
 
@@ -139,7 +134,7 @@ class IndexPage extends Component {
         }
 
         return (
-            <Layout>
+            <Main>
                 <div>
 
                     <div id="page-content">
@@ -217,12 +212,16 @@ class IndexPage extends Component {
                                                         <div className="blog-info">
                                                             <div className="is-flex is-justify-content-center mb-2">
                                                                 <div className={styles.action}>
-                                                                    <i className="fa fa-heart"/><br/>
-                                                                    <span>love</span>
+                                                                    <button>
+                                                                        <i className="fa fa-heart"/><br/>
+                                                                        <span>love</span>
+                                                                    </button>
                                                                 </div>
                                                                 <div className={styles.action}>
-                                                                    <img src="/icons/board-icon.svg"/><br/>
-                                                                    <span>+ board</span>
+                                                                    <button>
+                                                                        <img src="/icons/board-icon.svg"/><br/>
+                                                                        <span>+ board</span>
+                                                                    </button>
                                                                 </div>
                                                             </div>
                                                             <Link href={product.product_link}>
@@ -261,7 +260,7 @@ class IndexPage extends Component {
 
                     </div>
                 </div>
-            </Layout>
+            </Main>
 
         )
     }
