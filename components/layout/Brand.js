@@ -145,7 +145,7 @@ class Brand extends React.Component {
                     </header>
                     <section className="filter">
                         <div className="brand-name">
-                            <button className="go-back">{'<-'}</button>
+                            <button className="go-back" onClick={() => this.props.router.back()}>{'<-'}</button>
                             <span>{this.props.brandName}</span>
                         </div>
                         <div className="is-flex is-align-items-center">

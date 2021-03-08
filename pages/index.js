@@ -19,7 +19,6 @@ class IndexPage extends Component {
         this.state = {
             data: [],
             width: '300px',
-            filterBy: 1,
             stickyNav: true,
             fullyMounted: false,
         }
@@ -140,30 +139,13 @@ class IndexPage extends Component {
                     <div id="page-content">
                         <div id="hero-and-body">
                             {/* PAGEBODY */}
-                            {this.props.loaded && ((this.state.data.length === 0 && this.props.loaded && this.state.fullyMounted && this.state.user) &&
+                            {this.props.loaded && ((this.state.data.length === 0 && this.props.loaded && this.state.fullyMounted) &&
                                 <div className={styles.afterRegister}>
-                                    {this.state.filterBy === 1 ? <div>
-                                            <h2>Follow your favorite brands.</h2>
-                                            <h3><Link href={'/my-brands'}><a style={{textDecoration: 'underline'}}>Click on
-                                                my Brands to select them.</a></Link></h3>
-                                        </div> :
-                                        <div>
-                                            <h2>Selected brands have no sale styles.</h2>
-                                            <h3><Link href={'/my-brands'}><a style={{textDecoration: 'underline'}}>Click
-                                                on my Brands to select additional brands.</a></Link></h3>
-                                        </div>
-                                    }
-                                </div>)}
-
-                            {this.props.loaded && ((this.state.data.length === 0 && this.props.loaded && this.state.fullyMounted && !this.state.user) &&
-                                <div className={styles.afterRegister}>
-                                    {this.state.filterBy === 1 ? <div>
-                                            <h2>There are no sale styles.</h2>
-                                        </div> :
-                                        <div>
-                                            <h2>There are no sale styles.</h2>
-                                        </div>
-                                    }
+                                    <p className="has-text-centered">you have no brands in <strong>"my selection"</strong> filters.</p>
+                                    <p className="has-text-centered">
+                                        To follow brands just <strong>explore</strong> and visit a<br />
+                                        brand page, then click on the follow button.
+                                    </p>
                                 </div>)}
                             <section id="page-body">
                                 <div className="is-hidden-tablet" style={{height: '20px'}}/>
@@ -230,8 +212,10 @@ class IndexPage extends Component {
                                                                     {
                                                                         product.sale_price ? (
                                                                             <p className={styles.price}>
-                                                                                <span className={styles.salePrice}>{product.sale_price}</span>
-                                                                                <span className={styles.oldPrice}>{product.price}</span>
+                                                                                <span
+                                                                                    className={styles.salePrice}>{product.sale_price}</span>
+                                                                                <span
+                                                                                    className={styles.oldPrice}>{product.price}</span>
                                                                             </p>
                                                                         ) : (
                                                                             <p className={styles.price}>{product.price}</p>
