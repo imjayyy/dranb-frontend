@@ -40,6 +40,18 @@ class BrandPage extends Component {
         if ((prevState.width !== this.state.width)) {
             this.repackItems()
         }
+        if (this.props.siteType !== prevProps.siteType) {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+            await this.getInitialProducts()
+        }
+        if (this.props.period !== prevProps.period) {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+            await this.getInitialProducts()
+        }
+        if (this.props.gender !== prevProps.gender) {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+            await this.getInitialProducts()
+        }
     }
 
     componentWillUnmount() {
@@ -52,7 +64,7 @@ class BrandPage extends Component {
             return;
         }
         try {
-            const response = await await getProductsByBrand(brandName, 0, this.state.filterBy, this.props.auth.meta.token)
+            const response = await await getProductsByBrand(this.props.auth.meta.token, brandName, 0, this.props.siteType, this.props.gender, this.props.period)
             this.setState({
                 data: response.data,
                 dataPage: 1
@@ -70,7 +82,7 @@ class BrandPage extends Component {
             if (!brandName) {
                 return;
             }
-            const response = await await getProductsByBrand(brandName, this.state.dataPage, this.state.filterBy, this.props.auth.meta.token)
+            const response = await getProductsByBrand(this.props.auth.meta.token, brandName, this.state.dataPage, this.props.siteType, this.props.gender, this.props.period)
             let data = response.data
 
             this.setState({
@@ -238,9 +250,9 @@ class BrandPage extends Component {
 const mapStateToProps = state => {
     return {
         auth: state.auth.auth,
-        siteType: state.homeFilter.siteType,
-        exploreType: state.homeFilter.exploreType,
-        gender: state.homeFilter.gender
+        siteType: state.brandFilter.siteType,
+        period: state.brandFilter.period,
+        gender: state.brandFilter.gender
     }
 }
 

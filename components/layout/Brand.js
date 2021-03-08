@@ -23,7 +23,7 @@ class Brand extends React.Component {
 
     async componentDidMount() {
         try {
-            const data = await getBrandInfo(this.props.router.query.name, this.props.auth.meta.token)
+            const data = await getBrandInfo(this.props.auth.meta.token, this.props.brandName)
             this.setState({
                 followers: data.followers,
                 is_following: data.is_following
@@ -46,7 +46,7 @@ class Brand extends React.Component {
 
     toggleFollow = async (brandName) => {
         try {
-            const data = await toggleFollowBrand(brandName, this.props.auth.meta.token)
+            const data = await toggleFollowBrand(this.props.auth.meta.token, brandName)
             this.setState({
                 followers: data.followers,
                 is_following: data.is_following
@@ -151,9 +151,9 @@ class Brand extends React.Component {
                         <div className="is-flex is-align-items-center">
                             <div className="filter-item">
                                 <a onClick={() => this.props.setBrandSiteType(1)}
-                                   className={`${this.props.siteType === 1 ? 'is-active' : ''}`}>new arrivals</a>
+                                   className={`${this.props.brandSiteType === 1 ? 'is-active' : ''}`}>new arrivals</a>
                                 <a onClick={() => this.props.setBrandSiteType(2)}
-                                   className={`${this.props.siteType === 2 ? 'is-active' : ''}`}>sale</a>
+                                   className={`${this.props.brandSiteType === 2 ? 'is-active' : ''}`}>sale</a>
                             </div>
                             <div className="filter-item">
                                 <button className={this.state.is_following ? 'unfollow' : 'follow'} onClick={() => this.toggleFollow(this.props.brandName)}>
@@ -191,7 +191,8 @@ class Brand extends React.Component {
 const mapStateToProps = state => {
     return {
         auth: state.auth.auth,
-        siteType: state.brandFilter.siteType,
+        siteType: state.homeFilter.siteType,
+        brandSiteType: state.brandFilter.siteType,
         gender: state.brandFilter.gender,
         period: state.brandFilter.period
     }

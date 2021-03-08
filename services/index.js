@@ -42,7 +42,7 @@ export const getMyProfile = async (token) => {
     return response.data
 }
 
-export const toggleUsersSites = async (payload, token) => {
+export const toggleUsersSites = async (token, payload) => {
     const response = await axios.post(`${config.domain}/api/toggle-users-sites`, payload, {
         headers: {
             "Authorization": `Token ${token}`
@@ -51,7 +51,7 @@ export const toggleUsersSites = async (payload, token) => {
     return response.data
 }
 
-export const patchProfile = async (payload, token) => {
+export const patchProfile = async (token, payload) => {
     const response = await axios.patch(`${config.domain}/api/update-profile`, payload, {
         headers: {
             'Authorization': `Token ${token}`
@@ -60,8 +60,8 @@ export const patchProfile = async (payload, token) => {
     return response.data
 }
 
-export const getProductsByBrand = async (brandName, page, siteType, token) => {
-    const response = await axios.get(`${config.domain}/api/by-brand-name/${brandName}?page=${page}&site_type=${siteType}`, {
+export const getProductsByBrand = async (token, brandName, page, siteType, gender, period) => {
+    const response = await axios.get(`${config.domain}/api/by-brand-name/${brandName}?site_type=${siteType}&gender=${gender}&period=${period}&page=${page}`, {
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -69,7 +69,7 @@ export const getProductsByBrand = async (brandName, page, siteType, token) => {
     return response.data
 }
 
-export const toggleFollowBrand = async (brandName, token) => {
+export const toggleFollowBrand = async (token, brandName) => {
     const response = await axios.post(`${config.domain}/api/toggle-follow-brand`, {
         name: brandName
     }, {
@@ -80,7 +80,7 @@ export const toggleFollowBrand = async (brandName, token) => {
     return response.data
 }
 
-export const getBrandInfo = async (brandName, token) => {
+export const getBrandInfo = async (token, brandName) => {
     const response = await axios.get(`${config.domain}/api/brand/${brandName}`, {
         headers: {
             'Authorization': `Token ${token}`

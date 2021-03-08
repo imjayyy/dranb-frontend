@@ -76,7 +76,7 @@ class MyProfile extends Component {
         this.setState({error: ''})
 
         try {
-            await patchProfile({
+            await patchProfile(this.props.auth.meta.token, {
                 user: {
                     first_name: this.state.firstName,
                     last_name: this.state.lastName,
@@ -88,7 +88,7 @@ class MyProfile extends Component {
                     password: this.state.password,
                     password_confirm: this.state.passwordAgain
                 }
-            }, this.props.auth.meta.token)
+            })
             this.setState({
                 message: 'Success !'
             })

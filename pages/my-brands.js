@@ -94,13 +94,13 @@ class MyBrands extends Component {
 
     update = async (gender, site) => {
         try {
-            const data = await toggleUsersSites({
+            const data = await toggleUsersSites(this.props.token, {
                 data: {
                     used: gender.used,
                     ids: gender.ids,
                     site: site.name
                 }
-            }, this.props.token)
+            })
             const mapped = combineBothStates(data.sites, data.my_profiles)
             this.setState({
                 data: mapped
