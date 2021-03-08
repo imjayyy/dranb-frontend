@@ -159,10 +159,10 @@ class Main extends React.Component {
 const mapStateToProps = state => {
     return {
         auth: state.auth.auth,
-        siteType: state.siteType.siteType,
-        exploreType: state.exploreType.exploreType,
-        gender: state.gender.gender,
-        period: state.period.period
+        siteType: state.homeFilter.siteType,
+        exploreType: state.homeFilter.exploreType,
+        gender: state.homeFilter.gender,
+        period: state.homeFilter.period
     }
 }
 

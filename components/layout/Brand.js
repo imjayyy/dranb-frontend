@@ -1,11 +1,14 @@
 import React from 'react'
 import Link from 'next/link'
-import styles from "./layout.module.scss"
 import {connect} from "react-redux";
 import {withRouter} from "next/router";
-import {setAuth, setExploreType, setGender, setPeriod, setSiteType} from "../../redux/actions";
+import {
+    setAuth,
+    setBrandGender, setBrandPeriod,
+    setBrandSiteType, setSiteType,
+} from "../../redux/actions";
 import Sticky from "react-stickynode";
-import {getUser} from "../../services";
+import {getBrandInfo, toggleFollowBrand} from "../../services";
 
 class Brand extends React.Component {
     constructor(props) {
@@ -13,19 +16,21 @@ class Brand extends React.Component {
 
         this.state = {
             stickyNav: true,
+            followers: 0,
+            is_following: false
         }
     }
 
-    componentDidMount() {
-        if (this.props.auth) {
-            getUser(this.props.auth.meta.token)
-                .then(res => {
-                    console.log(res)
-                })
-                .catch(e => {
-                    console.error(e)
-                    this.props.setAuth(false)
-                })
+    async componentDidMount() {
+        try {
+            const data = await getBrandInfo(this.props.router.query.name, this.props.auth.meta.token)
+            this.setState({
+                followers: data.followers,
+                is_following: data.is_following
+            })
+        } catch (e) {
+            this.props.setAuth(false)
+            await this.props.router.push("/login")
         }
     }
 
@@ -37,6 +42,20 @@ class Brand extends React.Component {
     handleClick = async (siteType) => {
         this.props.setSiteType(siteType)
         await this.props.router.push('/')
+    }
+
+    toggleFollow = async (brandName) => {
+        try {
+            const data = await toggleFollowBrand(brandName, this.props.auth.meta.token)
+            this.setState({
+                followers: data.followers,
+                is_following: data.is_following
+            })
+        } catch (e) {
+            console.error(e)
+            this.props.setAuth(false)
+            await this.props.router.push('/login')
+        }
     }
 
     render() {
@@ -131,29 +150,33 @@ class Brand extends React.Component {
                         </div>
                         <div className="is-flex is-align-items-center">
                             <div className="filter-item">
-                                <a>new arrivals</a>
-                                <a>sale</a>
+                                <a onClick={() => this.props.setBrandSiteType(1)}
+                                   className={`${this.props.siteType === 1 ? 'is-active' : ''}`}>new arrivals</a>
+                                <a onClick={() => this.props.setBrandSiteType(2)}
+                                   className={`${this.props.siteType === 2 ? 'is-active' : ''}`}>sale</a>
                             </div>
                             <div className="filter-item">
-                                <button className="unfollow">unfollow</button>
+                                <button className={this.state.is_following ? 'unfollow' : 'follow'} onClick={() => this.toggleFollow(this.props.brandName)}>
+                                    {this.state.is_following ? 'unfollow' : 'follow'}
+                                </button>
                             </div>
                             <div className="filter-item">
-                                #followers
+                                {this.state.followers} followers
                             </div>
                             <div className="filter-item">
-                                <a onClick={() => this.props.setGender(0)}
+                                <a onClick={() => this.props.setBrandGender(0)}
                                    className={`${this.props.gender === 0 ? 'is-active' : ''}`}>all</a>
-                                <a onClick={() => this.props.setGender(1)}
+                                <a onClick={() => this.props.setBrandGender(1)}
                                    className={`${this.props.gender === 1 ? 'is-active' : ''}`}>women</a>
-                                <a onClick={() => this.props.setGender(2)}
+                                <a onClick={() => this.props.setBrandGender(2)}
                                    className={`${this.props.gender === 2 ? 'is-active' : ''}`}>men</a>
                             </div>
                             <div className="filter-item">
-                                <a onClick={() => this.props.setPeriod(-1)}
+                                <a onClick={() => this.props.setBrandPeriod(-1)}
                                    className={`${this.props.period === -1 ? 'is-active' : ''}`}>all</a>
-                                <a onClick={() => this.props.setPeriod(1)}
+                                <a onClick={() => this.props.setBrandPeriod(1)}
                                    className={`${this.props.period === 1 ? 'is-active' : ''}`}>today</a>
-                                <a onClick={() => this.props.setPeriod(7)}
+                                <a onClick={() => this.props.setBrandPeriod(7)}
                                    className={`${this.props.period === 7 ? 'is-active' : ''}`}>one week</a>
                             </div>
                         </div>
@@ -168,17 +191,16 @@ class Brand extends React.Component {
 const mapStateToProps = state => {
     return {
         auth: state.auth.auth,
-        siteType: state.siteType.siteType,
-        exploreType: state.exploreType.exploreType,
-        gender: state.gender.gender,
-        period: state.period.period
+        siteType: state.brandFilter.siteType,
+        gender: state.brandFilter.gender,
+        period: state.brandFilter.period
     }
 }
 
 export default connect(mapStateToProps, {
     setAuth,
     setSiteType,
-    setExploreType,
-    setGender,
-    setPeriod
+    setBrandSiteType,
+    setBrandGender,
+    setBrandPeriod
 })(withRouter(Brand))

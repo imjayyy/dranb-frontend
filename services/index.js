@@ -68,3 +68,23 @@ export const getProductsByBrand = async (brandName, page, siteType, token) => {
     })
     return response.data
 }
+
+export const toggleFollowBrand = async (brandName, token) => {
+    const response = await axios.post(`${config.domain}/api/toggle-follow-brand`, {
+        name: brandName
+    }, {
+        headers:  {
+            'Authorization': `Token ${token}`
+        }
+    })
+    return response.data
+}
+
+export const getBrandInfo = async (brandName, token) => {
+    const response = await axios.get(`${config.domain}/api/brand/${brandName}`, {
+        headers: {
+            'Authorization': `Token ${token}`
+        }
+    })
+    return response.data
+}

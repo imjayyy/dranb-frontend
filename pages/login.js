@@ -65,9 +65,8 @@ class Login extends Component {
         event && event.preventDefault()
         this.setState({error: ''})
 
-
         try {
-            let data = await registerUser({
+            let response = await registerUser({
                 first_name: this.state.registerFirstName,
                 last_name: this.state.registerLastName,
                 gender: parseInt(this.state.registerGender),
@@ -78,8 +77,8 @@ class Login extends Component {
                 password: this.state.registerPassword,
                 password_confirm: this.state.registerPasswordConfirm
             })
-            const {meta: {token}} = data.data
-            await login({token, register: true})
+            this.props.setAuth(response.data)
+            await this.props.router.push("/")
         } catch (error) {
             console.error(
                 'You have an error in your code or there are Network issues.',

@@ -12,6 +12,11 @@ import styles from "../../styles/Home.module.scss";
 import Link from "next/link";
 
 class BrandPage extends Component {
+    static async getInitialProps(ctx) {
+        const {query} = ctx
+        return {brandName: query.name}
+    }
+
     constructor(props) {
         super(props);
 
@@ -35,11 +40,6 @@ class BrandPage extends Component {
         if ((prevState.width !== this.state.width)) {
             this.repackItems()
         }
-        if (prevState.filterBy !== this.state.filterBy) {
-            window.scrollTo({top: 0, behavior: 'smooth'});
-            await this.fetchData()
-            this.loadMoreImages()
-        }
     }
 
     componentWillUnmount() {
@@ -47,8 +47,11 @@ class BrandPage extends Component {
     }
 
     getInitialProducts = async () => {
+        const brandName = this.props.brandName
+        if (!brandName) {
+            return;
+        }
         try {
-            const brandName = this.props.router.query.name
             const response = await await getProductsByBrand(brandName, 0, this.state.filterBy, this.props.auth.meta.token)
             this.setState({
                 data: response.data,
@@ -63,7 +66,10 @@ class BrandPage extends Component {
 
     loadMoreProducts = async () => {
         try {
-            const brandName = this.props.router.query.name
+            const brandName = this.props.brandName
+            if (!brandName) {
+                return;
+            }
             const response = await await getProductsByBrand(brandName, this.state.dataPage, this.state.filterBy, this.props.auth.meta.token)
             let data = response.data
 
@@ -122,7 +128,7 @@ class BrandPage extends Component {
     }
 
     render() {
-        const brandName = this.props.router.query.name
+        const brandName = this.props.brandName
         if (!this.props.loaded) {
             return <div id="page-loader" className="show-logo">
                 <span className="loader-icon bullets-jump"><span/><span/><span/></span>
@@ -196,8 +202,10 @@ class BrandPage extends Component {
                                                                     {
                                                                         product.sale_price ? (
                                                                             <p className={styles.price}>
-                                                                                <span className={styles.salePrice}>{product.sale_price}</span>
-                                                                                <span className={styles.oldPrice}>{product.price}</span>
+                                                                                <span
+                                                                                    className={styles.salePrice}>{product.sale_price}</span>
+                                                                                <span
+                                                                                    className={styles.oldPrice}>{product.price}</span>
                                                                             </p>
                                                                         ) : (
                                                                             <p className={styles.price}>{product.price}</p>
@@ -230,9 +238,9 @@ class BrandPage extends Component {
 const mapStateToProps = state => {
     return {
         auth: state.auth.auth,
-        siteType: state.siteType.siteType,
-        exploreType: state.exploreType.exploreType,
-        gender: state.gender.gender
+        siteType: state.homeFilter.siteType,
+        exploreType: state.homeFilter.exploreType,
+        gender: state.homeFilter.gender
     }
 }
 

@@ -1,8 +1,6 @@
 import {combineReducers} from "redux";
 import auth from './auth'
-import siteType from './siteType'
-import exploreType from "./exploreType";
-import gender from "./gender";
-import period from "./period";
+import homeFilter from "./homeFilter";
+import brandFilter from "./brandFilter";
 
-export default combineReducers({auth, siteType, exploreType, gender, period})
+export default combineReducers({auth, homeFilter, brandFilter})

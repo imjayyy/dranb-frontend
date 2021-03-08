@@ -269,9 +269,9 @@ class IndexPage extends Component {
 const mapStateToProps = state => {
     return {
         auth: state.auth.auth,
-        siteType: state.siteType.siteType,
-        exploreType: state.exploreType.exploreType,
-        gender: state.gender.gender
+        siteType: state.homeFilter.siteType,
+        exploreType: state.homeFilter.exploreType,
+        gender: state.homeFilter.gender
     }
 }
 

@@ -1,5 +1,12 @@
 import {
-    SET_AUTH, SET_EXPLORE_TYPE, SET_GENDER, SET_PERIOD, SET_SITE_TYPE
+    SET_AUTH,
+    SET_BRAND_GENDER,
+    SET_BRAND_PERIOD,
+    SET_BRAND_SITE_TYPE,
+    SET_EXPLORE_TYPE,
+    SET_GENDER,
+    SET_PERIOD,
+    SET_SITE_TYPE
 } from "./actionTypes";
 
 export const setAuth = payload => ({
@@ -7,13 +14,13 @@ export const setAuth = payload => ({
     payload: payload
 })
 
-export const setSiteType = payload => ({
-    type: SET_SITE_TYPE,
+export const setExploreType = payload => ({
+    type: SET_EXPLORE_TYPE,
     payload: payload
 })
 
-export const setExploreType = payload => ({
-    type: SET_EXPLORE_TYPE,
+export const setSiteType = payload => ({
+    type: SET_SITE_TYPE,
     payload: payload
 })
 
@@ -24,5 +31,20 @@ export const setGender = payload => ({
 
 export const setPeriod = payload => ({
     type: SET_PERIOD,
+    payload: payload
+})
+
+export const setBrandSiteType = payload => ({
+    type: SET_BRAND_SITE_TYPE,
+    payload: payload
+})
+
+export const setBrandGender = payload => ({
+    type: SET_BRAND_GENDER,
+    payload: payload
+})
+
+export const setBrandPeriod = payload => ({
+    type: SET_BRAND_PERIOD,
     payload: payload
 })
