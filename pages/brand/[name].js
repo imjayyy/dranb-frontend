@@ -130,9 +130,10 @@ class BrandPage extends Component {
             width = (parentWidth - 60) / 6.3
         }
 
-        let height = width * 5.5 / 3
+        // let height = width * 5.5 / 3
 
-        this.setState({width, height})
+        // this.setState({width, height})
+        this.setState({width})
     }
 
     repackItems = () => {
@@ -186,7 +187,7 @@ class BrandPage extends Component {
                                                         key={i}
                                                         style={{
                                                             width: this.state.width,
-                                                            height: this.state.height
+                                                            // height: this.state.height
                                                         }}>
                                                         <a href={product.product_link} target={"_blank"}
                                                            className="thumb-hover scale">
