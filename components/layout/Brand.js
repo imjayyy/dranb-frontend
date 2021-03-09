@@ -17,7 +17,8 @@ class Brand extends React.Component {
         this.state = {
             stickyNav: true,
             followers: 0,
-            is_following: false
+            is_following: false,
+            genders: 1,
         }
     }
 
@@ -26,7 +27,8 @@ class Brand extends React.Component {
             const data = await getBrandInfo(this.props.auth.meta.token, this.props.brandName)
             this.setState({
                 followers: data.followers,
-                is_following: data.is_following
+                is_following: data.is_following,
+                genders: data.genders
             })
         } catch (e) {
             this.props.setAuth(false)
@@ -156,21 +158,26 @@ class Brand extends React.Component {
                                    className={`${this.props.brandSiteType === 2 ? 'is-active' : ''}`}>sale</a>
                             </div>
                             <div className="filter-item">
-                                <button className={this.state.is_following ? 'unfollow' : 'follow'} onClick={() => this.toggleFollow(this.props.brandName)}>
+                                <button className={this.state.is_following ? 'unfollow' : 'follow'}
+                                        onClick={() => this.toggleFollow(this.props.brandName)}>
                                     {this.state.is_following ? 'unfollow' : 'follow'}
                                 </button>
                             </div>
                             <div className="filter-item">
                                 {this.state.followers} followers
                             </div>
-                            <div className="filter-item">
-                                <a onClick={() => this.props.setBrandGender(0)}
-                                   className={`${this.props.gender === 0 ? 'is-active' : ''}`}>all</a>
-                                <a onClick={() => this.props.setBrandGender(1)}
-                                   className={`${this.props.gender === 1 ? 'is-active' : ''}`}>women</a>
-                                <a onClick={() => this.props.setBrandGender(2)}
-                                   className={`${this.props.gender === 2 ? 'is-active' : ''}`}>men</a>
-                            </div>
+                            {
+                                this.state.genders === 2 && (
+                                    <div className="filter-item">
+                                        <a onClick={() => this.props.setBrandGender(0)}
+                                           className={`${this.props.gender === 0 ? 'is-active' : ''}`}>all</a>
+                                        <a onClick={() => this.props.setBrandGender(1)}
+                                           className={`${this.props.gender === 1 ? 'is-active' : ''}`}>women</a>
+                                        <a onClick={() => this.props.setBrandGender(2)}
+                                           className={`${this.props.gender === 2 ? 'is-active' : ''}`}>men</a>
+                                    </div>
+                                )
+                            }
                             <div className="filter-item">
                                 <a onClick={() => this.props.setBrandPeriod(-1)}
                                    className={`${this.props.period === -1 ? 'is-active' : ''}`}>all</a>
