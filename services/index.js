@@ -88,3 +88,14 @@ export const getBrandInfo = async (token, brandName) => {
     })
     return response.data
 }
+
+export const toggleLoveProduct = async (token, productId) => {
+    const response = await axios.post(`${config.domain}/api/toggle-love-product`, {
+        id: productId
+    }, {
+        headers:  {
+            'Authorization': `Token ${token}`
+        }
+    })
+    return response.data
+}

@@ -3,9 +3,39 @@ import PropTypes from 'prop-types'
 import config from "../config";
 import styles from "./product.module.scss";
 import Link from "next/link";
-import {DashboardOutlined, FavoriteBorderOutlined} from "@material-ui/icons";
+import {DashboardOutlined, Favorite, FavoriteBorderOutlined} from "@material-ui/icons";
+import {toggleLoveProduct} from "../services";
+import {connect} from "react-redux";
+import {withRouter} from "next/router";
+import {setAuth} from "../redux/actions";
 
 class Product extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isLove: false
+        }
+    }
+
+    componentDidMount() {
+        this.setState({
+            isLove: this.props.product.is_love
+        })
+    }
+
+    handleLoveClick = async () => {
+        try {
+            const data = await toggleLoveProduct(this.props.auth.meta.token, this.props.product.id)
+            this.setState({
+                isLove: data.is_love
+            })
+        } catch (e) {
+            this.props.setAuth(false)
+            await this.props.router.push("/login")
+        }
+    }
+
     render() {
         const product = this.props.product
 
@@ -25,14 +55,19 @@ class Product extends React.Component {
                 <div className="blog-info">
                     <div className="is-flex is-justify-content-center mb-2">
                         <div className={styles.action}>
-                            <button>
-                                <FavoriteBorderOutlined fontSize={'20px'} /><br/>
+                            <button onClick={this.handleLoveClick}>
+                                {this.state.isLove ? (
+                                    <Favorite style={{color: '#FF3366', fontSize: 20}} />
+                                ) : (
+                                    <FavoriteBorderOutlined style={{fontSize: 20}} />
+                                )}
+                                <br/>
                                 <span>love</span>
                             </button>
                         </div>
                         <div className={styles.action}>
                             <button>
-                                <DashboardOutlined fontSize={'18px'} /><br/>
+                                <DashboardOutlined style={{fontSize: 18}} /><br/>
                                 <span>+ board</span>
                             </button>
                         </div>
@@ -72,4 +107,12 @@ Product.propTypes = {
     isBrand: PropTypes.bool.isRequired,
 }
 
-export default Product
+const mapStateToProps = state => {
+    return {
+        auth: state.auth.auth,
+    }
+}
+
+export default connect(mapStateToProps, {
+    setAuth,
+})(withRouter(Product))
