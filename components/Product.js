@@ -58,13 +58,13 @@ class Product extends React.Component {
                             <button onClick={this.handleLoveClick}>
                                 {this.state.isLove ? (
                                     <>
-                                        <Favorite style={{color: '#FF3366', fontSize: 20}} />
+                                        <Favorite style={{color: '#FF3366', fontSize: 24}} />
                                         <br/>
                                         <span>remove</span>
                                     </>
                                 ) : (
                                     <>
-                                        <FavoriteBorderOutlined style={{fontSize: 20}} />
+                                        <FavoriteBorderOutlined style={{fontSize: 24}} />
                                         <br/>
                                         <span>love</span>
                                     </>
@@ -73,7 +73,7 @@ class Product extends React.Component {
                         </div>
                         <div className={styles.action}>
                             <button>
-                                <DashboardOutlined style={{fontSize: 18}} /><br/>
+                                <DashboardOutlined style={{fontSize: 24}} /><br/>
                                 <span>+ board</span>
                             </button>
                         </div>
