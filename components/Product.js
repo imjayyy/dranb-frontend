@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import config from "../config";
 import styles from "./product.module.scss";
 import Link from "next/link";
+import {DashboardOutlined, FavoriteBorderOutlined} from "@material-ui/icons";
 
 class Product extends React.Component {
     render() {
@@ -25,13 +26,13 @@ class Product extends React.Component {
                     <div className="is-flex is-justify-content-center mb-2">
                         <div className={styles.action}>
                             <button>
-                                <i className="fa fa-heart"/><br/>
+                                <FavoriteBorderOutlined fontSize={'20px'} /><br/>
                                 <span>love</span>
                             </button>
                         </div>
                         <div className={styles.action}>
                             <button>
-                                <img src="/icons/board-icon.svg"/><br/>
+                                <DashboardOutlined fontSize={'18px'} /><br/>
                                 <span>+ board</span>
                             </button>
                         </div>
@@ -51,11 +52,13 @@ class Product extends React.Component {
                             }
                         </a>
                     </Link>
-                    <Link href={`brand/${product.name}`}>
-                        <a>
-                            <p className={styles.brandName}>{product.display_name} ></p>
-                        </a>
-                    </Link>
+                    {!this.props.isBrand && (
+                        <Link href={`brand/${product.name}`}>
+                            <a>
+                                <p className={styles.brandName}>{product.display_name} ></p>
+                            </a>
+                        </Link>
+                    )}
                 </div>
             </div>
         )
@@ -66,6 +69,7 @@ Product.propTypes = {
     width: PropTypes.any.isRequired,
     product: PropTypes.object.isRequired,
     onLoad: PropTypes.func.isRequired,
+    isBrand: PropTypes.bool.isRequired,
 }
 
 export default Product

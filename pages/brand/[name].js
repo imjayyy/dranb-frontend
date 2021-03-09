@@ -10,6 +10,7 @@ import {connect} from "react-redux";
 import {withRouter} from "next/router";
 import styles from "../../styles/Home.module.scss";
 import Link from "next/link";
+import Product from "../../components/Product";
 
 class BrandPage extends Component {
     static async getInitialProps(ctx) {
@@ -178,66 +179,7 @@ class BrandPage extends Component {
                                         }}
                                         infiniteScrollDistance={400}
                                     >
-
-                                        {this.state.data.map((product, i) => {
-                                                // let height = i % 2 === 0 ? 200 : 100;
-                                                return (
-                                                    <div
-                                                        className="blog-media"
-                                                        key={i}
-                                                        style={{
-                                                            width: this.state.width,
-                                                            // height: this.state.height
-                                                        }}>
-                                                        <a href={product.product_link} target={"_blank"}
-                                                           className="thumb-hover scale">
-                                                            <img
-                                                                onLoad={() => this.debounce()}
-                                                                style={{objectFit: 'contain', width: '100%'}}
-                                                                src={`${config.domain}/images/${product.image_filename}`}
-                                                            />
-                                                            <span className={styles.shopNow}>
-                                                                shop now
-                                                            </span>
-                                                        </a>
-                                                        <div className="blog-info">
-                                                            <div className="is-flex is-justify-content-center mb-2">
-                                                                <div className={styles.action}>
-                                                                    <button>
-                                                                        <i className="fa fa-heart"/><br/>
-                                                                        <span>love</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div className={styles.action}>
-                                                                    <button>
-                                                                        <img src="/icons/board-icon.svg"/><br/>
-                                                                        <span>+ board</span>
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                            <Link href={product.product_link}>
-                                                                <a target="_blank" className={styles.productDetail}>
-                                                                    <p className={styles.productTitle}>{product.title}</p>
-                                                                    {
-                                                                        product.sale_price ? (
-                                                                            <p className={styles.price}>
-                                                                                <span
-                                                                                    className={styles.salePrice}>{product.sale_price}</span>
-                                                                                <span
-                                                                                    className={styles.oldPrice}>{product.price}</span>
-                                                                            </p>
-                                                                        ) : (
-                                                                            <p className={styles.price}>{product.price}</p>
-                                                                        )
-                                                                    }
-                                                                </a>
-                                                            </Link>
-                                                        </div>
-                                                    </div>
-                                                )
-                                            }
-                                        )}
-
+                                        {this.state.data.map((product, i) => <Product width={this.state.width} product={product} key={i} onLoad={() => this.debounce()} isBrand={true} />)}
                                     </MasonryLayout>
                                 </div>
                                 {/* END .wrapper */}

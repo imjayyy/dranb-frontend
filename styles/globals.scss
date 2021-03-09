@@ -69,6 +69,7 @@ header {
         a {
             padding: 6px 25px;
             color: #9E9E9E;
+            white-space: nowrap;
 
             &.is-active {
                 border-bottom: solid 1px black;

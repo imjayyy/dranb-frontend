@@ -170,7 +170,7 @@ class IndexPage extends Component {
                                         }}
                                         infiniteScrollDistance={400}
                                     >
-                                        {this.state.data.map((product, i) => <Product width={this.state.width} product={product} key={i} onLoad={() => this.debounce()}/>)}
+                                        {this.state.data.map((product, i) => <Product width={this.state.width} product={product} key={i} onLoad={() => this.debounce()} isBrand={false} />)}
                                     </MasonryLayout>
                                     {/*</div>*/}
                                 </div>
