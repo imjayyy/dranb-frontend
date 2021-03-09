@@ -1,6 +1,4 @@
 import React, {Component} from 'react'
-import config from '../config/index'
-import Link from 'next/link'
 import MasonryLayout from 'react-masonry-layout'
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
 
@@ -11,6 +9,7 @@ import {connect} from "react-redux";
 import {withRouter} from "next/router";
 
 import styles from '../styles/Home.module.scss'
+import Product from "../components/Product";
 
 class IndexPage extends Component {
     constructor(props) {
@@ -147,9 +146,10 @@ class IndexPage extends Component {
                             {/* PAGEBODY */}
                             {this.props.loaded && ((this.state.data.length === 0 && this.props.loaded && this.state.fullyMounted) &&
                                 <div className={styles.afterRegister}>
-                                    <p className="has-text-centered">you have no brands in <strong>"my selection"</strong> filters.</p>
+                                    <p className="has-text-centered">you have no brands in <strong>"my
+                                        selection"</strong> filters.</p>
                                     <p className="has-text-centered">
-                                        To follow brands just <strong>explore</strong> and visit a<br />
+                                        To follow brands just <strong>explore</strong> and visit a<br/>
                                         brand page, then click on the follow button.
                                     </p>
                                 </div>)}
@@ -170,78 +170,7 @@ class IndexPage extends Component {
                                         }}
                                         infiniteScrollDistance={400}
                                     >
-
-
-                                        {this.state.data.map((product, i) => {
-                                                return (
-                                                    <div
-                                                        className="blog-media"
-                                                        key={i}
-                                                        style={{
-                                                            width: this.state.width,
-                                                            // height: `${height}px`,
-                                                            // lineHeight: `${height}px`,
-                                                            // color: 'white',
-                                                            // fontSize: '32px',
-                                                            // display: 'block',
-                                                            // background: 'rgba(0,0,0,0.7)'
-                                                        }}>
-                                                        <a href={product.product_link} target={"_blank"}
-                                                           className={`thumb-hover scale ${styles.thumbnail}`}>
-                                                            <img
-                                                                onLoad={() => this.debounce()}
-                                                                style={{objectFit: 'contain', width: '100%'}}
-                                                                src={`${config.domain}/images/${product.image_filename}`}
-                                                            />
-                                                            <span className={styles.shopNow}>
-                                                                shop now
-                                                            </span>
-                                                        </a>
-                                                        <div className="blog-info">
-                                                            <div className="is-flex is-justify-content-center mb-2">
-                                                                <div className={styles.action}>
-                                                                    <button>
-                                                                        <i className="fa fa-heart"/><br/>
-                                                                        <span>love</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div className={styles.action}>
-                                                                    <button>
-                                                                        <img src="/icons/board-icon.svg"/><br/>
-                                                                        <span>+ board</span>
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                            <Link href={product.product_link}>
-                                                                <a target="_blank" className={styles.productDetail}>
-                                                                    <p className={styles.productTitle}>
-                                                                        <span>{product.title}</span>
-                                                                    </p>
-                                                                    {
-                                                                        product.sale_price ? (
-                                                                            <p className={styles.price}>
-                                                                                <span
-                                                                                    className={styles.salePrice}>{product.sale_price}</span>
-                                                                                <span
-                                                                                    className={styles.oldPrice}>{product.price}</span>
-                                                                            </p>
-                                                                        ) : (
-                                                                            <p className={styles.price}>{product.price}</p>
-                                                                        )
-                                                                    }
-                                                                </a>
-                                                            </Link>
-                                                            <Link href={`brand/${product.name}`}>
-                                                                <a>
-                                                                    <p className={styles.brandName}>{product.display_name} ></p>
-                                                                </a>
-                                                            </Link>
-                                                        </div>
-                                                    </div>
-                                                )
-                                            }
-                                        )}
-
+                                        {this.state.data.map((product, i) => <Product width={this.state.width} product={product} key={i} onLoad={() => this.debounce()}/>)}
                                     </MasonryLayout>
                                     {/*</div>*/}
                                 </div>
