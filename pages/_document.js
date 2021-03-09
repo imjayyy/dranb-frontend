@@ -33,6 +33,7 @@ class MyDocument extends Document {
                     <meta name="mobile-web-app-capable" content="yes"/>
                     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500" rel="stylesheet"
                           type="text/css"/>
+                    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet" />
                     <link rel="stylesheet" id="fontawesome-style-css" href="/fontawesome-pro/css/all.min.css"
                           type="text/css" media="all"/>
                     <link rel="stylesheet" id="default-style-css" href="/css/bulma.min.css" type="text/css"

@@ -619,13 +619,6 @@ ul li:first-child, ol li:first-child {
 
 /* Others
 ---------------------------------------- */
-p {
-    margin-top: 15px;
-}
-
-div p:first-child {
-    margin-top: 0px;
-}
 
 strong, b, dt {
     font-weight: 500;
@@ -799,8 +792,8 @@ h6 small {
 
 .wrapper, .wrapper-small, .wrapper-big {
     /* width: 1200px; */
-    margin: 0 auto;
-    max-width: calc(100% - 80px);
+    margin-left: 82px;
+    max-width: calc(100% - 160px);
 }
 
 .wrapper-small {

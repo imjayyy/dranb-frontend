@@ -61,8 +61,8 @@
     background: rgba(0, 0, 0, .5);
     border-radius: 10px;
     color: #ffffff;
-    font-size: 12px;
-    padding: 4px 16px;
+    font-size: 14px;
+    padding: 6px 35px;
     white-space: nowrap;
 
     &:hover {
@@ -87,11 +87,11 @@
     }
 
     i {
-        font-size: 12px;
+        font-size: 20px;
     }
 
     img {
-        height: 12px;
+        height: 18px;
     }
 
     span {
@@ -110,19 +110,25 @@
 
 .productTitle {
     text-align: center;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: normal;
+
+    span {
+        display: inline-block;
+        max-width: 300px;
+    }
 }
 
 .price  {
     text-align: center;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 22px;
 }
 
 .salePrice {
     margin-right: 10px;
     color: #FF3366;
+    margin-top: 10px;
 }
 
 .oldPrice {
@@ -131,9 +137,10 @@
 
 .brandName {
     text-align: center;
-    font-size: 10px;
+    font-size: 12px;
     color: black;
     line-height: 18px;
+    margin-bottom: .5rem;
 
     &:hover {
         color: #9E9E9E;

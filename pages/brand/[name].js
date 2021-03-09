@@ -42,14 +42,17 @@ class BrandPage extends Component {
         }
         if (this.props.siteType !== prevProps.siteType) {
             window.scrollTo({top: 0, behavior: 'smooth'});
+            this.props.toggleLoaded(false)
             await this.getInitialProducts()
         }
         if (this.props.period !== prevProps.period) {
             window.scrollTo({top: 0, behavior: 'smooth'});
+            this.props.toggleLoaded(false)
             await this.getInitialProducts()
         }
         if (this.props.gender !== prevProps.gender) {
             window.scrollTo({top: 0, behavior: 'smooth'});
+            this.props.toggleLoaded(false)
             await this.getInitialProducts()
         }
     }
@@ -77,6 +80,9 @@ class BrandPage extends Component {
     }
 
     loadMoreProducts = async () => {
+        if (this.state.isLoadingData)
+            return
+        this.setState({isLoadingData: true}, this.mount)
         try {
             const brandName = this.props.brandName
             if (!brandName) {

@@ -68,10 +68,11 @@ header {
 
         a {
             padding: 6px 25px;
-            color: black;
+            color: #9E9E9E;
 
             &.is-active {
                 border-bottom: solid 1px black;
+                color: black;
             }
         }
     }
@@ -80,9 +81,11 @@ header {
 .brand {
     font-size: 55px;
     font-weight: 400;
+    font-family: 'Playfair Display', serif;
 
     small {
         font-size: 14px;
+        font-family: 'Poppins', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 }
 

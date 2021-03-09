@@ -40,14 +40,17 @@ class IndexPage extends Component {
         }
         if (this.props.siteType !== prevProps.siteType) {
             window.scrollTo({top: 0, behavior: 'smooth'});
+            this.props.toggleLoaded(false)
             await this.getInitialProducts()
         }
         if (this.props.exploreType !== prevProps.exploreType) {
             window.scrollTo({top: 0, behavior: 'smooth'});
+            this.props.toggleLoaded(false)
             await this.getInitialProducts()
         }
         if (this.props.gender !== prevProps.gender) {
             window.scrollTo({top: 0, behavior: 'smooth'});
+            this.props.toggleLoaded(false)
             await this.getInitialProducts()
         }
     }
@@ -67,6 +70,9 @@ class IndexPage extends Component {
     }
 
     loadMoreProducts = async () => {
+        if (this.state.isLoadingData)
+            return
+        this.setState({isLoadingData: true}, this.mount)
         try {
             const response = await getHomeData(this.props.auth.meta.token, this.state.dataPage, this.props.siteType, this.props.exploreType, this.props.gender)
             let data = response.data
@@ -208,7 +214,9 @@ class IndexPage extends Component {
                                                             </div>
                                                             <Link href={product.product_link}>
                                                                 <a target="_blank" className={styles.productDetail}>
-                                                                    <p className={styles.productTitle}>{product.title}</p>
+                                                                    <p className={styles.productTitle}>
+                                                                        <span>{product.title}</span>
+                                                                    </p>
                                                                     {
                                                                         product.sale_price ? (
                                                                             <p className={styles.price}>
