@@ -6,6 +6,7 @@ import {withRouter} from "next/router";
 import {setAuth, setExploreType, setGender, setPeriod, setSiteType} from "../../redux/actions";
 import Sticky from "react-stickynode";
 import {getUser} from "../../services";
+import {Dashboard, Favorite} from "@material-ui/icons";
 
 class Main extends React.Component {
     constructor(props) {
@@ -72,15 +73,15 @@ class Main extends React.Component {
                                     </div>
                                     {this.props.auth ? (
                                         <>
-                                            <Link href="/loves">
+                                            <Link href="/my-loves">
                                                 <a className="navbar-item">
-                                                    <i className="fa fa-heart"/>
+                                                    <Favorite style={{color: '#FF3366', fontSize: 16, marginRight: '8px'}} />
                                                     I love
                                                 </a>
                                             </Link>
                                             <Link href="/following">
                                                 <a className="navbar-item">
-                                                    <img src="/icons/follow-icon.svg"/>
+                                                    <Dashboard style={{fontSize: 16, marginRight: '8px', color: '#FA9805'}} />
                                                     I follow
                                                 </a>
                                             </Link>

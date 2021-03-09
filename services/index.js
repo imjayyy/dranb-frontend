@@ -99,3 +99,12 @@ export const toggleLoveProduct = async (token, productId) => {
     })
     return response.data
 }
+
+export const getMyLoves = async (token, page) => {
+    const response = await axios.get(`${config.domain}/api/my-loves?page=${page}`, {
+        headers: {
+            'Authorization': `Token ${token}`
+        }
+    })
+    return response.data
+}

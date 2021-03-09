@@ -3,16 +3,16 @@ import MasonryLayout from 'react-masonry-layout'
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
 
 const repackDebounced = AwesomeDebouncePromise(() => (true), 50);
-import Main from '../components/layout/Main'
-import {getHomeData} from "../services";
+import {getMyLoves} from "../services";
 import {connect} from "react-redux";
 import {withRouter} from "next/router";
 
 import styles from '../styles/Home.module.scss'
 import Product from "../components/Product";
+import Profile from "../components/layout/Profile";
 import {setAuth} from "../redux/actions";
 
-class IndexPage extends Component {
+class MyLoves extends Component {
     constructor(props) {
         super(props);
 
@@ -38,26 +38,11 @@ class IndexPage extends Component {
         if ((prevState.width !== this.state.width)) {
             this.repackItems()
         }
-        if (this.props.siteType !== prevProps.siteType) {
-            window.scrollTo({top: 0, behavior: 'smooth'});
-            this.props.toggleLoaded(false)
-            await this.getInitialProducts()
-        }
-        if (this.props.exploreType !== prevProps.exploreType) {
-            window.scrollTo({top: 0, behavior: 'smooth'});
-            this.props.toggleLoaded(false)
-            await this.getInitialProducts()
-        }
-        if (this.props.gender !== prevProps.gender) {
-            window.scrollTo({top: 0, behavior: 'smooth'});
-            this.props.toggleLoaded(false)
-            await this.getInitialProducts()
-        }
     }
 
     getInitialProducts = async () => {
         try {
-            const response = await getHomeData(this.props.auth.meta.token, 0, this.props.siteType, this.props.exploreType, this.props.gender)
+            const response = await getMyLoves(this.props.auth.meta.token, 0)
             this.setState({
                 data: response.data,
                 dataPage: 1
@@ -75,7 +60,7 @@ class IndexPage extends Component {
             return
         this.setState({isLoadingData: true}, this.mount)
         try {
-            const response = await getHomeData(this.props.auth.meta.token, this.state.dataPage, this.props.siteType, this.props.exploreType, this.props.gender)
+            const response = await getMyLoves(this.props.auth.meta.token, this.state.dataPage)
             let data = response.data
 
             this.setState({
@@ -85,6 +70,8 @@ class IndexPage extends Component {
             }, this.mount)
         } catch (e) {
             console.error(e)
+            this.props.setAuth(false)
+            this.props.router.push('/login');
         }
     }
 
@@ -97,7 +84,6 @@ class IndexPage extends Component {
             this.setState({fullyMounted: true}, this.handleResize)
         }
     }
-
 
     handleResize = () => {
         const parentWidth = document.querySelector(".wrapper").getBoundingClientRect().width
@@ -140,7 +126,7 @@ class IndexPage extends Component {
         }
 
         return (
-            <Main>
+            <Profile>
                 <div>
 
                     <div id="page-content">
@@ -183,7 +169,7 @@ class IndexPage extends Component {
 
                     </div>
                 </div>
-            </Main>
+            </Profile>
 
         )
     }
@@ -192,12 +178,9 @@ class IndexPage extends Component {
 const mapStateToProps = state => {
     return {
         auth: state.auth.auth,
-        siteType: state.homeFilter.siteType,
-        exploreType: state.homeFilter.exploreType,
-        gender: state.homeFilter.gender
     }
 }
 
 export default connect(mapStateToProps, {
     setAuth
-})(withRouter(IndexPage))
+})(withRouter(MyLoves))

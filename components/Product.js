@@ -20,7 +20,7 @@ class Product extends React.Component {
 
     componentDidMount() {
         this.setState({
-            isLove: this.props.product.is_love
+            isLove: this.props.product.liked
         })
     }
 
