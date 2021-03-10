@@ -4,8 +4,8 @@ import {
     SET_BRAND_PERIOD,
     SET_BRAND_SITE_TYPE,
     SET_EXPLORE_TYPE,
-    SET_GENDER,
-    SET_PERIOD,
+    SET_GENDER, SET_MODAL_ACTIVE,
+    SET_PERIOD, SET_PRODUCT_ID_FOR_BOARD,
     SET_SITE_TYPE
 } from "./actionTypes";
 
@@ -46,5 +46,15 @@ export const setBrandGender = payload => ({
 
 export const setBrandPeriod = payload => ({
     type: SET_BRAND_PERIOD,
+    payload: payload
+})
+
+export const setModalActive = payload => ({
+    type: SET_MODAL_ACTIVE,
+    payload: payload
+})
+
+export const setProductIdForBoard = payload => ({
+    type: SET_PRODUCT_ID_FOR_BOARD,
     payload: payload
 })

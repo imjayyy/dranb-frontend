@@ -108,3 +108,30 @@ export const getMyLoves = async (token, page) => {
     })
     return response.data
 }
+
+export const createBoard = async (token, payload) => {
+    const response = await axios.post(`${config.domain}/api/boards`, payload, {
+        headers: {
+            'Authorization': `Token ${token}`
+        }
+    })
+    return response.data
+}
+
+export const getBoards = async (token, productId) => {
+    const response = await axios.get(`${config.domain}/api/boards?product_id=${productId}`, {
+        headers: {
+            'Authorization': `Token ${token}`
+        }
+    })
+    return response.data
+}
+
+export const toggleProductSaved = async (token, payload) => {
+    const response = await axios.post(`${config.domain}/api/toggle-product-saved`, payload, {
+        headers: {
+            'Authorization': `Token ${token}`
+        }
+    })
+    return response.data
+}

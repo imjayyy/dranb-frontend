@@ -172,7 +172,7 @@ class Login extends Component {
                                                     />
                                                 </div>
                                                 <div style={{paddingTop: '0px'}}
-                                                     className="column is-12  is-marginless">
+                                                     className="column is-12 is-marginless">
                                                     <label>Gender</label>
                                                     <>
                                                         <Radio onChange={e => this.setState({registerGender: "1"})}

@@ -7,6 +7,7 @@ import {setAuth, setExploreType, setGender, setPeriod, setSiteType} from "../../
 import Sticky from "react-stickynode";
 import {getUser} from "../../services";
 import {Dashboard, Favorite} from "@material-ui/icons";
+import BoardModal from "../BoardModal";
 
 class Main extends React.Component {
     constructor(props) {
@@ -152,6 +153,7 @@ class Main extends React.Component {
                     </section>
                 </Sticky>
                 {this.props.children}
+                <BoardModal />
             </>
         )
     }

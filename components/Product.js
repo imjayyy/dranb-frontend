@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import config from "../config";
 import styles from "./product.module.scss";
 import Link from "next/link";
-import {DashboardOutlined, Favorite, FavoriteBorderOutlined} from "@material-ui/icons";
+import {Dashboard, DashboardOutlined, Favorite, FavoriteBorderOutlined} from "@material-ui/icons";
 import {toggleLoveProduct} from "../services";
 import {connect} from "react-redux";
 import {withRouter} from "next/router";
-import {setAuth} from "../redux/actions";
+import {setAuth, setModalActive, setProductIdForBoard} from "../redux/actions";
 
 class Product extends React.Component {
     constructor(props) {
@@ -34,6 +34,12 @@ class Product extends React.Component {
             this.props.setAuth(false)
             await this.props.router.push("/login")
         }
+    }
+
+    saveToBoard = () => {
+        document.getElementsByTagName('html')[0].style.overflowY = 'hidden'
+        this.props.setProductIdForBoard(this.props.product.id)
+        this.props.setModalActive(true)
     }
 
     render() {
@@ -72,9 +78,18 @@ class Product extends React.Component {
                             </button>
                         </div>
                         <div className={styles.action}>
-                            <button>
-                                <DashboardOutlined style={{fontSize: 24}} /><br/>
-                                <span>+ board</span>
+                            <button onClick={() => this.saveToBoard()}>
+                                {product.followed ? (
+                                    <>
+                                        <Dashboard style={{fontSize: 24, color: '#FA9805'}} /><br/>
+                                        <span>manage</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <DashboardOutlined style={{fontSize: 24}} /><br/>
+                                        <span>+ board</span>
+                                    </>
+                                )}
                             </button>
                         </div>
                     </div>
@@ -121,4 +136,6 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
     setAuth,
+    setModalActive,
+    setProductIdForBoard,
 })(withRouter(Product))
