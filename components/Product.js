@@ -79,7 +79,7 @@ class Product extends React.Component {
                         </div>
                         <div className={styles.action}>
                             <button onClick={() => this.saveToBoard()}>
-                                {product.followed ? (
+                                {product.saved ? (
                                     <>
                                         <Dashboard style={{fontSize: 24, color: '#FA9805'}} /><br/>
                                         <span>manage</span>

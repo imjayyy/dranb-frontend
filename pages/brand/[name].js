@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import config from '../../config/index'
 import MasonryLayout from 'react-masonry-layout'
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
 
@@ -8,8 +7,6 @@ import Brand from '../../components/layout/Brand'
 import {getProductsByBrand} from "../../services";
 import {connect} from "react-redux";
 import {withRouter} from "next/router";
-import styles from "../../styles/Home.module.scss";
-import Link from "next/link";
 import Product from "../../components/Product";
 
 class BrandPage extends Component {

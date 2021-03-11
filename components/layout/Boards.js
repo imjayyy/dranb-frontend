@@ -1,13 +1,12 @@
 import React from 'react'
 import Link from 'next/link'
-import styles from "./layout.module.scss"
 import {connect} from "react-redux";
 import {withRouter} from "next/router";
 import {setAuth, setExploreType, setGender, setPeriod, setSiteType} from "../../redux/actions";
 import Sticky from "react-stickynode";
-import {getUser} from "../../services";
 import {Dashboard, Favorite} from "@material-ui/icons";
 import BoardModal from "../BoardModal";
+import {getBoardInfo, toggleFollowBoard} from "../../services";
 
 class Boards extends React.Component {
     constructor(props) {
@@ -15,19 +14,36 @@ class Boards extends React.Component {
 
         this.state = {
             stickyNav: true,
+            followers: 0,
+            isFollowing: false
         }
     }
 
-    componentDidMount() {
-        if (this.props.auth) {
-            getUser(this.props.auth.meta.token)
-                .then(res => {
-                    console.log(res)
+    async componentDidMount() {
+        if (this.props.name) {
+            try {
+                const data = await getBoardInfo(this.props.auth.meta.token, this.props.name)
+                this.setState({
+                    followers: data.followers,
+                    isFollowing: data.is_following,
                 })
-                .catch(e => {
-                    console.error(e)
-                    this.props.setAuth(false)
-                })
+            } catch (e) {
+                this.props.setAuth(false)
+                await this.props.router.push("/login")
+            }
+        }
+    }
+
+    toggleFollow = async (boardName) => {
+        try {
+            const data = await toggleFollowBoard(this.props.auth.meta.token, boardName)
+            this.setState({
+                followers: data.followers,
+                isFollowing: data.is_following
+            })
+        } catch (e) {
+            this.props.setAuth(false)
+            await this.props.router.push('/login')
         }
     }
 
@@ -76,13 +92,15 @@ class Boards extends React.Component {
                                         <>
                                             <Link href="/my-loves">
                                                 <a className="navbar-item">
-                                                    <Favorite style={{color: '#FF3366', fontSize: 16, marginRight: '8px'}} />
+                                                    <Favorite
+                                                        style={{color: '#FF3366', fontSize: 16, marginRight: '8px'}}/>
                                                     I love
                                                 </a>
                                             </Link>
                                             <Link href="/my-following">
                                                 <a className="navbar-item">
-                                                    <Dashboard style={{fontSize: 16, marginRight: '8px', color: '#FA9805'}} />
+                                                    <Dashboard
+                                                        style={{fontSize: 16, marginRight: '8px', color: '#FA9805'}}/>
                                                     I follow
                                                 </a>
                                             </Link>
@@ -121,12 +139,63 @@ class Boards extends React.Component {
                             </div>
                         </nav>
                     </header>
-                    <section className="breadcrumb board-breadcrumb">
-                        <h3>all boards</h3>
-                        <p>Suscipit purus dignissim quaerat magnis molestie minima eiusmod nunc, nulla maxime proin</p>
+                    <section className="board-breadcrumb">
+                        {this.props.creator ? (
+                            <>
+                                <ul>
+                                    <li>
+                                        <Link href="/boards">
+                                            <a>boards</a>
+                                        </Link>
+                                    </li>
+                                    {this.props.name ? (
+                                        <>
+                                            <li>
+                                                <Link href={`/boards/${this.props.creator}`}>
+                                                    <a>{this.props.creator}</a>
+                                                </Link>
+                                            </li>
+                                            <li className="is-active">
+                                                <a>{this.props.name}</a>
+                                            </li>
+                                        </>
+                                    ) : (
+                                        <li className="is-active">
+                                            <a>{this.props.creator}</a>
+                                        </li>
+                                    )}
+                                </ul>
+                                {this.props.name && (
+                                    <>
+                                        <p>
+                                            Suscipit purus dignissim quaerat magnis molestie minima eiusmod nunc, nulla
+                                            maxime proin
+                                        </p>
+                                        <div className="follow-piece">
+                                            <button
+                                                className={this.state.isFollowing ? 'unfollow' : 'follow'}
+                                                onClick={() => this.toggleFollow(this.props.name)}
+                                            >
+                                                {this.state.isFollowing ? 'unfollow' : 'follow'}
+                                            </button>
+                                            <span className="followers">{this.state.followers} followers</span>
+                                        </div>
+                                    </>
+                                )}
+                            </>
+                        ) : (
+                            <>
+                                <h3>all boards</h3>
+                                <p>
+                                    Suscipit purus dignissim quaerat magnis molestie minima eiusmod nunc, nulla maxime
+                                    proin
+                                </p>
+                            </>
+                        )}
                     </section>
                 </Sticky>
                 {this.props.children}
+                <BoardModal/>
             </>
         )
     }

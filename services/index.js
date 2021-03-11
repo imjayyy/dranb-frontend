@@ -135,3 +135,42 @@ export const toggleProductSaved = async (token, payload) => {
     })
     return response.data
 }
+
+export const getBoardsByCreator = async (token, username, page) => {
+    const response = await axios.get(`${config.domain}/api/boards-by-creator/${username}?page=${page}`, {
+        headers: {
+            'Authorization': `Token ${token}`
+        }
+    })
+    return response.data
+}
+
+export const getBoardInfo = async (token, boardName) => {
+    const response = await axios.get(`${config.domain}/api/board/${boardName}`, {
+        headers: {
+            'Authorization': `Token ${token}`
+        }
+    })
+    return response.data
+}
+
+export const toggleFollowBoard = async (token, boardName) => {
+    const response = await axios.post(`${config.domain}/api/toggle-follow-board`, {
+        name: boardName
+    }, {
+        headers:  {
+            'Authorization': `Token ${token}`
+        }
+    })
+    return response.data
+}
+
+
+export const getProductsByBoardId = async (token, name, page) => {
+    const response = await axios.get(`${config.domain}/api/boards-by-name/${name}?page=${page}`, {
+        headers: {
+            'Authorization': `Token ${token}`
+        }
+    })
+    return response.data
+}

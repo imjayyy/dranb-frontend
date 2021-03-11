@@ -94,6 +94,74 @@ header {
         transition: all 2s linear;
         display: block;
     }
+
+    ul > li {
+        color: #939393;
+        font-size: 14px;
+        line-height: 34px;
+        font-weight: 400;
+        display: inline-block;
+
+        a {
+            color: #939393;
+        }
+
+        &:after {
+            content: "/";
+            display: inline-block;
+            margin-left: 4px;
+            margin-right: 4px;
+        }
+
+        &.is-active {
+            font-size: 30px;
+            line-height: 34px;
+            font-weight: 400;
+            color: black;
+            display: block;
+
+            a {
+                color: black;
+            }
+
+            &:after {
+                content: unset;
+            }
+        }
+    }
+
+    .follow, .unfollow {
+        width: 157px;
+        height: 35px;
+        font-size: 14px;
+        font-weight: 400;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    .follow-piece {
+        margin-top: 22px;
+    }
+
+    .follow {
+        background: black;
+        color: white;
+        border: 1px solid white;
+    }
+
+    .unfollow {
+        background: white;
+        color: black;
+        border: 1px solid black;
+    }
+
+    .followers {
+        margin-left: 50px;
+        font-weight: 300;
+        font-size: 14px;
+        line-height: 22px;
+        color: black;
+    }
 }
 
 .brand {
@@ -125,8 +193,23 @@ header {
     }
 
     .board-breadcrumb {
+        display: flex;
+        align-items: center;
         background-color: #f7f7f7;
         padding: 12px 80px;
+
+        ul {
+            display: flex;
+
+            li {
+                line-height: 22px;
+                font-size: 14px;
+
+                &.is-active {
+                    font-size: 20px;
+                }
+            }
+        }
 
         h3 {
             font-size: 20px;
@@ -136,6 +219,16 @@ header {
         p {
             display: none;
             opacity: 0;
+        }
+
+        .follow-piece {
+            margin-top: 0;
+            margin-left: 50px;
+        }
+
+        .follow, .unfollow {
+            height: 30px;
+            width: 135px;
         }
     }
 

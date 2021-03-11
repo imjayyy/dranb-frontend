@@ -569,33 +569,15 @@ p + video, p + audio {
 
 /* Lists
 ---------------------------------------- */
-ul {
-    margin-top: 15px;
-    margin-left: 30px;
-    list-style: disc;
-}
-
 ul.nolist {
     list-style: none;
     margin-left: 0px;
-}
-
-div ul:first-child, li ul:first-child {
-    margin-top: 0px;
 }
 
 ol {
     margin-top: 15px;
     margin-left: 30px;
     list-style: decimal;
-}
-
-div ol:first-child, li ol:first-child {
-    margin-top: 0px;
-}
-
-ul li, ol li {
-    margin-top: 8px;
 }
 
 ul.biglist li, ol.biglist li, ul.nolist li, ol.nolist li {

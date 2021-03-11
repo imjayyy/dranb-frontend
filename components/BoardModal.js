@@ -87,6 +87,7 @@ class BoardModal extends React.Component {
     }
 
     handleBackgroundClick = () => {
+        document.getElementsByTagName('html')[0].style.overflowY = 'auto'
         this.props.setModalActive(false)
     }
 
@@ -111,6 +112,7 @@ class BoardModal extends React.Component {
                 boardName: '',
                 displayForm: false
             }, () => {
+                document.getElementsByTagName('html')[0].style.overflowY = 'auto'
                 this.props.setModalActive(false)
             })
         } catch (e) {
@@ -137,7 +139,7 @@ class BoardModal extends React.Component {
                             <div className="board-list">
                                 {this.state.boards.map((board, index) => (
                                     <BoardCheckbox
-                                        board={board} key={`${index}_${board.followed}`} index={index}
+                                        board={board} key={`${index}_${board.saved}`} index={index}
                                         productId={this.props.productId} token={this.props.auth.meta.token}/>
                                 ))}
                             </div>

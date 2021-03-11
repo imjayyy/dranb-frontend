@@ -1,22 +1,27 @@
 import React from 'react'
-import Boards from "../components/layout/Boards";
+import Boards from "../../../components/layout/Boards";
+import {getBoardsByCreator} from "../../../services";
 import AwesomeDebouncePromise from "awesome-debounce-promise";
 import MasonryLayout from "react-masonry-layout";
-import Board from "../components/Board";
-import {getBoards} from "../services";
+import Board from "../../../components/Board";
 import {connect} from "react-redux";
-import {setAuth} from "../redux/actions";
+import {setAuth} from "../../../redux/actions";
 import {withRouter} from "next/router";
 
 const repackDebounced = AwesomeDebouncePromise(() => (true), 50);
 
-class BoardsPage extends React.Component {
+class BoardsByCreator extends React.Component {
+    static async getInitialProps(ctx) {
+        const {query} = ctx
+        return {creator: query.creator}
+    }
+
     constructor(props) {
         super(props);
 
         this.state = {
             data: [],
-            width: '300px',
+            width: '192px',
             fullyMounted: false,
             isLoadingData: false,
             hasMore: true,
@@ -25,7 +30,7 @@ class BoardsPage extends React.Component {
 
     getInitialBoards = async () => {
         try {
-            const response = await getBoards(this.props.auth.meta.token, 0,  '')
+            const response = await getBoardsByCreator(this.props.auth.meta.token, this.props.creator, 0)
             if (response.data.length === 0) {
                 this.setState({
                     hasMore: false
@@ -55,7 +60,7 @@ class BoardsPage extends React.Component {
             return
         this.setState({isLoadingData: true}, this.mount)
         try {
-            const response = await getBoards(this.props.auth.meta.token, this.state.dataPage,  '')
+            const response = await getBoardsByCreator(this.props.auth.meta.token, this.props.creator, this.state.dataPage)
             let data = response.data
             if (data.length === 0) {
                 this.setState({
@@ -97,11 +102,11 @@ class BoardsPage extends React.Component {
         console.log(`Browser Width: ${browserWidth}px`)
         let width
         if (browserWidth <= 768) {
-            width = parentWidth
+            width = parentWidth - 100
         } else if (browserWidth <= 1024) {
-            width = (parentWidth) / 3.3
+            width = (parentWidth - 150) / 3
         } else {
-            width = (parentWidth - 60) / 6.3
+            width = (parentWidth - 210) / 11
         }
 
         this.setState({width})
@@ -135,12 +140,14 @@ class BoardsPage extends React.Component {
 
     render() {
         if (!this.props.loaded) {
-            return <div id="page-loader" className="show-logo">
-                <span className="loader-icon bullets-jump"><span/><span/><span/></span>
-            </div>
+            return (
+                <div id="page-loader" className="show-logo">
+                    <span className="loader-icon bullets-jump"><span/><span/><span/></span>
+                </div>
+            )
         }
         return (
-            <Boards>
+            <Boards creator={this.props.creator}>
                 <div>
                     <div id="page-content">
                         <div id="hero-and-body">
@@ -154,7 +161,7 @@ class BoardsPage extends React.Component {
                                             mq: '769px',
                                             columns: 3,
                                             gutter: 20
-                                        }, {mq: '1025px', columns: 6, gutter: 20}]}
+                                        }, {mq: '1025px', columns: 11, gutter: 20}]}
                                         infiniteScroll={async () => {
                                             await this.loadMoreBoards()
                                         }}
@@ -185,4 +192,4 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
     setAuth
-})(withRouter(BoardsPage))
+})(withRouter(BoardsByCreator))

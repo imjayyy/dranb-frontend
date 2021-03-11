@@ -9,6 +9,7 @@ import {
 } from "../../redux/actions";
 import Sticky from "react-stickynode";
 import {getBrandInfo, toggleFollowBrand} from "../../services";
+import BoardModal from "../BoardModal";
 
 class Brand extends React.Component {
     constructor(props) {
@@ -190,6 +191,7 @@ class Brand extends React.Component {
                     </section>
                 </Sticky>
                 {this.props.children}
+                <BoardModal />
             </>
         )
     }

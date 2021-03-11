@@ -1,6 +1,8 @@
 import React from 'react'
+import Link from 'next/link'
 import PropTypes from "prop-types";
 import config from "../config";
+import styles from './board.module.scss'
 
 class Board extends React.Component {
     render() {
@@ -17,9 +19,19 @@ class Board extends React.Component {
                         alt=""/>
                 </a>
                 <div className="blog-info">
-                    <a>
-                        <p>{board.name}</p>
-                    </a>
+                    <Link href={`/boards/${board.username}/${board.name}`}>
+                        <a>
+                            <p className={styles.name}>{board.name}</p>
+                        </a>
+                    </Link>
+                    {board.username && (
+                        <Link href={`/boards/${board.username}`}>
+                            <a>
+                                <p className={styles.creator}>by <strong>{board.username}</strong></p>
+                            </a>
+                        </Link>
+                    )}
+                    <p className={styles.followers}>{board.followers} followers</p>
                 </div>
             </div>
         )

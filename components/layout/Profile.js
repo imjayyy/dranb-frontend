@@ -7,6 +7,7 @@ import {setAuth, setSiteType} from "../../redux/actions";
 import Sticky from "react-stickynode";
 import {getUser} from "../../services";
 import {Dashboard, Favorite} from "@material-ui/icons";
+import BoardModal from "../BoardModal";
 
 class Profile extends React.Component {
     constructor(props) {
@@ -132,6 +133,7 @@ class Profile extends React.Component {
                     </section>
                 </Sticky>
                 {this.props.children}
+                <BoardModal />
             </>
         )
     }
