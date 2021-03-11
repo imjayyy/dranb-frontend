@@ -1,6 +1,7 @@
 @import '~pretty-checkbox/src/pretty-checkbox.scss';
 
-body {
+html, body {
+    overflow-y: auto;
     font-family: 'Poppins', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
@@ -79,10 +80,28 @@ header {
     }
 }
 
+.board-breadcrumb {
+    padding: 24px 80px;
+    margin-bottom: 8px;
+
+    h3 {
+        font-weight: normal;
+        font-size: 30px;
+        line-height: 45px;
+    }
+
+    p {
+        transition: all 2s linear;
+        display: block;
+    }
+}
+
 .brand {
     font-size: 55px;
     font-weight: 400;
     font-family: 'Playfair Display', serif;
+    transition: all 2s linear;
+    display: block;
 
     small {
         font-size: 14px;
@@ -97,11 +116,27 @@ header {
 
     .brand {
         display: none;
+        opacity: 0;
     }
 
     .filter {
         background-color: #f7f7f7;
         padding: 12px 80px;
+    }
+
+    .board-breadcrumb {
+        background-color: #f7f7f7;
+        padding: 12px 80px;
+
+        h3 {
+            font-size: 20px;
+            line-height: 22px;
+        }
+
+        p {
+            display: none;
+            opacity: 0;
+        }
     }
 
     .profile-heading {

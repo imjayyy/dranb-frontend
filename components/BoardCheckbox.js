@@ -8,24 +8,23 @@ class BoardCheckbox extends React.Component {
 
         this.state = {
             checked: false,
-            saved: false
+            followed: false
         }
     }
 
     componentDidMount() {
         this.setState({
-            checked: this.props.board.saved,
-            saved: this.props.board.saved
-        }, () => console.log(this.state))
+            checked: this.props.board.followed,
+            followed: this.props.board.followed
+        })
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log('componentDidUpdate')
         if (this.props.productId !== prevProps.productId) {
             this.setState({
-                checked: this.props.board.saved,
-                saved: this.props.board.saved
-            }, () => console.log(this.state))
+                checked: this.props.board.followed,
+                followed: this.props.board.followed
+            })
         }
     }
 
@@ -36,8 +35,8 @@ class BoardCheckbox extends React.Component {
                 board: this.props.board.id
             })
             this.setState({
-                saved: data.saved,
-                checked: data.saved,
+                followed: data.followed,
+                checked: data.followed,
             })
         } catch (e) {
             console.error(e)
@@ -49,7 +48,7 @@ class BoardCheckbox extends React.Component {
             <div className="field is-relative">
                 <input className="is-checkradio is-black" type="checkbox" checked={this.state.checked} id={`checkbox${this.props.index}`} onChange={this.handleChange} />
                 <label htmlFor={`checkbox${this.props.index}`}>{this.props.board.name}</label>
-                {this.state.saved && <span className="saved">saved</span>}
+                {this.state.followed && <span className="saved">saved</span>}
             </div>
         )
     }

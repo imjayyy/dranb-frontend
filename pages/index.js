@@ -19,8 +19,8 @@ class IndexPage extends Component {
         this.state = {
             data: [],
             width: '300px',
-            stickyNav: true,
             fullyMounted: false,
+            isLoadingData: false,
         }
     }
 

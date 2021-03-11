@@ -80,7 +80,7 @@ class Main extends React.Component {
                                                     I love
                                                 </a>
                                             </Link>
-                                            <Link href="/following">
+                                            <Link href="/my-following">
                                                 <a className="navbar-item">
                                                     <Dashboard style={{fontSize: 16, marginRight: '8px', color: '#FA9805'}} />
                                                     I follow

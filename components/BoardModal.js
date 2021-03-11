@@ -68,7 +68,7 @@ class BoardModal extends React.Component {
 
     async componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.isModalActive !== prevProps.isModalActive && this.props.isModalActive) {
-            const response = await getBoards(this.props.auth.meta.token, this.props.productId)
+            const response = await getBoards(this.props.auth.meta.token, '', this.props.productId)
             this.setState({
                 boards: response.data
             })
@@ -137,7 +137,7 @@ class BoardModal extends React.Component {
                             <div className="board-list">
                                 {this.state.boards.map((board, index) => (
                                     <BoardCheckbox
-                                        board={board} key={index} index={index}
+                                        board={board} key={`${index}_${board.followed}`} index={index}
                                         productId={this.props.productId} token={this.props.auth.meta.token}/>
                                 ))}
                             </div>

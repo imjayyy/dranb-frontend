@@ -1,52 +1,45 @@
-import React, {Component} from 'react'
-import MasonryLayout from 'react-masonry-layout'
-import AwesomeDebouncePromise from 'awesome-debounce-promise';
-
-const repackDebounced = AwesomeDebouncePromise(() => (true), 50);
-import {getMyLoves} from "../services";
+import React from 'react'
+import Boards from "../components/layout/Boards";
+import AwesomeDebouncePromise from "awesome-debounce-promise";
+import MasonryLayout from "react-masonry-layout";
+import Board from "../components/Board";
+import {getBoards} from "../services";
 import {connect} from "react-redux";
+import {setAuth} from "../redux/actions";
 import {withRouter} from "next/router";
 
-import styles from '../styles/Home.module.scss'
-import Product from "../components/Product";
-import Profile from "../components/layout/Profile";
-import {setAuth} from "../redux/actions";
+const repackDebounced = AwesomeDebouncePromise(() => (true), 50);
 
-class MyLoves extends Component {
+class BoardsPage extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
             data: [],
             width: '300px',
-            stickyNav: true,
             fullyMounted: false,
+            isLoadingData: false,
+            hasMore: true,
         }
     }
 
-    async componentDidMount() {
-        this.props.toggleLoaded(false)
-        await this.getInitialProducts()
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.handleResize);
-        this.props.toggleLoaded(false)
-    }
-
-    async componentDidUpdate(prevProps, prevState, snapshot) {
-        if ((prevState.width !== this.state.width)) {
-            this.repackItems()
-        }
-    }
-
-    getInitialProducts = async () => {
+    getInitialBoards = async () => {
         try {
-            const response = await getMyLoves(this.props.auth.meta.token, 0)
+            const response = await getBoards(this.props.auth.meta.token, 0,  '')
+            if (response.data.length === 0) {
+                this.setState({
+                    hasMore: false
+                })
+                return
+            } else {
+                this.setState({
+                    hasMore: true
+                })
+            }
             this.setState({
                 data: response.data,
                 dataPage: 1
-            }, this.loadMoreProducts)
+            }, this.loadMoreBoards)
         } catch (e) {
             console.error(e)
             this.props.setAuth(false)
@@ -55,13 +48,21 @@ class MyLoves extends Component {
         this.props.toggleLoaded(true)
     }
 
-    loadMoreProducts = async () => {
+    loadMoreBoards = async () => {
         if (this.state.isLoadingData)
+            return
+        if (!this.state.hasMore)
             return
         this.setState({isLoadingData: true}, this.mount)
         try {
-            const response = await getMyLoves(this.props.auth.meta.token, this.state.dataPage)
+            const response = await getBoards(this.props.auth.meta.token, this.state.dataPage,  '')
             let data = response.data
+            if (data.length === 0) {
+                this.setState({
+                    hasMore: false
+                })
+                return
+            }
 
             this.setState({
                 data: this.state.data.concat(data),
@@ -70,8 +71,6 @@ class MyLoves extends Component {
             }, this.mount)
         } catch (e) {
             console.error(e)
-            this.props.setAuth(false)
-            this.props.router.push('/login');
         }
     }
 
@@ -118,33 +117,36 @@ class MyLoves extends Component {
         this.repackItems()
     }
 
+    async componentDidMount() {
+        this.props.toggleLoaded(false)
+        await this.getInitialBoards()
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.handleResize);
+        this.props.toggleLoaded(false)
+    }
+
+    async componentDidUpdate(prevProps, prevState, snapshot) {
+        if ((prevState.width !== this.state.width)) {
+            this.repackItems()
+        }
+    }
+
     render() {
         if (!this.props.loaded) {
             return <div id="page-loader" className="show-logo">
                 <span className="loader-icon bullets-jump"><span/><span/><span/></span>
             </div>
         }
-
         return (
-            <Profile headTitle="I love" headIcon="favorite">
+            <Boards>
                 <div>
-
                     <div id="page-content">
                         <div id="hero-and-body">
-                            {/* PAGEBODY */}
-                            {this.props.loaded && ((this.state.data.length === 0 && this.props.loaded && this.state.fullyMounted) &&
-                                <div className={styles.afterRegister}>
-                                    <p className="has-text-centered">you have no brands in <strong>"my
-                                        selection"</strong> filters.</p>
-                                    <p className="has-text-centered">
-                                        To follow brands just <strong>explore</strong> and visit a<br/>
-                                        brand page, then click on the follow button.
-                                    </p>
-                                </div>)}
                             <section id="page-body">
                                 <div className="is-hidden-tablet" style={{height: '20px'}}/>
                                 <div className="wrapper">
-
                                     <MasonryLayout
                                         ref={instance => this.instance = instance}
                                         id="masonry-layout"
@@ -154,23 +156,23 @@ class MyLoves extends Component {
                                             gutter: 20
                                         }, {mq: '1025px', columns: 6, gutter: 20}]}
                                         infiniteScroll={async () => {
-                                            await this.loadMoreProducts()
+                                            await this.loadMoreBoards()
                                         }}
                                         infiniteScrollDistance={400}
                                     >
-                                        {this.state.data.map((product, i) => <Product width={this.state.width} product={product} key={i} onLoad={() => this.debounce()} isBrand={false} />)}
+                                        {this.state.data.map((board, i) =>
+                                            <Board
+                                                width={this.state.width}
+                                                board={board} key={i}
+                                                onLoad={() => this.debounce()}
+                                            />)}
                                     </MasonryLayout>
-                                    {/*</div>*/}
                                 </div>
-                                {/* END .wrapper */}
                             </section>
-                            {/* PAGEBODY */}
                         </div>
-
                     </div>
                 </div>
-            </Profile>
-
+            </Boards>
         )
     }
 }
@@ -183,4 +185,4 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
     setAuth
-})(withRouter(MyLoves))
+})(withRouter(BoardsPage))

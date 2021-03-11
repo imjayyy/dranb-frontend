@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import PropTypes from 'prop-types'
 import {connect} from "react-redux";
 import {withRouter} from "next/router";
 import {setAuth, setSiteType} from "../../redux/actions";
@@ -83,7 +84,7 @@ class Profile extends React.Component {
                                                     I love
                                                 </a>
                                             </Link>
-                                            <Link href="/following">
+                                            <Link href="/my-following">
                                                 <a className="navbar-item">
                                                     <Dashboard style={{fontSize: 16, marginRight: '8px', color: '#FA9805'}} />
                                                     I follow
@@ -125,14 +126,20 @@ class Profile extends React.Component {
                         </nav>
                     </header>
                     <section className="profile-heading">
-                        <Favorite style={{color: '#FF3366', fontSize: 22, marginRight: '8px'}} />
-                        <span>I love</span>
+                        {this.props.headIcon === 'favorite' && <Favorite style={{color: '#FF3366', fontSize: 22, marginRight: '8px'}} />}
+                        {this.props.headIcon === 'dashboard' && <Dashboard style={{color: '#FA9805', fontSize: 22, marginRight: '8px'}} />}
+                        <span>{this.props.headTitle}</span>
                     </section>
                 </Sticky>
                 {this.props.children}
             </>
         )
     }
+}
+
+Profile.propTypes = {
+    headTitle: PropTypes.string.isRequired,
+    headIcon: PropTypes.string.isRequired,
 }
 
 const mapStateToProps = state => {
