@@ -30,6 +30,7 @@ class BoardsPage extends React.Component {
                 this.setState({
                     hasMore: false
                 })
+                this.props.toggleLoaded(true)
                 return
             } else {
                 this.setState({
@@ -40,12 +41,12 @@ class BoardsPage extends React.Component {
                 data: response.data,
                 dataPage: 1
             }, this.loadMoreBoards)
+            this.props.toggleLoaded(true)
         } catch (e) {
             console.error(e)
             this.props.setAuth(false)
             await this.props.router.push('/login')
         }
-        this.props.toggleLoaded(true)
     }
 
     loadMoreBoards = async () => {

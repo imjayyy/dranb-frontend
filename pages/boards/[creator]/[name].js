@@ -69,6 +69,7 @@ class BoardsById extends React.Component {
                 this.setState({
                     hasMore: false
                 })
+                this.props.toggleLoaded(true)
                 return
             }
 
@@ -77,8 +78,11 @@ class BoardsById extends React.Component {
                 dataPage: this.state.dataPage + 1,
                 isLoadingData: false
             }, this.mount)
+            this.props.toggleLoaded(true)
         } catch (e) {
             console.error(e)
+            this.props.setAuth(false)
+            await this.props.router.push('/login')
         }
     }
 
