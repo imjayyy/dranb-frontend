@@ -5,31 +5,7 @@ import Select, {components} from "react-select";
 import {createBoard, getBoards} from "../services";
 import BoardCheckbox from "./BoardCheckbox";
 
-class SingleValue extends React.Component {
-    render() {
-        return (
-            <components.SingleValue {...this.props}>
-                <i className={this.props.data.icon} style={{marginRight: "5px"}}/>
-                {this.props.data.label}
-            </components.SingleValue>
-        )
-    }
-}
-
-class Option extends React.Component {
-    render() {
-        return (
-            <components.Option {...this.props}>
-                <i className={this.props.data.icon} style={{marginRight: "5px"}}/>
-                {this.props.data.label}
-            </components.Option>
-        )
-    }
-}
-
-const IndicatorSeparator = ({innerProps}) => {
-    return <></>
-}
+import {IndicatorSeparator, SingleValue, Option} from "./custom-select";
 
 const customStyles = {
     menu: (provided, state) => ({

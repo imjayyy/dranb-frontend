@@ -1,39 +1,31 @@
 import React from 'react'
-import Boards from "../../../components/layout/Boards";
-import {getProductsByBoardName} from "../../../services";
-import MasonryLayout from "react-masonry-layout";
-import {connect} from "react-redux";
-import {setAuth} from "../../../redux/actions";
-import {withRouter} from "next/router";
+import Boards from "../../components/layout/Boards";
+import {getMyBoards} from "../../services";
 import AwesomeDebouncePromise from "awesome-debounce-promise";
-import Product from "../../../components/Product";
+import MasonryLayout from "react-masonry-layout";
+import Board from "../../components/Board";
+import {connect} from "react-redux";
+import {setAuth} from "../../redux/actions";
+import {withRouter} from "next/router";
 
-const repackDebounced = AwesomeDebouncePromise(() => true, 50);
+const repackDebounced = AwesomeDebouncePromise(() => (true), 50);
 
-class BoardsById extends React.Component {
-    static async getInitialProps(ctx) {
-        const {query} = ctx
-        return {
-            name: query.name,
-            creator: query.creator
-        }
-    }
-
+class Index extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
             data: [],
-            width: '300px',
+            width: '192px',
             fullyMounted: false,
             isLoadingData: false,
             hasMore: true,
         }
     }
 
-    getInitialProducts = async () => {
+    getInitialBoards = async () => {
         try {
-            const response = await getProductsByBoardName(this.props.auth.meta.token, this.props.name, 0)
+            const response = await getMyBoards(this.props.auth.meta.token, 0)
             if (response.data.length === 0) {
                 this.setState({
                     hasMore: false
@@ -48,7 +40,7 @@ class BoardsById extends React.Component {
             this.setState({
                 data: response.data,
                 dataPage: 1
-            }, this.loadMoreProducts)
+            }, this.loadMoreBoards)
             this.props.toggleLoaded(true)
         } catch (e) {
             console.error(e)
@@ -57,20 +49,19 @@ class BoardsById extends React.Component {
         }
     }
 
-    loadMoreProducts = async () => {
+    loadMoreBoards = async () => {
         if (this.state.isLoadingData)
             return
         if (!this.state.hasMore)
             return
         this.setState({isLoadingData: true}, this.mount)
         try {
-            const response = await getProductsByBoardName(this.props.auth.meta.token, this.props.name, this.state.dataPage)
+            const response = await getMyBoards(this.props.auth.meta.token, this.state.dataPage)
             let data = response.data
             if (data.length === 0) {
                 this.setState({
                     hasMore: false
                 })
-                this.props.toggleLoaded(true)
                 return
             }
 
@@ -79,11 +70,8 @@ class BoardsById extends React.Component {
                 dataPage: this.state.dataPage + 1,
                 isLoadingData: false
             }, this.mount)
-            this.props.toggleLoaded(true)
         } catch (e) {
             console.error(e)
-            this.props.setAuth(false)
-            await this.props.router.push('/login')
         }
     }
 
@@ -110,11 +98,11 @@ class BoardsById extends React.Component {
         console.log(`Browser Width: ${browserWidth}px`)
         let width
         if (browserWidth <= 768) {
-            width = parentWidth
+            width = parentWidth - 100
         } else if (browserWidth <= 1024) {
-            width = (parentWidth - 130) / 3
+            width = (parentWidth - 150) / 3
         } else {
-            width = (parentWidth - 115) / 6
+            width = (parentWidth - 210) / 11
         }
 
         this.setState({width})
@@ -134,7 +122,7 @@ class BoardsById extends React.Component {
 
     async componentDidMount() {
         this.props.toggleLoaded(false)
-        await this.getInitialProducts()
+        await this.getInitialBoards()
     }
 
     componentWillUnmount() {
@@ -157,7 +145,7 @@ class BoardsById extends React.Component {
             )
         }
         return (
-            <Boards creator={this.props.creator} name={this.props.name}>
+            <Boards creator={this.props.auth.user.username}>
                 <div>
                     <div id="page-content">
                         <div id="hero-and-body">
@@ -171,18 +159,19 @@ class BoardsById extends React.Component {
                                             mq: '769px',
                                             columns: 3,
                                             gutter: 20
-                                        }, {mq: '1025px', columns: 6, gutter: 20}]}
+                                        }, {mq: '1025px', columns: 11, gutter: 20}]}
                                         infiniteScroll={async () => {
-                                            await this.loadMoreProducts()
+                                            await this.loadMoreBoards()
                                         }}
                                         infiniteScrollDistance={400}
                                     >
-                                        {this.state.data.map((product, i) =>
-                                            <Product
+                                        {this.state.data.map((board, i) =>
+                                            <Board
                                                 width={this.state.width}
-                                                product={product} key={i}
+                                                board={board} key={i}
                                                 onLoad={() => this.debounce()}
-                                                isBrand={false}
+                                                showAuthor={false}
+                                                isMine={true}
                                             />)}
                                     </MasonryLayout>
                                 </div>
@@ -203,5 +192,4 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
     setAuth
-})(withRouter(BoardsById))
-
+})(withRouter(Index))

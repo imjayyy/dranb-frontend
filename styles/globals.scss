@@ -139,37 +139,50 @@ header {
         }
     }
 
-    .follow, .unfollow {
-        width: 157px;
-        height: 35px;
-        font-size: 14px;
-        font-weight: 400;
-        border-radius: 10px;
-        cursor: pointer;
-    }
-
     .follow-piece {
         margin-top: 22px;
-    }
 
-    .follow {
-        background: black;
-        color: white;
-        border: 1px solid white;
-    }
+        .follow, .unfollow {
+            width: 157px;
+            height: 35px;
+            font-size: 14px;
+            font-weight: 400;
+            border-radius: 10px;
+            cursor: pointer;
+        }
 
-    .unfollow {
-        background: white;
-        color: black;
-        border: 1px solid black;
-    }
+        .follow {
+            background: black;
+            color: white;
+            border: 1px solid white;
+        }
 
-    .followers {
-        margin-left: 50px;
-        font-weight: 300;
-        font-size: 14px;
-        line-height: 22px;
-        color: black;
+        .unfollow {
+            background: white;
+            color: black;
+            border: 1px solid black;
+        }
+
+        .followers {
+            font-weight: 300;
+            font-size: 14px;
+            line-height: 22px;
+            color: black;
+        }
+
+        button {
+            border: unset;
+            background: unset;
+            cursor: pointer;
+        }
+
+        > * {
+            margin-right: 50px;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
     }
 }
 
@@ -245,6 +258,10 @@ header {
     .profile-heading {
         background-color: white;
         padding: 8px 80px;
+    }
+
+    .hidden-sticky-active {
+        display: none !important;
     }
 }
 

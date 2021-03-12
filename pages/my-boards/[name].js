@@ -1,21 +1,20 @@
 import React from 'react'
-import Boards from "../../../components/layout/Boards";
-import {getProductsByBoardName} from "../../../services";
+import Boards from "../../components/layout/Boards";
+import {getProductsByBoardName} from "../../services";
 import MasonryLayout from "react-masonry-layout";
 import {connect} from "react-redux";
-import {setAuth} from "../../../redux/actions";
+import {setAuth} from "../../redux/actions";
 import {withRouter} from "next/router";
 import AwesomeDebouncePromise from "awesome-debounce-promise";
-import Product from "../../../components/Product";
+import Product from "../../components/Product";
 
 const repackDebounced = AwesomeDebouncePromise(() => true, 50);
 
-class BoardsById extends React.Component {
+class MyBoardsByName extends React.Component {
     static async getInitialProps(ctx) {
         const {query} = ctx
         return {
             name: query.name,
-            creator: query.creator
         }
     }
 
@@ -157,7 +156,7 @@ class BoardsById extends React.Component {
             )
         }
         return (
-            <Boards creator={this.props.creator} name={this.props.name}>
+            <Boards creator={this.props.auth.user.username} name={this.props.name}>
                 <div>
                     <div id="page-content">
                         <div id="hero-and-body">
@@ -203,5 +202,5 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
     setAuth
-})(withRouter(BoardsById))
+})(withRouter(MyBoardsByName))
 

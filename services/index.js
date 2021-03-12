@@ -73,7 +73,7 @@ export const toggleFollowBrand = async (token, brandName) => {
     const response = await axios.post(`${config.domain}/api/toggle-follow-brand`, {
         name: brandName
     }, {
-        headers:  {
+        headers: {
             'Authorization': `Token ${token}`
         }
     })
@@ -93,7 +93,7 @@ export const toggleLoveProduct = async (token, productId) => {
     const response = await axios.post(`${config.domain}/api/toggle-love-product`, {
         id: productId
     }, {
-        headers:  {
+        headers: {
             'Authorization': `Token ${token}`
         }
     })
@@ -158,15 +158,15 @@ export const toggleFollowBoard = async (token, boardName) => {
     const response = await axios.post(`${config.domain}/api/toggle-follow-board`, {
         name: boardName
     }, {
-        headers:  {
+        headers: {
             'Authorization': `Token ${token}`
         }
     })
     return response.data
 }
 
-export const getProductsByBoardId = async (token, name, page) => {
-    const response = await axios.get(`${config.domain}/api/boards-by-name/${name}?page=${page}`, {
+export const getProductsByBoardName = async (token, name, page) => {
+    const response = await axios.get(`${config.domain}/api/products-by-board-name/${name}?page=${page}`, {
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -179,6 +179,46 @@ export const getMyFollowings = async (token, page) => {
         headers: {
             'Authorization': `Token ${token}`
         }
+    })
+    return response.data
+}
+
+export const getMyBoards = async (token, page) => {
+    const response = await axios.get(`${config.domain}/api/my-boards?page=${page}`, {
+        headers: {
+            'Authorization': `Token ${token}`
+        }
+    })
+    return response.data
+}
+
+export const deleteBoard = async (token, name) => {
+    const response = await axios.delete(`${config.domain}/api/board/${name}`, {
+        headers: {
+            'Authorization': `Token ${token}`
+        }
+    })
+    return response.data
+}
+
+export const changeBoardType = async (token, name, boardType) => {
+    const response = await axios.post(`${config.domain}/api/board/${name}`, {
+        type: boardType
+    }, {
+        headers: {
+            'Authorization': `Token ${token}`
+        }
+    })
+    return response.data
+}
+
+export const uploadBoardImage = async (token, name, formData, onUploadProgress) => {
+    const response = await axios.post(`${config.domain}/api/board/${name}/image`, formData, {
+        headers: {
+            'Authorization': `Token ${token}`,
+            'Content-Type': 'multipart/form-data'
+        },
+        onUploadProgress: onUploadProgress
     })
     return response.data
 }

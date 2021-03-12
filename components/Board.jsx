@@ -11,7 +11,7 @@ class Board extends React.Component {
             <div className="blog-media" style={{
                 width: this.props.width
             }}>
-                <Link href={`/boards/${board.username}/${board.name}`}>
+                <Link href={this.props.isMine ? `/my-boards/${board.name}` : `/boards/${board.username}/${board.name}`}>
                     <a className="thumb-hover">
                         <img
                             onLoad={this.props.onLoad}
@@ -21,7 +21,7 @@ class Board extends React.Component {
                     </a>
                 </Link>
                 <div className="blog-info">
-                    <Link href={`/boards/${board.username}/${board.name}`}>
+                    <Link href={this.props.isMine ? `/my-boards/${board.name}` : `/boards/${board.username}/${board.name}`}>
                         <a>
                             <p className={styles.name}>{board.name}</p>
                         </a>
@@ -44,7 +44,8 @@ Board.propTypes = {
     width: PropTypes.any.isRequired,
     board: PropTypes.object.isRequired,
     onLoad: PropTypes.func.isRequired,
-    showAuthor: PropTypes.bool.isRequired
+    showAuthor: PropTypes.bool.isRequired,
+    isMine: PropTypes.bool.isRequired
 }
 
 export default Board

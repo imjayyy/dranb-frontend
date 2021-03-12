@@ -72,9 +72,11 @@ class TopNav extends React.Component {
                                     </a>
 
                                     <div className="navbar-dropdown">
-                                        <a className="navbar-item">
-                                            My boards
-                                        </a>
+                                        <Link href="/my-boards">
+                                            <a className="navbar-item">
+                                                My boards
+                                            </a>
+                                        </Link>
                                         <Link href="/my-profile">
                                             <a className="navbar-item">
                                                 my profile

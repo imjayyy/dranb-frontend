@@ -160,15 +160,6 @@ audio:not([controls]) {
     color: #ffffff;
 }
 
-
-/* Headings
----------------------------------------- */
-h1, h2, h3, h4, h5, h6,
-.h1, .h2, .h3, .h4, .h5, .h6 {
-    font-family: 'Poppins';
-    font-weight: 300;
-}
-
 h1 i, h2 i, h3 i, h4 i, h5 i, h6 i, h1 em, h2 em, h3 em, h4 em, h5 em, h6 em {
     font-style: italic;
 }
@@ -184,36 +175,6 @@ h1, h2, h3, h4, h5, h6 {
 .text-light h1, .text-light h2, .text-light h3, .text-light h4, .text-light h5, .text-light h6,
 h1.text-light, h2.text-light, h3.text-light, h4.text-light, h5.text-light, h6.text-light {
     color: #ffffff;
-}
-
-h1, .h1 {
-    font-size: 66px;
-    /*line-height: 105px;*/
-}
-
-h2, .h2 {
-    font-size: 40px;
-    line-height: 66px;
-}
-
-h3, .h3 {
-    font-size: 32px;
-    line-height: 52px;
-}
-
-h4, .h4 {
-    font-size: 24px;
-    line-height: 32px;
-}
-
-h5, .h5 {
-    font-size: 18px;
-    line-height: 31px;
-}
-
-h6, .h6 {
-    font-size: 14px;
-    line-height: 22px;
 }
 
 i + h1, i + h2, i + h3, i + h4, i + h5, i + h6 {
@@ -3787,16 +3748,6 @@ div .isotope-grid:first-child {
 
 div .column-section:first-child, .fullwidth-section + .column-section {
     margin-top: 0px;
-}
-
-.column {
-    float: left;
-    margin-right: 25px;
-    min-height: 1px;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -ms-box-sizing: border-box;
-    box-sizing: border-box;
 }
 
 .column.push-right {
