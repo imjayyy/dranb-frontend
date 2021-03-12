@@ -44,7 +44,7 @@ class Boards extends React.Component {
             followers: 0,
             isFollowing: false,
             description: '',
-            isMine: true,
+            isMine: false,
             optionIndex: 1,
             imageFilename: null,
             isImageModalActive: false
