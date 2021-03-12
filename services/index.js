@@ -183,15 +183,6 @@ export const getMyFollowings = async (token, page) => {
     return response.data
 }
 
-export const getMyBoards = async (token, page) => {
-    const response = await axios.get(`${config.domain}/api/my-boards?page=${page}`, {
-        headers: {
-            'Authorization': `Token ${token}`
-        }
-    })
-    return response.data
-}
-
 export const deleteBoard = async (token, name) => {
     const response = await axios.delete(`${config.domain}/api/board/${name}`, {
         headers: {

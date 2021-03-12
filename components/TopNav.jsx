@@ -72,7 +72,7 @@ class TopNav extends React.Component {
                                     </a>
 
                                     <div className="navbar-dropdown">
-                                        <Link href="/my-boards">
+                                        <Link href={`/boards/${this.props.auth.user.username}`}>
                                             <a className="navbar-item">
                                                 My boards
                                             </a>
