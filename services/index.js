@@ -165,9 +165,17 @@ export const toggleFollowBoard = async (token, boardName) => {
     return response.data
 }
 
-
 export const getProductsByBoardId = async (token, name, page) => {
     const response = await axios.get(`${config.domain}/api/boards-by-name/${name}?page=${page}`, {
+        headers: {
+            'Authorization': `Token ${token}`
+        }
+    })
+    return response.data
+}
+
+export const getMyFollowings = async (token, page) => {
+    const response = await axios.get(`${config.domain}/api/my-followings?page=${page}`, {
         headers: {
             'Authorization': `Token ${token}`
         }

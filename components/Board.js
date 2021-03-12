@@ -11,13 +11,15 @@ class Board extends React.Component {
             <div className="blog-media" style={{
                 width: this.props.width
             }}>
-                <a className="thumb-hover">
-                    <img
-                        onLoad={this.props.onLoad}
-                        style={{objectFit: 'contain', width: '100%', borderRadius: '10px'}}
-                        src={`${config.domain}/images/${board.image_filename}`}
-                        alt=""/>
-                </a>
+                <Link href={`/boards/${board.username}/${board.name}`}>
+                    <a className="thumb-hover">
+                        <img
+                            onLoad={this.props.onLoad}
+                            style={{objectFit: 'contain', width: '100%', borderRadius: '10px'}}
+                            src={`${config.domain}/images/${board.image_filename}`}
+                            alt=""/>
+                    </a>
+                </Link>
                 <div className="blog-info">
                     <Link href={`/boards/${board.username}/${board.name}`}>
                         <a>
