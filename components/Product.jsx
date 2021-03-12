@@ -109,7 +109,7 @@ class Product extends React.Component {
                         </a>
                     </Link>
                     {!this.props.isBrand && (
-                        <Link href={`brand/${product.name}`}>
+                        <Link href={`/brand/${product.name}`}>
                             <a>
                                 <p className={styles.brandName}>{product.display_name} ></p>
                             </a>
