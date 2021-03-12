@@ -150,7 +150,7 @@ class BoardsByCreator extends React.Component {
             )
         }
         return (
-            <Boards creator={this.props.creator}>
+            <Boards creator={this.props.creator} isMine={false}>
                 <div>
                     <div id="page-content">
                         <div id="hero-and-body">

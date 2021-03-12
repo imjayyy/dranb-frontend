@@ -143,7 +143,7 @@ class BoardsPage extends React.Component {
             </div>
         }
         return (
-            <Boards>
+            <Boards isMine={false}>
                 <div>
                     <div id="page-content">
                         <div id="hero-and-body">

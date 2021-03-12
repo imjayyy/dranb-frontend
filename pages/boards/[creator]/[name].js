@@ -157,7 +157,7 @@ class BoardsById extends React.Component {
             )
         }
         return (
-            <Boards creator={this.props.creator} name={this.props.name}>
+            <Boards creator={this.props.creator} name={this.props.name} isMine={this.props.creator === this.props.auth.user.username}>
                 <div>
                     <div id="page-content">
                         <div id="hero-and-body">

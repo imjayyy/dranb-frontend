@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Link from 'next/link'
 import {connect} from "react-redux";
 import {withRouter} from "next/router";
@@ -44,7 +45,6 @@ class Boards extends React.Component {
             followers: 0,
             isFollowing: false,
             description: '',
-            isMine: false,
             optionIndex: 1,
             imageFilename: null,
             isImageModalActive: false
@@ -64,7 +64,6 @@ class Boards extends React.Component {
                     followers: data.followers,
                     isFollowing: data.is_following,
                     description: data.description,
-                    isMine: data.is_mine,
                     optionIndex: data.type,
                     imageFilename: data.image_filename
                 })
@@ -164,7 +163,7 @@ class Boards extends React.Component {
                                             {this.state.description}
                                         </p>
                                         <div className="follow-piece">
-                                            {!this.state.isMine && (
+                                            {!this.props.isMine && (
                                                 <button
                                                     className={this.state.isFollowing ? 'unfollow' : 'follow'}
                                                     onClick={() => this.toggleFollow(this.props.name)}
@@ -173,7 +172,7 @@ class Boards extends React.Component {
                                                 </button>
                                             )}
                                             <span className="followers">{this.state.followers} followers</span>
-                                            {this.state.isMine && (
+                                            {this.props.isMine && (
                                                 <>
                                                     <button
                                                         className="hidden-sticky-active"
@@ -223,6 +222,10 @@ class Boards extends React.Component {
             </>
         )
     }
+}
+
+Boards.propTypes = {
+    isMine: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = state => {
