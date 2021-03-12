@@ -6,11 +6,12 @@ import {withRouter} from "next/router";
 import {setAuth} from "../../redux/actions";
 import Sticky from "react-stickynode";
 import BoardModal from "../BoardModal";
-import {changeBoardType, deleteBoard, getBoardInfo, toggleFollowBoard} from "../../services";
+import {changeBoardInfo, deleteBoard, getBoardInfo, toggleFollowBoard} from "../../services";
 import TopNav from "../TopNav";
 import Select from "react-select";
 import {IndicatorSeparator, SingleValue, Option} from "../custom-select";
 import BoardImageModal from "../BoardImageModal";
+import LabelEditable from "../LabelEditable";
 
 const customStyles = {
     menu: (provided, state) => ({
@@ -102,7 +103,9 @@ class Boards extends React.Component {
 
     handleOptionChange = async (newOption) => {
         try {
-            await changeBoardType(this.props.auth.meta.token, this.props.name, newOption.value)
+            await changeBoardInfo(this.props.auth.meta.token, this.props.name, {
+                type: newOption.value
+            })
             this.setState({
                 optionIndex: newOption.value
             })
@@ -120,6 +123,30 @@ class Boards extends React.Component {
             } catch (e) {
                 console.error(e)
             }
+        }
+    }
+
+    handleBoardNameChange = async (value) => {
+        if (value !== this.props.name) {
+            try {
+                await changeBoardInfo(this.props.auth.meta.token, this.props.name, {
+                    name: value
+                })
+                await this.props.router.push(`/boards/${this.props.creator}`)
+            } catch (e) {
+                console.error(e)
+            }
+        }
+    }
+
+    handleBoardDescriptionChange = async (value) => {
+        try {
+            await changeBoardInfo(this.props.auth.meta.token, this.props.name, {
+                description: value
+            })
+            await this.props.router.push(`/boards/${this.props.creator}`)
+        } catch (e) {
+            console.error(e)
         }
     }
 
@@ -148,7 +175,11 @@ class Boards extends React.Component {
                                                 </Link>
                                             </li>
                                             <li className="is-active">
-                                                <a>{this.props.name}</a>
+                                                {this.props.isMine ? (
+                                                    <LabelEditable className="head" value={this.props.name} onChange={this.handleBoardNameChange} />
+                                                ) : (
+                                                    <a>{this.props.name}</a>
+                                                )}
                                             </li>
                                         </>
                                     ) : (
@@ -159,9 +190,13 @@ class Boards extends React.Component {
                                 </ul>
                                 {this.props.name && (
                                     <>
-                                        <p>
-                                            {this.state.description}
-                                        </p>
+                                        <>
+                                            {/*{this.props.isMine ? (*/}
+                                            {/*    <LabelEditable className="desc" value={this.state.description} onChange={this.handleBoardDescriptionChange} />*/}
+                                            {/*) : (*/}
+                                                <p>{this.state.description}</p>
+                                            {/*)}*/}
+                                        </>
                                         <div className="follow-piece">
                                             {!this.props.isMine && (
                                                 <button
@@ -225,7 +260,9 @@ class Boards extends React.Component {
 }
 
 Boards.propTypes = {
-    isMine: PropTypes.bool.isRequired
+    isMine: PropTypes.bool.isRequired,
+    creator: PropTypes.string,
+    name: PropTypes.string
 }
 
 const mapStateToProps = state => {

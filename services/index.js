@@ -192,10 +192,8 @@ export const deleteBoard = async (token, name) => {
     return response.data
 }
 
-export const changeBoardType = async (token, name, boardType) => {
-    const response = await axios.post(`${config.domain}/api/board/${name}`, {
-        type: boardType
-    }, {
+export const changeBoardInfo = async (token, name, payload) => {
+    const response = await axios.post(`${config.domain}/api/board/${name}`, payload, {
         headers: {
             'Authorization': `Token ${token}`
         }
