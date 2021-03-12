@@ -87,7 +87,7 @@ class BoardModal extends React.Component {
     }
 
     handleBackgroundClick = () => {
-        document.getElementsByTagName('html')[0].style.overflowY = 'auto'
+        document.getElementsByTagName('html')[0].style.overflowY = 'scroll'
         this.props.setModalActive(false)
     }
 
@@ -112,7 +112,7 @@ class BoardModal extends React.Component {
                 boardName: '',
                 displayForm: false
             }, () => {
-                document.getElementsByTagName('html')[0].style.overflowY = 'auto'
+                document.getElementsByTagName('html')[0].style.overflowY = 'scroll'
                 this.props.setModalActive(false)
             })
         } catch (e) {
@@ -130,7 +130,7 @@ class BoardModal extends React.Component {
                             <p>
                                 Save to
                                 <button onClick={() => {
-                                    document.getElementsByTagName('html')[0].style.overflowY = 'auto'
+                                    document.getElementsByTagName('html')[0].style.overflowY = 'scroll'
                                     this.props.setModalActive(false)
                                 }}>X</button>
                             </p>

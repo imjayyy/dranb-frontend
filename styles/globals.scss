@@ -1,7 +1,6 @@
 @import '~pretty-checkbox/src/pretty-checkbox.scss';
 
 html, body {
-    overflow-y: auto;
     font-family: 'Poppins', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
@@ -12,6 +11,16 @@ html, body {
 .navbar-menu .navbar-start .navbar-item {
     font-size: 18px;
     font-weight: 400;
+    margin-left: 10px;
+    margin-right: 10px;
+
+    &:first-child {
+        margin-left: 0;
+    }
+
+    &:last-child {
+        margin-right: 0;
+    }
 
     &.is-active {
         border-bottom: 1px solid black;

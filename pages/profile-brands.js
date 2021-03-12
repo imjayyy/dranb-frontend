@@ -76,8 +76,10 @@ export default class ProfileBrands extends Component {
     }
 
     repackItems = () => {
-        const bricksInstance = this.instance.getBricksInstance();
-        bricksInstance.pack()
+        if (this.instance) {
+            const bricksInstance = this.instance.getBricksInstance();
+            bricksInstance.pack()
+        }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {

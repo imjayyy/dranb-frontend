@@ -109,8 +109,10 @@ class BoardsPage extends React.Component {
     }
 
     repackItems = () => {
-        const bricksInstance = this.instance.getBricksInstance();
-        bricksInstance.pack()
+        if (this.instance) {
+            const bricksInstance = this.instance.getBricksInstance();
+            bricksInstance.pack()
+        }
     }
 
     debounce = async () => {
