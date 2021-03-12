@@ -123,14 +123,11 @@ class BrandPage extends Component {
         if (browserWidth <= 768) {
             width = parentWidth
         } else if (browserWidth <= 1024) {
-            width = (parentWidth) / 3.3
+            width = (parentWidth - 130) / 3
         } else {
-            width = (parentWidth - 60) / 6.3
+            width = (parentWidth - 115) / 6
         }
 
-        // let height = width * 5.5 / 3
-
-        // this.setState({width, height})
         this.setState({width})
     }
 

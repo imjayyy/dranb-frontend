@@ -110,11 +110,11 @@ class BoardsById extends React.Component {
         console.log(`Browser Width: ${browserWidth}px`)
         let width
         if (browserWidth <= 768) {
-            width = parentWidth - 80
+            width = parentWidth
         } else if (browserWidth <= 1024) {
             width = (parentWidth - 130) / 3
         } else {
-            width = (parentWidth - 120) / 6
+            width = (parentWidth - 115) / 6
         }
 
         this.setState({width})
