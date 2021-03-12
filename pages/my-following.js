@@ -170,6 +170,7 @@ class MyFollowing extends React.Component {
                                                 width={this.state.width}
                                                 board={board} key={i}
                                                 onLoad={() => this.debounce()}
+                                                showAuthor={true}
                                             />)}
                                     </MasonryLayout>
                                 </div>

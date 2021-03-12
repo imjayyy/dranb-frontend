@@ -26,7 +26,7 @@ class Board extends React.Component {
                             <p className={styles.name}>{board.name}</p>
                         </a>
                     </Link>
-                    {board.username && (
+                    {this.props.showAuthor && (
                         <Link href={`/boards/${board.username}`}>
                             <a>
                                 <p className={styles.creator}>by <strong>{board.username}</strong></p>
@@ -44,6 +44,7 @@ Board.propTypes = {
     width: PropTypes.any.isRequired,
     board: PropTypes.object.isRequired,
     onLoad: PropTypes.func.isRequired,
+    showAuthor: PropTypes.bool.isRequired
 }
 
 export default Board
