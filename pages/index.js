@@ -53,11 +53,16 @@ class IndexPage extends Component {
             this.props.toggleLoaded(false)
             await this.getInitialProducts()
         }
+        if (this.props.period !== prevProps.period) {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+            this.props.toggleLoaded(false)
+            await this.getInitialProducts()
+        }
     }
 
     getInitialProducts = async () => {
         try {
-            const response = await getHomeData(this.props.auth.meta.token, 0, this.props.siteType, this.props.exploreType, this.props.gender)
+            const response = await getHomeData(this.props.auth.meta.token, 0, this.props.siteType, this.props.exploreType, this.props.gender, this.props.period)
             this.setState({
                 data: response.data,
                 dataPage: 1
@@ -75,7 +80,7 @@ class IndexPage extends Component {
             return
         this.setState({isLoadingData: true}, this.mount)
         try {
-            const response = await getHomeData(this.props.auth.meta.token, this.state.dataPage, this.props.siteType, this.props.exploreType, this.props.gender)
+            const response = await getHomeData(this.props.auth.meta.token, this.state.dataPage, this.props.siteType, this.props.exploreType, this.props.gender, this.props.period)
             let data = response.data
 
             this.setState({
@@ -196,7 +201,8 @@ const mapStateToProps = state => {
         auth: state.auth.auth,
         siteType: state.homeFilter.siteType,
         exploreType: state.homeFilter.exploreType,
-        gender: state.homeFilter.gender
+        gender: state.homeFilter.gender,
+        period: state.homeFilter.period
     }
 }
 

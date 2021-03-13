@@ -1,5 +1,6 @@
 import axios from "axios";
 import config from "../config";
+import {prefixes} from "next/dist/build/output/log";
 
 export const getUser = async (token) => {
     const response = await axios.get(`${config.domain}/api/me`, {
@@ -19,8 +20,8 @@ export const loginUser = async (payload) => {
     return await axios.post(`${config.domain}/api/sessions`, payload)
 }
 
-export const getHomeData = async (token, page, siteType, isAll, gender) => {
-    const response = await axios.get(`${config.domain}/api/homepage-data?page=${page}&site_type=${siteType}&all=${isAll}&gender=${gender}`, {
+export const getHomeData = async (token, page, siteType, isAll, gender, period) => {
+    const response = await axios.get(`${config.domain}/api/homepage-data?page=${page}&site_type=${siteType}&all=${isAll}&gender=${gender}&period=${period}`, {
         headers: {
             'Authorization': `Token ${token}`
         }

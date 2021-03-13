@@ -53,6 +53,11 @@ class BrandPage extends Component {
             this.props.toggleLoaded(false)
             await this.getInitialProducts()
         }
+        if (this.props.period !== prevProps.period) {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+            this.props.toggleLoaded(false)
+            await this.getInitialProducts()
+        }
     }
 
     componentWillUnmount() {
