@@ -119,7 +119,7 @@ class Boards extends React.Component {
         if (r) {
             try {
                 await deleteBoard(this.props.auth.meta.token, this.props.name)
-                await this.props.router.push('/my-boards')
+                await this.props.router.push(`/boards/${this.props.creator}`)
             } catch (e) {
                 console.error(e)
             }
