@@ -4,7 +4,7 @@ import AwesomeDebouncePromise from 'awesome-debounce-promise';
 
 const repackDebounced = AwesomeDebouncePromise(() => (true), 50);
 import Brand from '../../components/layout/Brand'
-import {getProductsByBrand} from "../../services";
+import {getBrandInfo, getProductsByBrand} from "../../services";
 import {connect} from "react-redux";
 import {withRouter} from "next/router";
 import Product from "../../components/Product";
@@ -25,12 +25,18 @@ class BrandPage extends Component {
             height: '400px',
             filterBy: 1,
             stickyNav: true,
-            fullyMounted: false
+            fullyMounted: false,
+            displayName: ''
         }
     }
 
     async componentDidMount() {
         this.props.toggleLoaded(false)
+        const data = await getBrandInfo(this.props.auth.meta.token, this.props.brandName)
+        const {display_name, followers, genders, is_following} = data
+        this.setState({
+            displayName: display_name,
+        })
         await this.getInitialProducts()
     }
 
@@ -156,7 +162,7 @@ class BrandPage extends Component {
             </div>
         }
         return (
-            <Brand brandName={brandName}>
+            <Brand brandName={brandName} displayName={this.state.displayName}>
                 <div>
                     <div id="page-content">
 

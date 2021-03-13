@@ -10,6 +10,7 @@ import Sticky from "react-stickynode";
 import {getBrandInfo, toggleFollowBrand} from "../../services";
 import BoardModal from "../BoardModal";
 import TopNav from "../TopNav";
+import PropTypes from "prop-types";
 
 class Brand extends React.Component {
     constructor(props) {
@@ -62,7 +63,7 @@ class Brand extends React.Component {
                     <section className="filter">
                         <div className="brand-name">
                             <button className="go-back" onClick={() => this.props.router.back()}>{'<-'}</button>
-                            <span>{this.props.brandName}</span>
+                            <span>{this.props.displayName}</span>
                         </div>
                         <div className="is-flex is-align-items-center">
                             <div className="filter-item">
@@ -108,6 +109,11 @@ class Brand extends React.Component {
             </>
         )
     }
+}
+
+Brand.propTypes = {
+    displayName: PropTypes.string.isRequired,
+    brandName: PropTypes.string.isRequired,
 }
 
 const mapStateToProps = state => {
