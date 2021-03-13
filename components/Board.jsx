@@ -8,14 +8,13 @@ class Board extends React.Component {
     render() {
         const board = this.props.board
         return (
-            <div className="blog-media" style={{
+            <div className={`blog-media ${styles.board}`} style={{
                 width: this.props.width
             }}>
                 <Link href={this.props.isMine ? `/my-boards/${board.name}` : `/boards/${board.username}/${board.name}`}>
                     <a className="thumb-hover">
                         <img
                             onLoad={this.props.onLoad}
-                            style={{objectFit: 'contain', width: '100%', borderRadius: '10px'}}
                             src={`${config.domain}/images/${board.image_filename}`}
                             alt=""/>
                     </a>
