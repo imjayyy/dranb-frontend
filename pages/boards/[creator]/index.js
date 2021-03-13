@@ -136,8 +136,13 @@ class BoardsByCreator extends React.Component {
     }
 
     async componentDidUpdate(prevProps, prevState, snapshot) {
-        if ((prevState.width !== this.state.width)) {
+        if (prevState.width !== this.state.width) {
             this.repackItems()
+        }
+        if (this.props.creator !== prevProps.creator) {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+            this.props.toggleLoaded(false)
+            await this.getInitialBoards()
         }
     }
 
