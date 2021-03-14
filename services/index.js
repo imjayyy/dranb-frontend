@@ -212,3 +212,8 @@ export const uploadBoardImage = async (token, name, formData, onUploadProgress) 
     })
     return response.data
 }
+
+export const submitTicket = async (payload) => {
+    const response = await axios.post(`${config.domain}/api/tickets`, payload)
+    return response.data
+}

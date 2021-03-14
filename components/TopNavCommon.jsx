@@ -5,7 +5,7 @@ import {withRouter} from "next/router";
 import {connect} from "react-redux";
 import {setAuth, setSiteType} from "../redux/actions";
 
-class TopNav extends React.Component {
+class TopNavCommon extends React.Component {
     handleLogout = async () => {
         this.props.setAuth(false)
         await this.props.router.push('/login')
@@ -22,20 +22,20 @@ class TopNav extends React.Component {
                             <h1 className="brand">DRANBS<small> / inspire your styles</small></h1>
                         </Link>
                         <div className="is-flex">
-                            <a className={`navbar-item p-0 ${this.props.siteType == 1 ? 'is-active' : ''}`}
+                            <a className="navbar-item p-0"
                                onClick={() => {
                                    this.props.setSiteType(1)
                                    router.push('/')
                                }}>
                                 new arrivals
                             </a>
-                            <a className={`navbar-item p-0 ${this.props.siteType == 2 ? 'is-active' : ''}`}
+                            <a className="navbar-item p-0"
                                onClick={() => {
                                    this.props.setSiteType(2)
                                    router.push('/')
                                }}>sale</a>
                             <Link href="/boards">
-                                <a className={`navbar-item p-0 ${router.pathname == '/boards' ? 'is-active' : ''}`}>boards</a>
+                                <a className="navbar-item p-0">boards</a>
                             </Link>
                         </div>
                     </div>
@@ -114,4 +114,4 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {
     setAuth,
     setSiteType,
-})(withRouter(TopNav))
+})(withRouter(TopNavCommon))

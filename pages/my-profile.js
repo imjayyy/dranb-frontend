@@ -1,5 +1,4 @@
 import {Component} from 'react'
-import Main from '../components/layout/Main'
 import React from "react";
 import {Radio} from 'pretty-checkbox-react';
 
@@ -10,6 +9,7 @@ const countries = countriesNames.all().map(x => ({value: x.name, label: x.name})
 import {getUser, patchProfile} from "../services";
 import {connect} from "react-redux";
 import {withRouter} from "next/router";
+import Default from "../components/layout/Default";
 
 
 class MyProfile extends Component {
@@ -27,7 +27,7 @@ class MyProfile extends Component {
             email: '',
             password: '',
             passwordAgain: '',
-            error: '',
+            error: null,
             message: ''
         }
     }
@@ -66,49 +66,53 @@ class MyProfile extends Component {
         const name = target.name
 
         this.setState({
-            [name]: value,
-            message: ''
+            [name]: value
         })
     }
 
     updateProfile = async (event) => {
         event && event.preventDefault()
-        this.setState({error: ''})
+        this.setState({error: null})
 
         try {
-            await patchProfile(this.props.auth.meta.token, {
-                user: {
-                    first_name: this.state.firstName,
-                    last_name: this.state.lastName,
-                    gender: parseInt(this.state.gender),
-                    birthday: `${this.state.birthdayYYYY}-${this.state.birthdayMM}-${this.state.birthdayDD}`,
-                    country: this.state.country.value,
-                    email: this.state.email,
-                    username: this.state.username,
-                    password: this.state.password,
-                    password_confirm: this.state.passwordAgain
-                }
-            })
+            let birthDay = ''
+            if (this.state.registerBirthdayYYYY && this.state.registerBirthdayMM && this.state.registerBirthdayDD) {
+                birthDay = `${this.state.registerBirthdayYYYY}-${this.state.registerBirthdayMM}-${this.state.registerBirthdayDD}`
+            }
+            let payload = {
+                first_name: this.state.firstName,
+                last_name: this.state.lastName,
+                gender: parseInt(this.state.gender),
+                country: this.state.country.value,
+                email: this.state.email,
+                username: this.state.username,
+            }
+            if (birthDay) {
+                payload['birthday'] = birthDay
+            }
+            if (this.state.password || this.state.passwordAgain) {
+                payload['password'] = this.state.password
+                payload['password_confirm'] = this.state.passwordAgain
+            }
+            await patchProfile(this.props.auth.meta.token, payload)
             this.setState({
                 message: 'Success !'
             })
         } catch (error) {
-            console.error(
-                'You have an error in your code or there are Network issues.',
-                error
-            )
-            this.setState({error: error.message})
+            this.setState({
+                error: error.response.data
+            })
         }
     }
 
     render() {
         return (
-            <Main>
+            <Default>
                 <div className="container">
                     <div id="page-content">
                         <div id="hero-and-body">
                             <div id="page-body">
-                                <div className="columns is-multiline is-mobile mt-5">
+                                <div className="columns is-multiline is-mobile my-5">
                                     <div className="column is-5-desktop is-12-touch">
                                         {this.state.message && (
                                             <div className="notification is-success">
@@ -135,6 +139,13 @@ class MyProfile extends Component {
                                                     placeholder={"First Name"}
                                                     onChange={this.handleChange}
                                                 />
+                                                {this.state.error && this.state.error.first_name && (
+                                                    this.state.error.first_name.map((message, index) => (
+                                                        <p className="help is-danger" key={index}>
+                                                            {message}
+                                                        </p>
+                                                    ))
+                                                )}
                                             </div>
                                             <div className="field">
                                                 <label className="label">Last Name</label>
@@ -146,17 +157,40 @@ class MyProfile extends Component {
                                                     placeholder={"Last Name"}
                                                     onChange={this.handleChange}
                                                 />
+                                                {this.state.error && this.state.error.last_name && (
+                                                    this.state.error.last_name.map((message, index) => (
+                                                        <p className="help is-danger" key={index}>
+                                                            {message}
+                                                        </p>
+                                                    ))
+                                                )}
                                             </div>
                                             <div className="field">
                                                 <label className="label">Gender</label>
-                                                <>
-                                                    <Radio onChange={e => this.setState({gender: "1"})}
-                                                           checked={this.state.gender === "1"}
-                                                           name="1">Women</Radio>
-                                                    <Radio onChange={e => this.setState({gender: "2"})}
-                                                           checked={this.state.gender === "2"}
-                                                           name="2">Men</Radio>
-                                                </>
+                                                <div>
+                                                    <div className="is-inline-block">
+                                                        <input className="is-checkradio" id="checkbox-women" value="1"
+                                                               name="gender" type="radio"
+                                                               checked={this.state.gender == 1}
+                                                               onChange={this.handleChange}
+                                                        />
+                                                        <label htmlFor="checkbox-women">Women</label>
+                                                    </div>
+                                                    <div className="is-inline-block">
+                                                        <input className="is-checkradio" id="checkbox-men" value="2"
+                                                               name="gender" type="radio"
+                                                               checked={this.state.gender == 2}
+                                                               onChange={this.handleChange}/>
+                                                        <label htmlFor="checkbox-men">Men</label>
+                                                    </div>
+                                                </div>
+                                                {this.state.error && this.state.error.gender && (
+                                                    this.state.error.gender.map((message, index) => (
+                                                        <p className="help is-danger" key={index}>
+                                                            {message}
+                                                        </p>
+                                                    ))
+                                                )}
                                             </div>
                                             <div className="field">
                                                 <label className="label">Birthday</label>
@@ -194,6 +228,13 @@ class MyProfile extends Component {
                                                         />
                                                     </div>
                                                 </div>
+                                                {this.state.error && this.state.error.birthday && (
+                                                    this.state.error.birthday.map((message, index) => (
+                                                        <p className="help is-danger" key={index}>
+                                                            {message}
+                                                        </p>
+                                                    ))
+                                                )}
                                             </div>
                                             <div className="field">
                                                 <label className="label">Country</label>
@@ -204,6 +245,13 @@ class MyProfile extends Component {
                                                     options={countries}
                                                     instanceId="key"
                                                 />
+                                                {this.state.error && this.state.error.country && (
+                                                    this.state.error.country.map((message, index) => (
+                                                        <p className="help is-danger" key={index}>
+                                                            {message}
+                                                        </p>
+                                                    ))
+                                                )}
                                             </div>
                                             <div className="field">
                                                 <label className="label">Email</label>
@@ -215,6 +263,13 @@ class MyProfile extends Component {
                                                     placeholder={"Email"}
                                                     onChange={this.handleChange}
                                                 />
+                                                {this.state.error && this.state.error.email && (
+                                                    this.state.error.email.map((message, index) => (
+                                                        <p className="help is-danger" key={index}>
+                                                            {message}
+                                                        </p>
+                                                    ))
+                                                )}
                                             </div>
 
                                             <br/>
@@ -232,6 +287,13 @@ class MyProfile extends Component {
                                                     placeholder={"New Password"}
                                                     onChange={this.handleChange}
                                                 />
+                                                {this.state.error && this.state.error.password && (
+                                                    this.state.error.password.map((message, index) => (
+                                                        <p className="help is-danger" key={index}>
+                                                            {message}
+                                                        </p>
+                                                    ))
+                                                )}
                                             </div>
 
                                             <div className="field">
@@ -243,18 +305,19 @@ class MyProfile extends Component {
                                                     placeholder={"New Password Again"}
                                                     onChange={this.handleChange}
                                                 />
+                                                {this.state.error && this.state.error.password_confirm && (
+                                                    this.state.error.password_confirm.map((message, index) => (
+                                                        <p className="help is-danger" key={index}>
+                                                            {message}
+                                                        </p>
+                                                    ))
+                                                )}
                                             </div>
 
                                             <div className="field">
                                                 <button className="button is-primary" type='submit'>
                                                     Update
                                                 </button>
-                                            </div>
-                                            <div className="field">
-                                                <p className={`error ${this.state.error && 'show'}`}>
-                                                    {this.state.error && `Error: ${this.state.error}`}
-                                                </p>
-
                                             </div>
                                         </form>
                                     </div>
@@ -263,7 +326,7 @@ class MyProfile extends Component {
                         </div>
                     </div>
                 </div>
-            </Main>
+            </Default>
         )
     }
 }

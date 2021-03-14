@@ -68,7 +68,6 @@ class IndexPage extends Component {
                 dataPage: 1
             }, this.loadMoreProducts)
         } catch (e) {
-            console.error(e)
             this.props.setAuth(false)
             await this.props.router.push('/login')
         }
