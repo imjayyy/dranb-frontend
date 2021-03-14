@@ -39,7 +39,8 @@ class BoardModal extends React.Component {
             displayForm: false,
             boardName: '',
             boardType: 1,
-            boards: []
+            boards: [],
+            error: null
         }
     }
 
@@ -105,6 +106,9 @@ class BoardModal extends React.Component {
             })
         } catch (e) {
             console.error(e)
+            this.setState({
+                error: e.response.data
+            })
         }
     }
 
@@ -180,6 +184,13 @@ class BoardModal extends React.Component {
                                                 value={this.state.boardName}
                                                 onChange={(event) => this.setState({boardName: event.target.value})}
                                                 placeholder="Enter the name here"/>
+                                            {this.state.error && this.state.error.board_name && (
+                                                this.state.error.board_name.map((message, index) => (
+                                                    <p className="help is-danger" key={index}>
+                                                        {message}
+                                                    </p>
+                                                ))
+                                            )}
                                         </div>
                                         <div className="field">
                                             <label className="label">Confidentiality</label>

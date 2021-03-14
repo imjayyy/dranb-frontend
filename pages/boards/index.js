@@ -169,7 +169,6 @@ class BoardsPage extends React.Component {
                                                 board={board} key={i}
                                                 onLoad={() => this.debounce()}
                                                 showAuthor={true}
-                                                isMine={false}
                                             />)}
                                     </MasonryLayout>
                                 </div>

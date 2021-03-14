@@ -168,7 +168,7 @@ class BoardsById extends React.Component {
             )
         }
         return (
-            <Boards creator={this.props.creator} name={this.props.name}
+            <Boards creator={this.props.creator} slug={this.props.name}
                     isMine={this.props.creator === this.props.auth.user.username}
                     onToggleSaved={this.handleToggleSaved}>
                 <div>

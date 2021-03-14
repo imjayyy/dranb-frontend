@@ -49,7 +49,8 @@ class Boards extends React.Component {
             description: '',
             optionIndex: 1,
             imageFilename: null,
-            isImageModalActive: false
+            isImageModalActive: false,
+            name: ''
         }
     }
 
@@ -59,13 +60,14 @@ class Boards extends React.Component {
     ]
 
     async componentDidMount() {
-        if (this.props.name) {
+        if (this.props.slug) {
             try {
-                const data = await getBoardInfo(this.props.auth.meta.token, this.props.name)
+                const data = await getBoardInfo(this.props.auth.meta.token, this.props.slug)
                 this.setState({
                     followers: data.followers,
                     isFollowing: data.is_following,
                     description: data.description,
+                    name: data.name,
                     optionIndex: data.type,
                     imageFilename: data.image_filename
                 })
@@ -104,7 +106,7 @@ class Boards extends React.Component {
 
     handleOptionChange = async (newOption) => {
         try {
-            await changeBoardInfo(this.props.auth.meta.token, this.props.name, {
+            await changeBoardInfo(this.props.auth.meta.token, this.props.slug, {
                 type: newOption.value
             })
             this.setState({
@@ -119,7 +121,7 @@ class Boards extends React.Component {
         let r = confirm('Are you sure to delete this board?')
         if (r) {
             try {
-                await deleteBoard(this.props.auth.meta.token, this.props.name)
+                await deleteBoard(this.props.auth.meta.token, this.props.slug)
                 await this.props.router.push(`/boards/${this.props.creator}`)
             } catch (e) {
                 console.error(e)
@@ -128,21 +130,19 @@ class Boards extends React.Component {
     }
 
     handleBoardNameChange = async (value) => {
-        if (value !== this.props.name) {
-            try {
-                await changeBoardInfo(this.props.auth.meta.token, this.props.name, {
-                    name: value
-                })
-                await this.props.router.push(`/boards/${this.props.creator}`)
-            } catch (e) {
-                console.error(e)
-            }
+        try {
+            await changeBoardInfo(this.props.auth.meta.token, this.props.slug, {
+                name: value
+            })
+            await this.props.router.push(`/boards/${this.props.creator}`)
+        } catch (e) {
+            console.error(e)
         }
     }
 
     handleBoardDescriptionChange = async (value) => {
         try {
-            await changeBoardInfo(this.props.auth.meta.token, this.props.name, {
+            await changeBoardInfo(this.props.auth.meta.token, this.props.slug, {
                 description: value
             })
             await this.props.router.push(`/boards/${this.props.creator}`)
@@ -168,7 +168,7 @@ class Boards extends React.Component {
                                             <a>boards</a>
                                         </Link>
                                     </li>
-                                    {this.props.name ? (
+                                    {this.state.name ? (
                                         <>
                                             <li>
                                                 <Link href={`/boards/${this.props.creator}`}>
@@ -177,9 +177,9 @@ class Boards extends React.Component {
                                             </li>
                                             <li className="is-active">
                                                 {this.props.isMine ? (
-                                                    <LabelEditable className="head" value={this.props.name} onChange={this.handleBoardNameChange} />
+                                                    <LabelEditable className="head" value={this.state.name} onChange={this.handleBoardNameChange} />
                                                 ) : (
-                                                    <a>{this.props.name}</a>
+                                                    <a>{this.state.name}</a>
                                                 )}
                                             </li>
                                         </>
@@ -189,7 +189,7 @@ class Boards extends React.Component {
                                         </li>
                                     )}
                                 </ul>
-                                {this.props.name && (
+                                {this.state.name && (
                                     <>
                                         <>
                                             {/*{this.props.isMine ? (*/}
@@ -202,7 +202,7 @@ class Boards extends React.Component {
                                             {!this.props.isMine && (
                                                 <button
                                                     className={this.state.isFollowing ? 'unfollow' : 'follow'}
-                                                    onClick={() => this.toggleFollow(this.props.name)}
+                                                    onClick={() => this.toggleFollow(this.state.name)}
                                                 >
                                                     {this.state.isFollowing ? 'unfollow' : 'follow'}
                                                 </button>
@@ -252,7 +252,7 @@ class Boards extends React.Component {
                     <BoardImageModal
                         imageFilename={this.state.imageFilename}
                         isActive={this.state.isImageModalActive}
-                        boardName={this.props.name}
+                        boardName={this.state.name}
                         onClose={() => this.closeImageModal()}
                     />)}
             </>
@@ -263,7 +263,7 @@ class Boards extends React.Component {
 Boards.propTypes = {
     isMine: PropTypes.bool.isRequired,
     creator: PropTypes.string,
-    name: PropTypes.string,
+    slug: PropTypes.string,
     onToggleSaved: PropTypes.func
 }
 
