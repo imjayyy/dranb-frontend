@@ -35,7 +35,7 @@ class TopNavCommon extends React.Component {
                                    router.push('/')
                                }}>sale</a>
                             <Link href="/boards">
-                                <a className="navbar-item p-0">boards</a>
+                                <a className={`navbar-item p-0 ${router.pathname == '/boards' ? 'is-active' : ''}`}>boards</a>
                             </Link>
                         </div>
                     </div>

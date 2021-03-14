@@ -12,6 +12,7 @@ import Select from "react-select";
 import {IndicatorSeparator, SingleValue, Option} from "../custom-select";
 import BoardImageModal from "../BoardImageModal";
 import LabelEditable from "../LabelEditable";
+import TopNavCommon from "../TopNavCommon";
 
 const customStyles = {
     menu: (provided, state) => ({
@@ -156,7 +157,7 @@ class Boards extends React.Component {
                 <Sticky enabled={this.state.stickyNav} top={0} bottomBoundary={0} innerZ={1500}
                         activeClass={'sticky-active'} releasedClass={'sticky-released'}>
                     <header>
-                        <TopNav />
+                        <TopNavCommon />
                     </header>
                     <section className="board-breadcrumb">
                         {this.props.creator ? (
