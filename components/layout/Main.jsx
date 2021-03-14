@@ -7,6 +7,7 @@ import Sticky from "react-stickynode";
 import {getUser} from "../../services";
 import BoardModal from "../BoardModal";
 import TopNav from "../TopNav";
+import PropTypes from "prop-types";
 
 class Main extends React.Component {
     constructor(props) {
@@ -70,10 +71,14 @@ class Main extends React.Component {
                     </section>
                 </Sticky>
                 {this.props.children}
-                <BoardModal/>
+                <BoardModal onToggleSaved={this.props.onToggleSaved}/>
             </>
         )
     }
+}
+
+Main.propTypes = {
+    onToggleSaved: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => {

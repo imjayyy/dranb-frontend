@@ -102,7 +102,6 @@ class IndexPage extends Component {
         }
     }
 
-
     handleResize = () => {
         const parentWidth = document.querySelector(".wrapper").getBoundingClientRect().width
         const browserWidth = Math.max(
@@ -126,6 +125,17 @@ class IndexPage extends Component {
         this.setState({width})
     }
 
+    handleToggleSaved = ({productId, saved}) => {
+        let products = [...this.state.data]
+        let index = this.state.data.findIndex(p => p.id === productId)
+        let product = {...products[index]}
+        product.saved = saved
+        products[index] = product
+        this.setState({
+            data: products
+        })
+    }
+
     repackItems = () => {
         if (this.instance) {
             const bricksInstance = this.instance.getBricksInstance();
@@ -146,7 +156,7 @@ class IndexPage extends Component {
         }
 
         return (
-            <Main>
+            <Main onToggleSaved={this.handleToggleSaved}>
                 <div>
 
                     <div id="page-content">
@@ -178,7 +188,10 @@ class IndexPage extends Component {
                                         }}
                                         infiniteScrollDistance={400}
                                     >
-                                        {this.state.data.map((product, i) => <Product width={this.state.width} product={product} key={i} onLoad={() => this.debounce()} isBrand={false} />)}
+                                        {this.state.data.map((product, i) => (
+                                            <Product width={this.state.width} product={product} key={i} onLoad={() => this.debounce()} isBrand={false} />
+                                            )
+                                        )}
                                     </MasonryLayout>
                                     {/*</div>*/}
                                 </div>

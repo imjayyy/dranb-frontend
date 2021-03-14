@@ -2,10 +2,11 @@ import React from 'react'
 import {connect} from "react-redux";
 import {setModalActive} from "../redux/actions";
 import Select, {components} from "react-select";
-import {createBoard, getBoards} from "../services";
+import {createBoard, getBoards, toggleProductSaved} from "../services";
 import BoardCheckbox from "./BoardCheckbox";
 
 import {IndicatorSeparator, SingleValue, Option} from "./custom-select";
+import PropTypes from "prop-types";
 
 const customStyles = {
     menu: (provided, state) => ({
@@ -62,9 +63,19 @@ class BoardModal extends React.Component {
         })
     }
 
-    handleBackgroundClick = () => {
+    closeModal = () => {
+        let savedBoards = this.state.boards.filter(b => b.saved)
+        let saved = savedBoards.length > 0
+        this.props.onToggleSaved({
+            productId: this.props.productId,
+            saved: saved
+        })
         document.getElementsByTagName('html')[0].style.overflowY = 'scroll'
         this.props.setModalActive(false)
+    }
+
+    handleBackgroundClick = () => {
+        this.closeModal()
     }
 
     handleOptionChange = (newOption) => {
@@ -81,15 +92,40 @@ class BoardModal extends React.Component {
                 board_type: this.state.boardType,
                 product_id: this.props.productId
             })
-            let boards = this.state.boards
-            boards.push(data.board)
+            let boards = [...this.state.boards]
+            let board = data.board
+            board['saved'] = data.saved
+            boards.push(board)
             this.setState({
                 boards: boards,
                 boardName: '',
                 displayForm: false
             }, () => {
-                document.getElementsByTagName('html')[0].style.overflowY = 'scroll'
-                this.props.setModalActive(false)
+                this.closeModal()
+            })
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+    handleCheckboxChange = async (boardId) => {
+        try {
+            const data = await toggleProductSaved(this.props.auth.meta.token, {
+                product: this.props.productId,
+                board: boardId
+            })
+            let index = this.state.boards.findIndex(b => b.id === boardId)
+            let boards = [...this.state.boards];
+            let board = {...boards[index]}
+            board.saved = data.saved
+            boards[index] = board
+            this.setState({boards}, () => {
+                let savedBoards = this.state.boards.filter(b => b.saved)
+                let saved = savedBoards.length > 0
+                this.props.onToggleSaved({
+                    productId: this.props.productId,
+                    saved: saved
+                })
             })
         } catch (e) {
             console.error(e)
@@ -106,17 +142,25 @@ class BoardModal extends React.Component {
                             <p>
                                 Save to
                                 <button onClick={() => {
-                                    document.getElementsByTagName('html')[0].style.overflowY = 'scroll'
-                                    this.props.setModalActive(false)
+                                    this.closeModal()
                                 }}>X</button>
                             </p>
                         </header>
                         <div className="create-theme-body">
                             <div className="board-list">
                                 {this.state.boards.map((board, index) => (
+                                    // <BoardCheckbox
+                                    //     board={board} key={`${index}_${board.saved}`}
+                                    //     index={index}
+                                    //     productId={this.props.productId}
+                                    //     token={this.props.auth.meta.token}
+                                    //     checked={board.saved}
+                                    //     onChange={this.handleCheckboxChange}/>
                                     <BoardCheckbox
-                                        board={board} key={`${index}_${board.saved}`} index={index}
-                                        productId={this.props.productId} token={this.props.auth.meta.token}/>
+                                        board={board} key={`${index}_${board.saved}`}
+                                        index={index}
+                                        checked={board.saved}
+                                        onChange={this.handleCheckboxChange}/>
                                 ))}
                             </div>
                         </div>
@@ -159,6 +203,10 @@ class BoardModal extends React.Component {
             </div>
         )
     }
+}
+
+BoardModal.propTypes = {
+    onToggleSaved: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => {
