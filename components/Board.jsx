@@ -19,7 +19,7 @@ class Board extends React.Component {
                             alt=""/>
                     </a>
                 </Link>
-                <div className="blog-info">
+                <div className="blog-info" style={{paddingLeft: '10px'}}>
                     <Link href={`/boards/${board.username}/${board.slug}`}>
                         <a>
                             <p className={styles.name}>{board.name}</p>

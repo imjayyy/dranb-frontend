@@ -239,8 +239,7 @@ class Boards extends React.Component {
                             <>
                                 <h3>all boards</h3>
                                 <p>
-                                    Suscipit purus dignissim quaerat magnis molestie minima eiusmod nunc, nulla maxime
-                                    proin
+                                    Explore and follow boards created by users
                                 </p>
                             </>
                         )}
