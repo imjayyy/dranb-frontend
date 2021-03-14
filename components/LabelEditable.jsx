@@ -16,7 +16,6 @@ class LabelEditable extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.props.className)
         this.setState({
             currentValue: this.props.value
         })
@@ -24,6 +23,11 @@ class LabelEditable extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.value !== prevProps.value) {
+            this.setState({
+                currentValue: this.props.value
+            })
+        }
         this.updateInputWidth()
     }
 
@@ -77,7 +81,7 @@ class LabelEditable extends React.Component {
 }
 
 LabelEditable.propTypes = {
-    value: PropTypes.string.isRequired,
+    value: PropTypes.string,
     onChange: PropTypes.func.isRequired,
 }
 

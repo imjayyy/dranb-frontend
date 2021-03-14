@@ -50,7 +50,8 @@ class Boards extends React.Component {
             optionIndex: 1,
             imageFilename: null,
             isImageModalActive: false,
-            name: ''
+            name: '',
+            prevName: ''
         }
     }
 
@@ -69,7 +70,8 @@ class Boards extends React.Component {
                     description: data.description,
                     name: data.name,
                     optionIndex: data.type,
-                    imageFilename: data.image_filename
+                    imageFilename: data.image_filename,
+                    prevName: data.name
                 })
             } catch (e) {
                 this.props.setAuth(false)
@@ -131,21 +133,28 @@ class Boards extends React.Component {
 
     handleBoardNameChange = async (value) => {
         try {
+            this.setState({
+                name: value
+            })
             await changeBoardInfo(this.props.auth.meta.token, this.props.slug, {
                 name: value
             })
-            await this.props.router.push(`/boards/${this.props.creator}`)
         } catch (e) {
-            console.error(e)
+            alert(e.response.data.message)
+            this.setState({
+                name: this.state.prevName
+            })
         }
     }
 
     handleBoardDescriptionChange = async (value) => {
         try {
+            this.setState({
+                description: value
+            })
             await changeBoardInfo(this.props.auth.meta.token, this.props.slug, {
                 description: value
             })
-            await this.props.router.push(`/boards/${this.props.creator}`)
         } catch (e) {
             console.error(e)
         }
@@ -192,11 +201,11 @@ class Boards extends React.Component {
                                 {this.state.name && (
                                     <>
                                         <>
-                                            {/*{this.props.isMine ? (*/}
-                                            {/*    <LabelEditable className="desc" value={this.state.description} onChange={this.handleBoardDescriptionChange} />*/}
-                                            {/*) : (*/}
+                                            {this.props.isMine ? (
+                                                <LabelEditable className="desc" value={this.state.description} onChange={this.handleBoardDescriptionChange} />
+                                            ) : (
                                                 <p>{this.state.description}</p>
-                                            {/*)}*/}
+                                            )}
                                         </>
                                         <div className="follow-piece">
                                             {!this.props.isMine && (
