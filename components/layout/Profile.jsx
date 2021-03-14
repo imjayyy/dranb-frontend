@@ -7,7 +7,7 @@ import Sticky from "react-stickynode";
 import {getUser} from "../../services";
 import {Dashboard, Favorite} from "@material-ui/icons";
 import BoardModal from "../BoardModal";
-import TopNav from "../TopNav";
+import TopNavCommon from "../TopNavCommon";
 
 class Profile extends React.Component {
     constructor(props) {
@@ -37,7 +37,7 @@ class Profile extends React.Component {
                 <Sticky enabled={this.state.stickyNav} top={0} bottomBoundary={0} innerZ={1500}
                         activeClass={'sticky-active'} releasedClass={'sticky-released'}>
                     <header>
-                        <TopNav />
+                        <TopNavCommon />
                     </header>
                     <section className="profile-heading">
                         {this.props.headIcon === 'favorite' && <Favorite style={{color: '#FF3366', fontSize: 22, marginRight: '8px'}} />}
@@ -46,7 +46,7 @@ class Profile extends React.Component {
                     </section>
                 </Sticky>
                 {this.props.children}
-                <BoardModal />
+                <BoardModal onToggleSaved={this.props.onToggleSaved} />
             </>
         )
     }
@@ -55,6 +55,7 @@ class Profile extends React.Component {
 Profile.propTypes = {
     headTitle: PropTypes.string.isRequired,
     headIcon: PropTypes.string.isRequired,
+    onToggleSaved: PropTypes.func,
 }
 
 const mapStateToProps = state => {

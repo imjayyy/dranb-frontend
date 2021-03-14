@@ -105,7 +105,7 @@ class Brand extends React.Component {
                     </section>
                 </Sticky>
                 {this.props.children}
-                <BoardModal />
+                <BoardModal onToggleSaved={this.props.onToggleSaved} />
             </>
         )
     }
@@ -114,6 +114,7 @@ class Brand extends React.Component {
 Brand.propTypes = {
     displayName: PropTypes.string.isRequired,
     brandName: PropTypes.string.isRequired,
+    onToggleSaved: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => {

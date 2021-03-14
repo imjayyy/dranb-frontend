@@ -148,6 +148,17 @@ class BoardsById extends React.Component {
         }
     }
 
+    handleToggleSaved = ({productId, saved}) => {
+        let products = [...this.state.data]
+        let index = this.state.data.findIndex(p => p.id === productId)
+        let product = {...products[index]}
+        product.saved = saved
+        products[index] = product
+        this.setState({
+            data: products
+        })
+    }
+
     render() {
         if (!this.props.loaded) {
             return (
@@ -157,7 +168,9 @@ class BoardsById extends React.Component {
             )
         }
         return (
-            <Boards creator={this.props.creator} name={this.props.name} isMine={this.props.creator === this.props.auth.user.username}>
+            <Boards creator={this.props.creator} name={this.props.name}
+                    isMine={this.props.creator === this.props.auth.user.username}
+                    onToggleSaved={this.handleToggleSaved}>
                 <div>
                     <div id="page-content">
                         <div id="hero-and-body">

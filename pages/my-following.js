@@ -7,6 +7,7 @@ import {withRouter} from "next/router";
 import MasonryLayout from "react-masonry-layout";
 import Board from "../components/Board";
 import AwesomeDebouncePromise from "awesome-debounce-promise";
+import styles from "../styles/Home.module.scss";
 
 const repackDebounced = AwesomeDebouncePromise(() => (true), 50);
 
@@ -28,7 +29,8 @@ class MyFollowing extends React.Component {
             const response = await getMyFollowings(this.props.auth.meta.token, 0)
             if (response.data.length === 0) {
                 this.setState({
-                    hasMore: false
+                    hasMore: false,
+                    fullyMounted: true
                 })
                 this.props.toggleLoaded(true)
                 return
@@ -149,6 +151,14 @@ class MyFollowing extends React.Component {
                 <div>
                     <div id="page-content">
                         <div id="hero-and-body">
+                            {this.props.loaded && ((this.state.data.length === 0 && this.props.loaded && this.state.fullyMounted) &&
+                                <div className={styles.afterRegister}>
+                                    <p className="has-text-centered">
+                                        you are not following any board right now. <br/>
+                                        Just browse the section <strong>"boards"</strong> and <br/>
+                                        explore any board then click on the follow button.
+                                    </p>
+                                </div>)}
                             <section id="page-body">
                                 <div className="is-hidden-tablet" style={{height: '20px'}}/>
                                 <div className="wrapper">

@@ -206,7 +206,7 @@ class BoardModal extends React.Component {
 }
 
 BoardModal.propTypes = {
-    onToggleSaved: PropTypes.func.isRequired,
+    onToggleSaved: PropTypes.func,
 }
 
 const mapStateToProps = state => {

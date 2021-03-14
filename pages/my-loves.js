@@ -85,6 +85,17 @@ class MyLoves extends Component {
         }
     }
 
+    handleToggleSaved = ({productId, saved}) => {
+        let products = [...this.state.data]
+        let index = this.state.data.findIndex(p => p.id === productId)
+        let product = {...products[index]}
+        product.saved = saved
+        products[index] = product
+        this.setState({
+            data: products
+        })
+    }
+
     handleResize = () => {
         const parentWidth = document.querySelector(".wrapper").getBoundingClientRect().width
         const browserWidth = Math.max(
@@ -128,7 +139,7 @@ class MyLoves extends Component {
         }
 
         return (
-            <Profile headTitle="I love" headIcon="favorite">
+            <Profile headTitle="I love" headIcon="favorite" onToggleSaved={this.handleToggleSaved}>
                 <div>
 
                     <div id="page-content">
@@ -136,11 +147,12 @@ class MyLoves extends Component {
                             {/* PAGEBODY */}
                             {this.props.loaded && ((this.state.data.length === 0 && this.props.loaded && this.state.fullyMounted) &&
                                 <div className={styles.afterRegister}>
-                                    <p className="has-text-centered">you have no brands in <strong>"my
-                                        selection"</strong> filters.</p>
                                     <p className="has-text-centered">
-                                        To follow brands just <strong>explore</strong> and visit a<br/>
-                                        brand page, then click on the follow button.
+                                        You have no items yet in this section. <br/>
+                                        Just explore and click on the love icon for items you wish to buy soon or later. <br/>
+                                        Be aware that this section is not an archive. <br/>
+                                        When the item is not anymore available on the brand site <br/>
+                                        it will be removed from our site and this section.
                                     </p>
                                 </div>)}
                             <section id="page-body">
@@ -160,7 +172,10 @@ class MyLoves extends Component {
                                         }}
                                         infiniteScrollDistance={400}
                                     >
-                                        {this.state.data.map((product, i) => <Product width={this.state.width} product={product} key={i} onLoad={() => this.debounce()} isBrand={false} />)}
+                                        {this.state.data.map((product, i) => <Product width={this.state.width}
+                                                                                      product={product} key={i}
+                                                                                      onLoad={() => this.debounce()}
+                                                                                      isBrand={false}/>)}
                                     </MasonryLayout>
                                     {/*</div>*/}
                                 </div>

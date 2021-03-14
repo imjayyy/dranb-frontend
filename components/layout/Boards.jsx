@@ -247,7 +247,7 @@ class Boards extends React.Component {
                     </section>
                 </Sticky>
                 {this.props.children}
-                <BoardModal/>
+                <BoardModal onToggleSaved={this.props.onToggleSaved}/>
                 {this.state.imageFilename && (
                     <BoardImageModal
                         imageFilename={this.state.imageFilename}
@@ -263,7 +263,8 @@ class Boards extends React.Component {
 Boards.propTypes = {
     isMine: PropTypes.bool.isRequired,
     creator: PropTypes.string,
-    name: PropTypes.string
+    name: PropTypes.string,
+    onToggleSaved: PropTypes.func
 }
 
 const mapStateToProps = state => {

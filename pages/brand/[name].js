@@ -120,6 +120,17 @@ class BrandPage extends Component {
         }
     }
 
+    handleToggleSaved = ({productId, saved}) => {
+        let products = [...this.state.data]
+        let index = this.state.data.findIndex(p => p.id === productId)
+        let product = {...products[index]}
+        product.saved = saved
+        products[index] = product
+        this.setState({
+            data: products
+        })
+    }
+
     handleResize = () => {
         const parentWidth = document.querySelector(".wrapper").getBoundingClientRect().width
         const browserWidth = Math.max(
@@ -162,7 +173,7 @@ class BrandPage extends Component {
             </div>
         }
         return (
-            <Brand brandName={brandName} displayName={this.state.displayName}>
+            <Brand brandName={brandName} displayName={this.state.displayName} onToggleSaved={this.handleToggleSaved}>
                 <div>
                     <div id="page-content">
 

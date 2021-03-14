@@ -162,15 +162,16 @@ class IndexPage extends Component {
                     <div id="page-content">
                         <div id="hero-and-body">
                             {/* PAGEBODY */}
-                            {this.props.loaded && ((this.state.data.length === 0 && this.props.loaded && this.state.fullyMounted) &&
-                                <div className={styles.afterRegister}>
-                                    <p className="has-text-centered">you have no brands in <strong>"my
-                                        selection"</strong> filters.</p>
-                                    <p className="has-text-centered">
-                                        To follow brands just <strong>explore</strong> and visit a<br/>
-                                        brand page, then click on the follow button.
-                                    </p>
-                                </div>)}
+                            {this.props.loaded && this.state.data.length === 0 && this.state.fullyMounted && !this.props.exploreType &&
+                            (<div className={styles.afterRegister}>
+                                <p className="has-text-centered">you have no brands in <strong>"my
+                                    selection"</strong> filters.</p>
+                                <p className="has-text-centered">
+                                    To follow brands just <strong>explore</strong> and visit a<br/>
+                                    brand page, then click on the follow button.
+                                </p>
+                            </div>)
+                            }
                             <section id="page-body">
                                 <div className="is-hidden-tablet" style={{height: '20px'}}/>
                                 <div className="wrapper">
@@ -189,7 +190,8 @@ class IndexPage extends Component {
                                         infiniteScrollDistance={400}
                                     >
                                         {this.state.data.map((product, i) => (
-                                            <Product width={this.state.width} product={product} key={i} onLoad={() => this.debounce()} isBrand={false} />
+                                                <Product width={this.state.width} product={product} key={i}
+                                                         onLoad={() => this.debounce()} isBrand={false}/>
                                             )
                                         )}
                                     </MasonryLayout>

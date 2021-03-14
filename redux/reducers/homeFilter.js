@@ -1,7 +1,7 @@
 import {SET_EXPLORE_TYPE, SET_GENDER, SET_PERIOD, SET_SITE_TYPE} from "../actionTypes";
 
 const initialState = {
-    exploreType: false, // false: all, true: my selection
+    exploreType: false, // true: all, false: my selection
     gender: 0, // 0: all, 1: women, 2: men,
     period: -1, // -1: all, 1: today, 7: one week
     siteType: 1, // 1: new arrivals, 2: sale
