@@ -15,7 +15,8 @@ class BoardImageModal extends React.Component {
             imageUrl: null,
             prevUrl: null,
             file: null,
-            uploadPercent: 0
+            uploadPercent: 0,
+            error: null
         }
 
         this.fileRef = React.createRef()
@@ -40,7 +41,8 @@ class BoardImageModal extends React.Component {
     handleReset = () => {
         if (this.state.prevUrl) {
             this.setState({
-                imageUrl: this.state.prevUrl
+                imageUrl: this.state.prevUrl,
+                error: null
             })
         }
     }
@@ -62,7 +64,9 @@ class BoardImageModal extends React.Component {
                 await uploadBoardImage(this.props.auth.meta.token, this.props.boardName, formData, this.handleUploadProgress)
                 this.props.onClose()
             } catch (e) {
-                console.error(e)
+                this.setState({
+                    error: e.response.data.message
+                })
             }
         }
     }
@@ -96,6 +100,14 @@ class BoardImageModal extends React.Component {
                                             <input type="file" hidden ref={this.fileRef} onChange={this.handleFileChange} accept="image/*" />
                                             upload image
                                         </label>
+                                        <p className="help">
+                                            *Image max size 1MB
+                                        </p>
+                                        {this.state.error && (
+                                            <p className="help is-danger">
+                                                {this.state.error}
+                                            </p>
+                                        )}
                                     </div>
                                     <div>
                                         <button className={styles.button} type="reset" onClick={this.handleReset}>
@@ -116,7 +128,8 @@ class BoardImageModal extends React.Component {
                                             onClick={() => {
                                                 this.fileRef.current.value = null
                                                 this.setState({
-                                                    imageUrl: null
+                                                    imageUrl: null,
+                                                    error: null
                                                 }, () => {
                                                     this.props.onClose()
                                                 })
