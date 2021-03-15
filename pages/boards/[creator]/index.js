@@ -165,7 +165,7 @@ class BoardsByCreator extends React.Component {
                             (<div className={styles.afterRegister}>
                                 <p className="has-text-centered">
                                     You didn’t create any board yet.<br/>
-                                    Browse the site and click on + board<br/>
+                                    Browse the site and click on <strong style={{fontWeight: 'bold'}}>+ board icon</strong><br/>
                                     under products image to start your board.
                                 </p>
                             </div>)
