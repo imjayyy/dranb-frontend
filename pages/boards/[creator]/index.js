@@ -7,6 +7,7 @@ import Board from "../../../components/Board";
 import {connect} from "react-redux";
 import {setAuth} from "../../../redux/actions";
 import {withRouter} from "next/router";
+import styles from "../../../styles/Home.module.scss";
 
 const repackDebounced = AwesomeDebouncePromise(() => (true), 50);
 
@@ -159,6 +160,16 @@ class BoardsByCreator extends React.Component {
                 <div>
                     <div id="page-content">
                         <div id="hero-and-body">
+                            {/* PAGEBODY */}
+                            {this.props.loaded && this.state.data.length === 0 && this.props.creator == this.props.auth.user.username &&
+                            (<div className={styles.afterRegister}>
+                                <p className="has-text-centered">
+                                    You didn’t create any board yet.<br/>
+                                    Browse the site and click on + board<br/>
+                                    under products image to start your board.
+                                </p>
+                            </div>)
+                            }
                             <section id="page-body">
                                 <div className="is-hidden-tablet" style={{height: '20px'}}/>
                                 <div className="wrapper">

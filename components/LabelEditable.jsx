@@ -78,7 +78,7 @@ class LabelEditable extends React.Component {
                 }
                 {
                     this.state.editable ? (
-                        <SaveOutlined onClick={() => this.saveDescription()}/>
+                        <SaveOutlined style={{color: '#1CCF8F'}} onClick={() => this.saveDescription()}/>
                     ) : (
                         <EditOutlined onClick={() => this.setState({editable: true})}/>
                     )
