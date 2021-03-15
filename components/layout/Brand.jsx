@@ -9,8 +9,8 @@ import {
 import Sticky from "react-stickynode";
 import {getBrandInfo, toggleFollowBrand} from "../../services";
 import BoardModal from "../BoardModal";
-import TopNav from "../TopNav";
 import PropTypes from "prop-types";
+import TopNavCommon from "../TopNavCommon";
 
 class Brand extends React.Component {
     constructor(props) {
@@ -58,7 +58,7 @@ class Brand extends React.Component {
                 <Sticky enabled={this.state.stickyNav} top={0} bottomBoundary={0} innerZ={1500}
                         activeClass={'sticky-active'} releasedClass={'sticky-released'}>
                     <header>
-                        <TopNav />
+                        <TopNavCommon />
                     </header>
                     <section className="filter">
                         <div className="brand-name">
