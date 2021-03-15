@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {EditOutlined} from "@material-ui/icons";
+import {EditOutlined, SaveOutlined} from "@material-ui/icons";
 
 class LabelEditable extends React.Component {
     constructor(props) {
@@ -40,12 +40,16 @@ class LabelEditable extends React.Component {
         }
     }
 
+    saveDescription = () => {
+        this.props.onChange(this.state.currentValue);
+        this.setState({
+            editable: false
+        })
+    }
+
     handleEnterPressInput = (event) => {
         if (event.code === 'Enter') {
-            this.props.onChange(this.state.currentValue);
-            this.setState({
-                editable: false
-            })
+            this.saveDescription()
         }
     }
 
@@ -66,14 +70,29 @@ class LabelEditable extends React.Component {
                             value={this.state.currentValue}
                             ref={this.inputRef}
                             style={inputStyle}
+                            placeholder={this.props.emptyString}
                             onChange={(event) => {
                                 this.setState({currentValue: event.target.value})
                             }}/> :
-                        <label className="label-editable">{this.state.currentValue}</label>
+                        <label className="label-editable">{this.state.currentValue ? this.state.currentValue : this.props.emptyString}</label>
                 }
-                <EditOutlined onClick={() => this.setState({editable: true})}/>
-                <div style={{visibility: 'hidden', position: "absolute", top: 0, left: 0, overflow: 'scroll', whiteSpace: 'nowrap'}} ref={this.sizerRef}>
-                    {this.state.currentValue}
+                {
+                    this.state.editable ? (
+                        <SaveOutlined onClick={() => this.saveDescription()}/>
+                    ) : (
+                        <EditOutlined onClick={() => this.setState({editable: true})}/>
+                    )
+                }
+
+                <div style={{
+                    visibility: 'hidden',
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    overflow: 'scroll',
+                    whiteSpace: 'nowrap'
+                }} ref={this.sizerRef}>
+                    {this.state.currentValue ? this.state.currentValue : this.props.emptyString}
                 </div>
             </div>
         )

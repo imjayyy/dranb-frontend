@@ -56,7 +56,7 @@ class Boards extends React.Component {
     }
 
     options = [
-        {value: 0, label: 'Private', icon: 'far fa-lock-alt', },
+        {value: 0, label: 'Private', icon: 'far fa-lock-alt',},
         {value: 1, label: 'Public', icon: 'far fa-globe-americas'},
     ]
 
@@ -166,7 +166,7 @@ class Boards extends React.Component {
                 <Sticky enabled={this.state.stickyNav} top={0} bottomBoundary={0} innerZ={1500}
                         activeClass={'sticky-active'} releasedClass={'sticky-released'}>
                     <header>
-                        <TopNavCommon />
+                        <TopNavCommon/>
                     </header>
                     <section className="board-breadcrumb">
                         {this.props.creator ? (
@@ -186,7 +186,8 @@ class Boards extends React.Component {
                                             </li>
                                             <li className="is-active">
                                                 {this.props.isMine ? (
-                                                    <LabelEditable className="head" value={this.state.name} onChange={this.handleBoardNameChange} />
+                                                    <LabelEditable className="head" value={this.state.name}
+                                                                   onChange={this.handleBoardNameChange}/>
                                                 ) : (
                                                     <a>{this.state.name}</a>
                                                 )}
@@ -202,7 +203,10 @@ class Boards extends React.Component {
                                     <>
                                         <>
                                             {this.props.isMine ? (
-                                                <LabelEditable className="desc" value={this.state.description} onChange={this.handleBoardDescriptionChange} />
+                                                <LabelEditable className="desc"
+                                                               value={this.state.description}
+                                                               emptyString={"add a description"}
+                                                               onChange={this.handleBoardDescriptionChange}/>
                                             ) : (
                                                 <p>{this.state.description}</p>
                                             )}
@@ -228,7 +232,8 @@ class Boards extends React.Component {
                                                     >
                                                         Change board image
                                                     </button>
-                                                    <div className="hidden-sticky-active" style={{display: 'inline-block', width: '120px'}}>
+                                                    <div className="hidden-sticky-active"
+                                                         style={{display: 'inline-block', width: '120px'}}>
                                                         <Select
                                                             options={this.options}
                                                             value={this.options[this.state.optionIndex]}
