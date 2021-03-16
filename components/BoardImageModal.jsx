@@ -61,7 +61,7 @@ class BoardImageModal extends React.Component {
             let formData = new FormData()
             formData.append('file', this.state.file)
             try {
-                await uploadBoardImage(this.props.auth.meta.token, this.props.boardName, formData, this.handleUploadProgress)
+                await uploadBoardImage(this.props.auth.meta.token, this.props.username, this.props.slug, formData, this.handleUploadProgress)
                 this.props.onClose()
             } catch (e) {
                 this.setState({
@@ -153,7 +153,8 @@ BoardImageModal.propTypes = {
     imageFilename: PropTypes.string.isRequired,
     isActive: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
-    boardName: PropTypes.string.isRequired,
+    slug: PropTypes.string.isRequired,
+    username: PropTypes.string.isRequired,
 }
 
 const mapStateToProps = state => {

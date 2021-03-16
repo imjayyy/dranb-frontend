@@ -1,5 +1,4 @@
 import React from 'react'
-import Boards from "../../../components/layout/Boards";
 import {getBoardsByCreator} from "../../../services";
 import AwesomeDebouncePromise from "awesome-debounce-promise";
 import MasonryLayout from "react-masonry-layout";
@@ -8,6 +7,7 @@ import {connect} from "react-redux";
 import {setAuth} from "../../../redux/actions";
 import {withRouter} from "next/router";
 import styles from "../../../styles/Home.module.scss";
+import BoardListLayout from "../../../components/layout/BoardListLayout";
 
 const repackDebounced = AwesomeDebouncePromise(() => (true), 50);
 
@@ -156,7 +156,7 @@ class BoardsByCreator extends React.Component {
             )
         }
         return (
-            <Boards creator={this.props.creator} isMine={false}>
+            <BoardListLayout creator={this.props.creator}>
                 <div>
                     <div id="page-content">
                         <div id="hero-and-body">
@@ -200,7 +200,7 @@ class BoardsByCreator extends React.Component {
                         </div>
                     </div>
                 </div>
-            </Boards>
+            </BoardListLayout>
         )
     }
 }

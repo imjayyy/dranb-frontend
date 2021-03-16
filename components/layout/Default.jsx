@@ -3,7 +3,6 @@ import {connect} from "react-redux";
 import {withRouter} from "next/router";
 import {setAuth, setExploreType, setGender, setPeriod} from "../../redux/actions";
 import Sticky from "react-stickynode";
-import {getUser} from "../../services";
 import BoardModal from "../BoardModal";
 import TopNavCommon from "../TopNavCommon";
 
@@ -13,19 +12,6 @@ class Default extends React.Component {
 
         this.state = {
             stickyNav: true,
-        }
-    }
-
-    componentDidMount() {
-        if (this.props.auth) {
-            getUser(this.props.auth.meta.token)
-                .then(res => {
-                    console.log(res)
-                })
-                .catch(e => {
-                    console.error(e)
-                    this.props.setAuth(false)
-                })
         }
     }
 

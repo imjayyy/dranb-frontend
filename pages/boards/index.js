@@ -1,5 +1,4 @@
 import React from 'react'
-import Boards from "../../components/layout/Boards";
 import AwesomeDebouncePromise from "awesome-debounce-promise";
 import MasonryLayout from "react-masonry-layout";
 import Board from "../../components/Board";
@@ -7,6 +6,7 @@ import {getBoards} from "../../services";
 import {connect} from "react-redux";
 import {setAuth} from "../../redux/actions";
 import {withRouter} from "next/router";
+import BoardListLayout from "../../components/layout/BoardListLayout";
 
 const repackDebounced = AwesomeDebouncePromise(() => (true), 50);
 
@@ -143,7 +143,7 @@ class BoardsPage extends React.Component {
             </div>
         }
         return (
-            <Boards isMine={false}>
+            <BoardListLayout>
                 <div>
                     <div id="page-content">
                         <div id="hero-and-body">
@@ -176,7 +176,7 @@ class BoardsPage extends React.Component {
                         </div>
                     </div>
                 </div>
-            </Boards>
+            </BoardListLayout>
         )
     }
 }

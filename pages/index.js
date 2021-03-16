@@ -3,8 +3,8 @@ import MasonryLayout from 'react-masonry-layout'
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
 
 const repackDebounced = AwesomeDebouncePromise(() => (true), 50);
-import Main from '../components/layout/Main'
-import {getHomeData} from "../services";
+import HomeLayout from '../components/layout/HomeLayout'
+import {getProducts} from "../services";
 import {connect} from "react-redux";
 import {withRouter} from "next/router";
 
@@ -62,7 +62,7 @@ class IndexPage extends Component {
 
     getInitialProducts = async () => {
         try {
-            const response = await getHomeData(this.props.auth.meta.token, 0, this.props.siteType, this.props.exploreType, this.props.gender, this.props.period)
+            const response = await getProducts(this.props.auth.meta.token, 0, this.props.siteType, this.props.exploreType, this.props.gender, this.props.period)
             this.setState({
                 data: response.data,
                 dataPage: 1
@@ -79,7 +79,7 @@ class IndexPage extends Component {
             return
         this.setState({isLoadingData: true}, this.mount)
         try {
-            const response = await getHomeData(this.props.auth.meta.token, this.state.dataPage, this.props.siteType, this.props.exploreType, this.props.gender, this.props.period)
+            const response = await getProducts(this.props.auth.meta.token, this.state.dataPage, this.props.siteType, this.props.exploreType, this.props.gender, this.props.period)
             let data = response.data
 
             this.setState({
@@ -156,7 +156,7 @@ class IndexPage extends Component {
         }
 
         return (
-            <Main onToggleSaved={this.handleToggleSaved}>
+            <HomeLayout onToggleSaved={this.handleToggleSaved}>
                 <div>
 
                     <div id="page-content">
@@ -204,7 +204,7 @@ class IndexPage extends Component {
 
                     </div>
                 </div>
-            </Main>
+            </HomeLayout>
 
         )
     }

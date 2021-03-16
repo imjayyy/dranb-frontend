@@ -4,7 +4,6 @@ import {connect} from "react-redux";
 import {withRouter} from "next/router";
 import {setAuth, setSiteType} from "../../redux/actions";
 import Sticky from "react-stickynode";
-import {getUser} from "../../services";
 import {Dashboard, Favorite} from "@material-ui/icons";
 import BoardModal from "../BoardModal";
 import TopNavCommon from "../TopNavCommon";
@@ -15,19 +14,6 @@ class Profile extends React.Component {
 
         this.state = {
             stickyNav: true,
-        }
-    }
-
-    componentDidMount() {
-        if (this.props.auth) {
-            getUser(this.props.auth.meta.token)
-                .then(res => {
-                    console.log(res)
-                })
-                .catch(e => {
-                    console.error(e)
-                    this.props.setAuth(false)
-                })
         }
     }
 

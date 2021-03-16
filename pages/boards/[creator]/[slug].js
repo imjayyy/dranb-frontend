@@ -1,12 +1,12 @@
 import React from 'react'
-import Boards from "../../../components/layout/Boards";
-import {getProductsByBoardName} from "../../../services";
+import {getProductsByBoard} from "../../../services";
 import MasonryLayout from "react-masonry-layout";
 import {connect} from "react-redux";
 import {setAuth} from "../../../redux/actions";
 import {withRouter} from "next/router";
 import AwesomeDebouncePromise from "awesome-debounce-promise";
 import Product from "../../../components/Product";
+import BoardLayout from "../../../components/layout/BoardLayout";
 
 const repackDebounced = AwesomeDebouncePromise(() => true, 50);
 
@@ -14,7 +14,7 @@ class BoardsById extends React.Component {
     static async getInitialProps(ctx) {
         const {query} = ctx
         return {
-            name: query.name,
+            slug: query.slug,
             creator: query.creator
         }
     }
@@ -33,7 +33,7 @@ class BoardsById extends React.Component {
 
     getInitialProducts = async () => {
         try {
-            const response = await getProductsByBoardName(this.props.auth.meta.token, this.props.name, 0)
+            const response = await getProductsByBoard(this.props.auth.meta.token, this.props.creator, this.props.slug, 0)
             if (response.data.length === 0) {
                 this.setState({
                     hasMore: false
@@ -52,8 +52,8 @@ class BoardsById extends React.Component {
             this.props.toggleLoaded(true)
         } catch (e) {
             console.error(e)
-            this.props.setAuth(false)
-            await this.props.router.push('/login')
+            // this.props.setAuth(false)
+            // await this.props.router.push('/login')
         }
     }
 
@@ -64,7 +64,7 @@ class BoardsById extends React.Component {
             return
         this.setState({isLoadingData: true}, this.mount)
         try {
-            const response = await getProductsByBoardName(this.props.auth.meta.token, this.props.name, this.state.dataPage)
+            const response = await getProductsByBoard(this.props.auth.meta.token, this.props.creator, this.props.slug, this.state.dataPage)
             let data = response.data
             if (data.length === 0) {
                 this.setState({
@@ -82,8 +82,8 @@ class BoardsById extends React.Component {
             this.props.toggleLoaded(true)
         } catch (e) {
             console.error(e)
-            this.props.setAuth(false)
-            await this.props.router.push('/login')
+            // this.props.setAuth(false)
+            // await this.props.router.push('/login')
         }
     }
 
@@ -168,7 +168,7 @@ class BoardsById extends React.Component {
             )
         }
         return (
-            <Boards creator={this.props.creator} slug={this.props.name}
+            <BoardLayout username={this.props.creator} slug={this.props.slug}
                     isMine={this.props.creator === this.props.auth.user.username}
                     onToggleSaved={this.handleToggleSaved}>
                 <div>
@@ -203,7 +203,7 @@ class BoardsById extends React.Component {
                         </div>
                     </div>
                 </div>
-            </Boards>
+            </BoardLayout>
         )
     }
 }

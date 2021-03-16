@@ -6,10 +6,11 @@ const countriesNames = require('countries-names');
 import Select from 'react-select';
 
 const countries = countriesNames.all().map(x => ({value: x.name, label: x.name}))
-import {getUser, patchProfile} from "../services";
+import {getProfile, patchProfile} from "../services";
 import {connect} from "react-redux";
 import {withRouter} from "next/router";
 import Default from "../components/layout/Default";
+import {setAuth} from "../redux/actions";
 
 
 class MyProfile extends Component {
@@ -33,7 +34,7 @@ class MyProfile extends Component {
     }
 
     componentDidMount() {
-        getUser(this.props.auth.meta.token).then(data => {
+        getProfile(this.props.auth.meta.token).then(data => {
             const [year, month, day] = data.data.birthday ? data.data.birthday.split("-") : ["", "", ""]
             let gender
             switch (data.gender) {
@@ -57,6 +58,9 @@ class MyProfile extends Component {
                 birthdayDD: day,
                 birthdayYYYY: year,
             })
+        }).catch(error => {
+            this.props.setAuth(false)
+            this.props.router.push('/login')
         })
     }
 
@@ -335,4 +339,4 @@ const mapStateToProps = state => {
     return state.auth
 }
 
-export default connect(mapStateToProps)(withRouter(MyProfile))
+export default connect(mapStateToProps, {setAuth})(withRouter(MyProfile))

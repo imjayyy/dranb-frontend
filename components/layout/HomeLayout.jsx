@@ -4,30 +4,16 @@ import {connect} from "react-redux";
 import {withRouter} from "next/router";
 import {setAuth, setExploreType, setGender, setPeriod} from "../../redux/actions";
 import Sticky from "react-stickynode";
-import {getUser} from "../../services";
 import BoardModal from "../BoardModal";
 import TopNav from "../TopNav";
 import PropTypes from "prop-types";
 
-class Main extends React.Component {
+class HomeLayout extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
             stickyNav: true,
-        }
-    }
-
-    componentDidMount() {
-        if (this.props.auth) {
-            getUser(this.props.auth.meta.token)
-                .then(res => {
-                    console.log(res)
-                })
-                .catch(e => {
-                    console.error(e)
-                    this.props.setAuth(false)
-                })
         }
     }
 
@@ -77,7 +63,7 @@ class Main extends React.Component {
     }
 }
 
-Main.propTypes = {
+HomeLayout.propTypes = {
     onToggleSaved: PropTypes.func.isRequired,
 }
 
@@ -95,4 +81,4 @@ export default connect(mapStateToProps, {
     setExploreType,
     setGender,
     setPeriod
-})(withRouter(Main))
+})(withRouter(HomeLayout))
