@@ -51,9 +51,8 @@ class BoardsById extends React.Component {
             }, this.loadMoreProducts)
             this.props.toggleLoaded(true)
         } catch (e) {
-            console.error(e)
-            // this.props.setAuth(false)
-            // await this.props.router.push('/login')
+            this.props.setAuth(false)
+            await this.props.router.push('/login')
         }
     }
 
@@ -81,9 +80,8 @@ class BoardsById extends React.Component {
             }, this.mount)
             this.props.toggleLoaded(true)
         } catch (e) {
-            console.error(e)
-            // this.props.setAuth(false)
-            // await this.props.router.push('/login')
+            this.props.setAuth(false)
+            await this.props.router.push('/login')
         }
     }
 

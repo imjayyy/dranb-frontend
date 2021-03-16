@@ -48,7 +48,6 @@ class MyLoves extends Component {
                 dataPage: 1
             }, this.loadMoreProducts)
         } catch (e) {
-            console.error(e)
             this.props.setAuth(false)
             await this.props.router.push('/login')
         }
@@ -69,9 +68,8 @@ class MyLoves extends Component {
                 isLoadingData: false
             }, this.mount)
         } catch (e) {
-            console.error(e)
             this.props.setAuth(false)
-            this.props.router.push('/login');
+            await this.props.router.push('/login');
         }
     }
 

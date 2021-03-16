@@ -45,7 +45,6 @@ class MyFollowing extends React.Component {
             }, this.loadMoreBoards)
             this.props.toggleLoaded(true)
         } catch (e) {
-            console.error(e)
             this.props.setAuth(false)
             await this.props.router.push('/login')
         }

@@ -46,7 +46,6 @@ class Brand extends React.Component {
                 is_following: data.is_following
             })
         } catch (e) {
-            console.error(e)
             this.props.setAuth(false)
             await this.props.router.push('/login')
         }

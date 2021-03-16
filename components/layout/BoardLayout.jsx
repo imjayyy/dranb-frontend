@@ -72,9 +72,8 @@ class BoardLayout extends React.Component {
                 prevName: data.name
             })
         } catch (e) {
-            console.error(e.response.data)
-            // this.props.setAuth(false)
-            // await this.props.router.push("/login")
+            this.props.setAuth(false)
+            await this.props.router.push("/login")
         }
     }
 
