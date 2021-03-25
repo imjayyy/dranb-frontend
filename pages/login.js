@@ -1,16 +1,16 @@
-import {Component} from 'react'
+import { Component } from 'react'
 import React from "react";
-import {Radio} from 'pretty-checkbox-react';
+import { Radio } from 'pretty-checkbox-react';
 import Select from 'react-select';
 import styles from '../styles/Login.module.scss'
-import {loginUser, registerUser} from "../services";
-import {connect} from "react-redux";
-import {setAuth} from "../redux/actions";
-import {withRouter} from "next/router";
+import { loginUser, registerUser } from "../services";
+import { connect } from "react-redux";
+import { setAuth } from "../redux/actions";
+import { withRouter } from "next/router";
 import Default from "../components/layout/Default";
 
 const countriesNames = require('countries-names');
-const countries = countriesNames.all().map(x => ({value: x.name, label: x.name}))
+const countries = countriesNames.all().map(x => ({ value: x.name, label: x.name }))
 
 class Login extends Component {
     constructor(props) {
@@ -42,7 +42,7 @@ class Login extends Component {
 
     handleLogin = async (event) => {
         event.preventDefault()
-        this.setState({loginError: null})
+        this.setState({ loginError: null })
         const username = this.state.loginUsername
         const password = this.state.loginPassword
 
@@ -75,7 +75,7 @@ class Login extends Component {
 
     handleRegister = async (event) => {
         event && event.preventDefault()
-        this.setState({registerError: ''})
+        this.setState({ registerError: '' })
 
         try {
             let birthDay = ''
@@ -108,15 +108,18 @@ class Login extends Component {
     render() {
         return (
             <Default>
+                <div className="home-top-nav navbar is-fixed-top navbar-d-none mobile-top-bar">
+                    <div>login</div>
+                </div>
                 <div className="container">
                     <div id="page-content">
                         <div id="hero-and-body">
                             <div className={styles.pageBody}>
-                                <div className="columns is-multiline is-mobile">
+                                <div className="login columns is-multiline is-mobile">
                                     <div className="column is-5-desktop is-12-touch">
-                                        <div className="is-size-4" style={{height: '80px'}}>Access all the brands and
-                                            manage your
-                                            selection.
+                                        <div className="is-size-4" style={{ height: '80px' }}>Access all the brands and
+                                        manage your
+                                        selection.
                                         </div>
                                         <form onSubmit={this.handleLogin}>
                                             {this.state.loginError && this.state.loginError.non_field_errors && (
@@ -132,7 +135,7 @@ class Login extends Component {
                                                     className="input"
                                                     value={this.state.loginUsername}
                                                     placeholder={"Username"}
-                                                    onChange={e => this.setState({loginUsername: e.target.value})}
+                                                    onChange={e => this.setState({ loginUsername: e.target.value })}
                                                 />
                                             </div>
                                             <div className="field">
@@ -141,22 +144,22 @@ class Login extends Component {
                                                     className="input"
                                                     value={this.state.loginPassword}
                                                     placeholder={"Password"}
-                                                    onChange={e => this.setState({loginPassword: e.target.value})}
+                                                    onChange={e => this.setState({ loginPassword: e.target.value })}
                                                 />
                                             </div>
-                                            <div className="field">
+                                            <div className="btn field">
                                                 <button className="button is-primary" type='submit'>
                                                     Login
                                                 </button>
                                             </div>
-                                            <div className="field">
+                                            <div className="password field">
                                                 <a className="is-primary">Forgot password?</a>
                                             </div>
                                         </form>
                                     </div>
-                                    <div className="column is-2 is-hidden-touch"/>
+                                    <div className="column is-2 is-hidden-touch" />
                                     <div className="column is-5-desktop is-12-touch">
-                                        <div className="is-size-4" style={{height: '80px'}}>
+                                        <div className="is-size-4 signup-title">
                                             No account? Sign up to access and follow
                                             all your favorite fashion brands.
                                         </div>
@@ -201,17 +204,17 @@ class Login extends Component {
                                                 <label>Gender</label>
                                                 <div className="is-inline-block">
                                                     <input className="is-checkradio" id="checkbox-women" value="1"
-                                                           name="registerGender" type="radio"
-                                                           checked={this.state.registerGender == 1}
-                                                           onChange={this.handleChange}
+                                                        name="registerGender" type="radio"
+                                                        checked={this.state.registerGender == 1}
+                                                        onChange={this.handleChange}
                                                     />
                                                     <label htmlFor="checkbox-women">Women</label>
                                                 </div>
                                                 <div className="is-inline-block">
                                                     <input className="is-checkradio" id="checkbox-men" value="2"
-                                                           name="registerGender" type="radio"
-                                                           checked={this.state.registerGender == 2}
-                                                           onChange={this.handleChange}/>
+                                                        name="registerGender" type="radio"
+                                                        checked={this.state.registerGender == 2}
+                                                        onChange={this.handleChange} />
                                                     <label htmlFor="checkbox-men">Men</label>
                                                 </div>
                                             </div>
@@ -256,7 +259,7 @@ class Login extends Component {
                                                 <label>Country</label>
                                                 <Select
                                                     value={this.state.registerCountry}
-                                                    onChange={e => this.setState({registerCountry: e})}
+                                                    onChange={e => this.setState({ registerCountry: e })}
                                                     options={countries}
                                                 />
                                             </div>
@@ -330,7 +333,7 @@ class Login extends Component {
                                                     ))
                                                 )}
                                             </div>
-                                            <div className="field">
+                                            <div className="signup field">
                                                 <button className="button is-primary">Sign Up</button>
                                             </div>
                                         </form>
@@ -345,4 +348,4 @@ class Login extends Component {
     }
 }
 
-export default connect(null, {setAuth})(withRouter(Login))
+export default connect(null, { setAuth })(withRouter(Login))

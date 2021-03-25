@@ -227,7 +227,7 @@ Smartphones (768px max)
 	.comments .comment-reply-link, .comments #cancel-comment-reply-link { position: absolute; float: none; right: 0; bottom: 0; }
 	
 	/* columns */
-	.column { float: none !important; margin-right: 0px !important; width: 100% !important; margin-top: 50px; display: block; }
+	.column { float: none !important; margin-right: 0px !important; width: 100% !important; margin-top: 0px !important; display: block; }
 	.spaced-none .column { margin-top: 0px;}
 	div .column:first-child { margin-top: 0px; }
 	

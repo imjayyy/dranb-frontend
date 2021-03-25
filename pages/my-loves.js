@@ -10,7 +10,11 @@ import {withRouter} from "next/router";
 import styles from '../styles/Home.module.scss'
 import Product from "../components/Product";
 import Profile from "../components/layout/Profile";
-import {setAuth} from "../redux/actions";
+import {setAuth, setSiteType} from "../redux/actions";
+
+import Browse from "../components/bottom_nav/Browse"
+import Manage from "../components/bottom_nav/Manage"
+import BottomBar from "../components/bottom_nav/BottomBar"
 
 class MyLoves extends Component {
     constructor(props) {
@@ -21,6 +25,9 @@ class MyLoves extends Component {
             width: '300px',
             stickyNav: true,
             fullyMounted: false,
+
+            isShowBrowse: false, 
+            isShowManage: false,
         }
     }
 
@@ -129,6 +136,37 @@ class MyLoves extends Component {
         this.repackItems()
     }
 
+    handleBrowseClose = (value) => {
+        this.setState({
+          isShowBrowse: value,
+          isShowFilterButton: true
+        })
+      }
+    
+    handleManageClose = (value) => {
+        this.setState({
+          isShowManage: value,
+          isShowFilterButton: true
+        })
+    }
+    
+    handleBottomBarSelect = (value) => {
+        this.setState({isShowFilterButton: false, isShowFilter: false, isShowBrowse: false, isShowManage: false}, ()=>{
+            if (value === 1) {
+                this.props.setSiteType(1)
+                this.props.router.push('/')
+            } else if (value === 2) {
+                this.setState({
+                  isShowBrowse: true
+                })
+            } else if (value === 4) {
+                this.setState({
+                  isShowManage: true
+                })
+            }
+        })
+    }
+
     render() {
         if (!this.props.loaded) {
             return <div id="page-loader" className="show-logo">
@@ -138,8 +176,10 @@ class MyLoves extends Component {
 
         return (
             <Profile headTitle="I love" headIcon="favorite" onToggleSaved={this.handleToggleSaved}>
-                <div>
-
+                <div className="navbar is-fixed-top navbar-d-none mobile-top-bar">
+                    <div>I love</div>
+                </div>
+                <div className='love-body'>
                     <div id="page-content">
                         <div id="hero-and-body">
                             {/* PAGEBODY */}
@@ -184,6 +224,9 @@ class MyLoves extends Component {
 
                     </div>
                 </div>
+                {this.state.isShowBrowse ? <Browse onClose={this.handleBrowseClose}/> : null}
+                {this.state.isShowManage ? <Manage onClose={this.handleManageClose}/> : null}
+                <BottomBar onSelect={this.handleBottomBarSelect}/>
             </Profile>
 
         )
@@ -193,9 +236,11 @@ class MyLoves extends Component {
 const mapStateToProps = state => {
     return {
         auth: state.auth.auth,
+        setSiteType: state.homeFilter.siteType,
     }
 }
 
 export default connect(mapStateToProps, {
-    setAuth
+    setAuth,
+    setSiteType,
 })(withRouter(MyLoves))

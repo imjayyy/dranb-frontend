@@ -1,13 +1,17 @@
 import React from 'react'
 import Profile from "../components/layout/Profile";
-import {getMyFollowings} from "../services";
-import {connect} from "react-redux";
-import {setAuth} from "../redux/actions";
-import {withRouter} from "next/router";
+import { getMyFollowings } from "../services";
+import { connect } from "react-redux";
+import { setAuth, setSiteType } from "../redux/actions";
+import { withRouter } from "next/router";
 import MasonryLayout from "react-masonry-layout";
 import Board from "../components/Board";
 import AwesomeDebouncePromise from "awesome-debounce-promise";
 import styles from "../styles/Home.module.scss";
+
+import Browse from "../components/bottom_nav/Browse"
+import Manage from "../components/bottom_nav/Manage"
+import BottomBar from "../components/bottom_nav/BottomBar"
 
 const repackDebounced = AwesomeDebouncePromise(() => (true), 50);
 
@@ -20,6 +24,10 @@ class MyFollowing extends React.Component {
             width: '192px',
             fullyMounted: false,
             isLoadingData: false,
+
+            isShowBrowse: false, 
+            isShowManage: false,
+
             hasMore: true,
         }
     }
@@ -55,7 +63,7 @@ class MyFollowing extends React.Component {
             return
         if (!this.state.hasMore)
             return
-        this.setState({isLoadingData: true}, this.mount)
+        this.setState({ isLoadingData: true }, this.mount)
         try {
             const response = await getMyFollowings(this.props.auth.meta.token, this.state.dataPage)
             let data = response.data
@@ -82,7 +90,7 @@ class MyFollowing extends React.Component {
             const event = new Event('load');
             window.dispatchEvent(event)
             this.props.toggleLoaded(true)
-            this.setState({fullyMounted: true}, this.handleResize)
+            this.setState({ fullyMounted: true }, this.handleResize)
         }
     }
 
@@ -106,7 +114,7 @@ class MyFollowing extends React.Component {
             width = (parentWidth - 210) / 11
         }
 
-        this.setState({width})
+        this.setState({ width })
     }
 
     repackItems = () => {
@@ -119,6 +127,37 @@ class MyFollowing extends React.Component {
     debounce = async () => {
         await repackDebounced()
         this.repackItems()
+    }
+
+    handleBrowseClose = (value) => {
+        this.setState({
+          isShowBrowse: value,
+          isShowFilterButton: true
+        })
+      }
+    
+    handleManageClose = (value) => {
+        this.setState({
+          isShowManage: value,
+          isShowFilterButton: true
+        })
+    }
+    
+    handleBottomBarSelect = (value) => {
+        this.setState({isShowBrowse: false, isShowManage: false}, ()=>{
+            if (value === 1) {
+                this.props.setSiteType(1)
+                this.props.router.push('/')
+            } else if (value === 2) {
+                this.setState({
+                  isShowBrowse: !this.state.isShowBrowse
+                })
+            } else if (value === 4) {
+                this.setState({
+                    isShowManage: !this.state.isShowManage
+                })
+            }
+        })
     }
 
     async componentDidMount() {
@@ -141,34 +180,49 @@ class MyFollowing extends React.Component {
         if (!this.props.loaded) {
             return (
                 <div id="page-loader" className="show-logo">
-                    <span className="loader-icon bullets-jump"><span/><span/><span/></span>
+                    <span className="loader-icon bullets-jump"><span /><span /><span /></span>
                 </div>
             )
         }
         return (
             <Profile headTitle="I follow" headIcon="dashboard">
-                <div>
+                <div className="navbar is-fixed-top navbar-d-none mobile-top-bar">
+                    <div>I follow</div>
+                </div>
+                <div className='following-body'>
                     <div id="page-content">
                         <div id="hero-and-body">
                             {this.props.loaded && ((this.state.data.length === 0 && this.props.loaded && this.state.fullyMounted) &&
                                 <div className={styles.afterRegister}>
                                     <p className="has-text-centered">
-                                        you are not following any board right now. <br/>
-                                        Just browse the section <strong>"boards"</strong> and <br/>
+                                        you are not following any board right now. <br />
+                                        Just browse the section <strong>"boards"</strong> and <br />
                                         explore any board then click on the follow button.
                                     </p>
                                 </div>)}
                             <section id="page-body">
-                                <div className="is-hidden-tablet" style={{height: '20px'}}/>
+                                <div className="is-hidden-tablet" style={{ height: '20px' }} />
                                 <div className="wrapper">
                                     <MasonryLayout
                                         ref={instance => this.instance = instance}
                                         id="masonry-layout"
-                                        sizes={[{columns: 1, gutter: 20}, {
-                                            mq: '769px',
-                                            columns: 3,
-                                            gutter: 20
-                                        }, {mq: '1025px', columns: 11, gutter: 20}]}
+                                        sizes={[
+                                            { 
+                                                mq: '500px',
+                                                columns: 2, 
+                                                gutter: 7 
+                                            }, 
+                                            {
+                                                mq: '769px',
+                                                columns: 3,
+                                                gutter: 20
+                                            }, 
+                                            { 
+                                                mq: '1025px', 
+                                                columns: 11, 
+                                                gutter: 20 
+                                            }
+                                        ]}
                                         infiniteScroll={async () => {
                                             await this.loadMoreBoards()
                                         }}
@@ -188,6 +242,9 @@ class MyFollowing extends React.Component {
                         </div>
                     </div>
                 </div>
+                {this.state.isShowBrowse ? <Browse onClose={this.handleBrowseClose}/> : null}
+                {this.state.isShowManage ? <Manage onClose={this.handleManageClose}/> : null}
+                <BottomBar onSelect={this.handleBottomBarSelect}/>
             </Profile>
         )
     }
@@ -196,9 +253,11 @@ class MyFollowing extends React.Component {
 const mapStateToProps = state => {
     return {
         auth: state.auth.auth,
+        setSiteType: state.homeFilter.siteType,
     }
 }
 
 export default connect(mapStateToProps, {
-    setAuth
+    setAuth,
+    setSiteType,
 })(withRouter(MyFollowing))

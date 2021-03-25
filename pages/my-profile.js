@@ -10,8 +10,11 @@ import {getProfile, patchProfile} from "../services";
 import {connect} from "react-redux";
 import {withRouter} from "next/router";
 import Default from "../components/layout/Default";
-import {setAuth} from "../redux/actions";
+import { setAuth, setSiteType } from "../redux/actions";
 
+import Browse from "../components/bottom_nav/Browse"
+import Manage from "../components/bottom_nav/Manage"
+import BottomBar from "../components/bottom_nav/BottomBar"
 
 class MyProfile extends Component {
     constructor(props) {
@@ -29,7 +32,9 @@ class MyProfile extends Component {
             password: '',
             passwordAgain: '',
             error: null,
-            message: ''
+            message: '',
+            isShowBrowse: false, 
+            isShowManage: false,
         }
     }
 
@@ -63,6 +68,38 @@ class MyProfile extends Component {
             this.props.router.push('/login')
         })
     }
+
+    handleBrowseClose = (value) => {
+        this.setState({
+          isShowBrowse: value,
+          isShowFilterButton: true
+        })
+      }
+    
+    handleManageClose = (value) => {
+        this.setState({
+          isShowManage: value,
+          isShowFilterButton: true
+        })
+    }
+    
+    handleBottomBarSelect = (value) => {
+        this.setState({isShowBrowse: false, isShowManage: false}, ()=>{
+            if (value === 1) {
+                this.props.setSiteType(1)
+                this.props.router.push('/')
+            } else if (value === 2) {
+                this.setState({
+                  isShowBrowse: !this.state.isShowBrowse
+                })
+            } else if (value === 4) {
+                this.setState({
+                    isShowManage: !this.state.isShowManage
+                })
+            }
+        })
+    }
+
 
     handleChange = (event) => {
         const target = event.target
@@ -112,7 +149,10 @@ class MyProfile extends Component {
     render() {
         return (
             <Default>
-                <div className="container">
+                <div className="navbar is-fixed-top navbar-d-none mobile-top-bar">
+                    <div>my profile</div>
+                </div>
+                <div className="container" style={{padding: '20px'}}>
                     <div id="page-content">
                         <div id="hero-and-body">
                             <div id="page-body">
@@ -330,13 +370,22 @@ class MyProfile extends Component {
                         </div>
                     </div>
                 </div>
+                {this.state.isShowBrowse ? <Browse onClose={this.handleBrowseClose}/> : null}
+                {this.state.isShowManage ? <Manage onClose={this.handleManageClose}/> : null}
+                <BottomBar onSelect={this.handleBottomBarSelect}/>
             </Default>
         )
     }
 }
 
 const mapStateToProps = state => {
-    return state.auth
+    return {
+        auth: state.auth.auth,
+        setSiteType: state.homeFilter.siteType,
+    }
 }
 
-export default connect(mapStateToProps, {setAuth})(withRouter(MyProfile))
+export default connect(mapStateToProps, {
+    setAuth,
+    setSiteType,
+})(withRouter(MyProfile))

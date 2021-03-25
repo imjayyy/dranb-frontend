@@ -69,7 +69,7 @@ class IndexPage extends Component {
             }, this.loadMoreProducts)
         } catch (e) {
             this.props.setAuth(false)
-            await this.props.router.push('/login')
+            await this.props.router.push('/landing')
         }
         this.props.toggleLoaded(true)
     }
@@ -164,10 +164,10 @@ class IndexPage extends Component {
                             {/* PAGEBODY */}
                             {this.props.loaded && this.state.data.length === 0 && this.state.fullyMounted && !this.props.exploreType &&
                             (<div className={styles.afterRegister}>
-                                <p className="has-text-centered">you have no brands in <strong>"my
-                                    selection"</strong> filters.</p>
-                                <p className="has-text-centered">
-                                    To follow brands just <strong>explore</strong> and visit a<br/>
+                                <p className="has-text-centered no-brand">you have no brands in <b>"my
+                                    selection"</b> filters.</p>
+                                <p className="has-text-centered follow-brand">
+                                    To follow brands just <b>explore</b> and visit a<br/>
                                     brand page, then click on the follow button.
                                 </p>
                             </div>)

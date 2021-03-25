@@ -227,7 +227,7 @@ Smartphones (768px max)
 	.comments .comment-reply-link, .comments #cancel-comment-reply-link { position: absolute; float: none; right: 0; bottom: 0; }
 	
 	/* columns */
-	.column { float: none !important; margin-right: 0px !important; width: 100% !important; margin-top: 50px; display: block; }
+	.column { float: none !important; margin-right: 0px !important; width: 100% !important; margin-top: 0px; display: block; }
 	.spaced-none .column { margin-top: 0px;}
 	div .column:first-child { margin-top: 0px; }
 	
@@ -363,4 +363,53 @@ Small Screens (680px max)
 	.isotope-grid[class*='isotope-spaced-huge'] .isotope-item  { width: calc(100% - 40px) !important; }
 		.isotope-grid[class*='isotope-spaced-huge'] .isotope-item.double-width { width: calc(100% - 40px) !important; }
 		
+}
+
+/* ---------------------
+
+Small Screens (500px max)
+
+------------------------ */
+@media only screen and (max-width: 500px) {
+	/* general */
+	.wrapper { width: 100%; max-width: 100%; }
+	.wrapper-small { width: 100%; max-width: 100%; }
+	.wrapper-big { width: 100%; max-width: 100%; }
+	#hero[class*='side-'] ~ #page-body .wrapper-small { max-width: 100%; }
+	#hero-and-body {
+        margin-top: 0px !important;
+    }
+
+	.board-body .wrapper { width: 500px; max-width: calc(100% - 35px); }
+	.board-body .wrapper-small { width: 450px; max-width: calc(100% - 35px); }
+	.board-body .wrapper-big { width: calc(100% - 60px); max-width: calc(100% - 35px); }
+	.board-body #hero[class*='side-'] ~ #page-body .wrapper-small { max-width: calc(100% - 20px); }
+
+	.following-body .wrapper { width: 500px; max-width: calc(100% - 35px); }
+	.following-body .wrapper-small { width: 450px; max-width: calc(100% - 35px); }
+	.following-body .wrapper-big { width: calc(100% - 60px); max-width: calc(100% - 35px); }
+	.following-body #hero[class*='side-'] ~ #page-body .wrapper-small { max-width: calc(100% - 20px); }
+
+	.love-body .wrapper { width: 500px; max-width: calc(100% - 0px); }
+	.love-body .wrapper-small { width: 450px; max-width: calc(100% - 35px); }
+	.love-body .wrapper-big { width: calc(100% - 60px); max-width: calc(100% - 35px); }
+	.love-body #hero[class*='side-'] ~ #page-body .wrapper-small { max-width: calc(100% - 20px); }
+
+	.board-breadcrumb p {
+		font-size: 14px;
+		text-align: center;
+	}
+
+	.board-breadcrumb {
+		padding: 35px !important;
+	}
+
+	.create-by-breadcrumb p {
+		font-size: 16px;
+		text-align: center;
+	}
+
+	.create-by-breadcrumb {
+		padding: 15px !important;
+	}
 }

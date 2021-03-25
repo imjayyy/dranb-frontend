@@ -7,6 +7,7 @@ import {withRouter} from "next/router";
 import AwesomeDebouncePromise from "awesome-debounce-promise";
 import Product from "../../../components/Product";
 import BoardLayout from "../../../components/layout/BoardLayout";
+import BoardHome from '../../../components/layout/BoardHome';
 
 const repackDebounced = AwesomeDebouncePromise(() => true, 50);
 
@@ -166,10 +167,10 @@ class BoardsById extends React.Component {
             )
         }
         return (
-            <BoardLayout username={this.props.creator} slug={this.props.slug}
+            <BoardHome username={this.props.creator} slug={this.props.slug}
                     isMine={this.props.creator === this.props.auth.user.username}
                     onToggleSaved={this.handleToggleSaved}>
-                <div>
+                <div className='board-detail-body'>
                     <div id="page-content">
                         <div id="hero-and-body">
                             <section id="page-body">
@@ -201,7 +202,7 @@ class BoardsById extends React.Component {
                         </div>
                     </div>
                 </div>
-            </BoardLayout>
+            </BoardHome>
         )
     }
 }

@@ -2,10 +2,10 @@ import React from 'react'
 import AwesomeDebouncePromise from "awesome-debounce-promise";
 import MasonryLayout from "react-masonry-layout";
 import Board from "../../components/Board";
-import {getBoards} from "../../services";
-import {connect} from "react-redux";
-import {setAuth} from "../../redux/actions";
-import {withRouter} from "next/router";
+import { getBoards } from "../../services";
+import { connect } from "react-redux";
+import { setAuth } from "../../redux/actions";
+import { withRouter } from "next/router";
 import BoardListLayout from "../../components/layout/BoardListLayout";
 
 const repackDebounced = AwesomeDebouncePromise(() => (true), 50);
@@ -25,7 +25,7 @@ class BoardsPage extends React.Component {
 
     getInitialBoards = async () => {
         try {
-            const response = await getBoards(this.props.auth.meta.token, 0,  '')
+            const response = await getBoards(this.props.auth.meta.token, 0, '')
             if (response.data.length === 0) {
                 this.setState({
                     hasMore: false
@@ -53,9 +53,9 @@ class BoardsPage extends React.Component {
             return
         if (!this.state.hasMore)
             return
-        this.setState({isLoadingData: true}, this.mount)
+        this.setState({ isLoadingData: true }, this.mount)
         try {
-            const response = await getBoards(this.props.auth.meta.token, this.state.dataPage,  '')
+            const response = await getBoards(this.props.auth.meta.token, this.state.dataPage, '')
             let data = response.data
             if (data.length === 0) {
                 this.setState({
@@ -80,7 +80,7 @@ class BoardsPage extends React.Component {
             const event = new Event('load');
             window.dispatchEvent(event)
             this.props.toggleLoaded(true)
-            this.setState({fullyMounted: true}, this.handleResize)
+            this.setState({ fullyMounted: true }, this.handleResize)
         }
     }
 
@@ -104,7 +104,7 @@ class BoardsPage extends React.Component {
             width = (parentWidth - 210) / 11
         }
 
-        this.setState({width})
+        this.setState({ width })
     }
 
     repackItems = () => {
@@ -138,25 +138,39 @@ class BoardsPage extends React.Component {
     render() {
         if (!this.props.loaded) {
             return <div id="page-loader" className="show-logo">
-                <span className="loader-icon bullets-jump"><span/><span/><span/></span>
+                <span className="loader-icon bullets-jump"><span /><span /><span /></span>
             </div>
         }
         return (
             <BoardListLayout>
-                <div>
+                <div className="board-body">
                     <div id="page-content">
                         <div id="hero-and-body">
                             <section id="page-body">
-                                <div className="is-hidden-tablet" style={{height: '20px'}}/>
+                                <div className="is-hidden-tablet" style={{ height: '20px' }} />
                                 <div className="wrapper">
+                                    <section className="board-breadcrumb">
+                                        <p>Explore and follow boards created by users</p>
+                                    </section>
                                     <MasonryLayout
                                         ref={instance => this.instance = instance}
                                         id="masonry-layout"
-                                        sizes={[{columns: 1, gutter: 20}, {
-                                            mq: '769px',
-                                            columns: 3,
-                                            gutter: 20
-                                        }, {mq: '1025px', columns: 11, gutter: 20}]}
+                                        sizes={[
+                                            {
+                                                mq: '500px',
+                                                columns: 2,
+                                                gutter: 7
+                                            },
+                                            {
+                                                mq: '769px',
+                                                columns: 3,
+                                                gutter: 20
+                                            },
+                                            {
+                                                mq: '1025px',
+                                                columns: 11,
+                                                gutter: 20
+                                            }]}
                                         infiniteScroll={async () => {
                                             await this.loadMoreBoards()
                                         }}

@@ -156,7 +156,7 @@ class BoardsByCreator extends React.Component {
         }
         return (
             <BoardListLayout creator={this.props.creator}>
-                <div>
+                <div className="board-body">
                     <div id="page-content">
                         <div id="hero-and-body">
                             {/* PAGEBODY */}
@@ -172,17 +172,31 @@ class BoardsByCreator extends React.Component {
                             <section id="page-body">
                                 <div className="is-hidden-tablet" style={{height: '20px'}}/>
                                 <div className="wrapper">
+                                    <section className="create-by-breadcrumb">
+                                        <div style={{textAlign: 'center'}}>
+                                            <div style={{display: 'inline', fontSize: '12px', color: 'gray', marginRight: '5px'}}>by</div> 
+                                            <div style={{display: 'inline'}}>{this.props.creator}</div>
+                                        </div>
+                                    </section>
                                     <MasonryLayout
                                         ref={instance => this.instance = instance}
                                         id="masonry-layout"
-                                        sizes={[{columns: 1, gutter: 20}, {
-                                            mq: '769px',
-                                            columns: 3,
-                                            gutter: 20
-                                        }, {mq: '1025px', columns: 11, gutter: 20}]}
-                                        infiniteScroll={async () => {
-                                            await this.loadMoreBoards()
-                                        }}
+                                        sizes={[
+                                            {
+                                                mq: '500px',
+                                                columns: 2,
+                                                gutter: 7
+                                            },
+                                            {
+                                                mq: '769px',
+                                                columns: 3,
+                                                gutter: 20
+                                            }, 
+                                            {
+                                                mq: '1025px', columns: 11, gutter: 20}]}
+                                                infiniteScroll={async () => {
+                                                await this.loadMoreBoards()
+                                            }}
                                         infiniteScrollDistance={400}
                                     >
                                         {this.state.data.map((board, i) =>
