@@ -149,7 +149,7 @@ class BoardsPage extends React.Component {
                             <section id="page-body">
                                 <div className="is-hidden-tablet" style={{ height: '20px' }} />
                                 <div className="wrapper">
-                                    <section className="board-breadcrumb">
+                                    <section className="board-breadcrumb navbar-d-none">
                                         <p>Explore and follow boards created by users</p>
                                     </section>
                                     <MasonryLayout

@@ -63,6 +63,12 @@ class BoardHome extends React.Component {
 
       sShowBrowse: false,
       isShowManage: false,
+
+      scrollDirection: "scroll up",
+
+      threshold: 0,
+      isTicking: false,
+      lastScrollY: window.pageYOffset,
     };
   }
 
@@ -87,9 +93,44 @@ class BoardHome extends React.Component {
         imageFilename: data.image_filename,
         prevName: data.name,
       });
+
+      window.addEventListener("scroll", this.onScroll);
     } catch (e) {
       this.props.setAuth(false);
       await this.props.router.push("/login");
+    }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.onScroll);
+  }
+
+  updateScrollDir = () => {
+    const scrollY = window.pageYOffset;
+
+    if (Math.abs(scrollY - this.state.lastScrollY) < this.state.threshold) {
+      this.setState({ isTicking: false });
+      return;
+    }
+
+    this.handleScrollDownUp(
+      scrollY > this.state.lastScrollY ? "scroll down" : "scroll up"
+    );
+    this.setState({ lastScrollY: scrollY > 0 ? scrollY : 0 });
+    this.setState({ isTicking: false });
+  };
+
+  onScroll = () => {
+    if (!this.state.isTicking) {
+      window.requestAnimationFrame(this.updateScrollDir);
+      this.setState({ isTicking: true });
+    }
+  };
+
+  handleScrollDownUp(scrollDirection) {
+    if (scrollDirection !== this.state.scrollDirection) {
+      console.log("-------------------", scrollDirection);
+      this.setState({ scrollDirection: scrollDirection });
     }
   }
 
@@ -127,16 +168,16 @@ class BoardHome extends React.Component {
       { isShowFilter: false, isShowBrowse: false, isShowManage: false },
       () => {
         if (value === 1) {
-          this.props.setSiteType(1)
-          this.props.router.push('/')
+          this.props.setSiteType(1);
+          this.props.router.push("/");
         } else if (value === 2) {
           this.setState({
-            isShowBrowse: true
-          })
+            isShowBrowse: true,
+          });
         } else if (value === 4) {
           this.setState({
-            isShowManage: true
-          })
+            isShowManage: true,
+          });
         }
       }
     );
@@ -239,34 +280,66 @@ class BoardHome extends React.Component {
             >
               {"<-"}
             </button>
-            {this.props.slug}
+            <>
+              {this.props.isMine ? (
+                <LabelEditable
+                  className="head"
+                  value={this.state.name}
+                  onChange={this.handleBoardNameChange}
+                />
+              ) : (
+                <a>{this.state.name}</a>
+              )}
+            </>
           </div>
-          <div className="board-top-bar filter">
-            <div>
-              <div
-                style={{
-                  display: "inline",
-                  fontSize: "12px",
-                  color: "gray",
-                  marginRight: "5px",
-                }}
-              >
-                by
+          <div
+            className={
+              this.state.scrollDirection === "scroll down"
+                ? "scroll-down"
+                : "scroll-up"
+            }
+          >
+            <div className="board-top-bar filter">
+              <div>
+                <div
+                  style={{
+                    display: "inline",
+                    fontSize: "12px",
+                    color: "gray",
+                    marginRight: "5px",
+                  }}>
+                  by
+                </div>
+                <div style={{ display: "inline" }}>{this.props.username}</div>
               </div>
-              <div style={{ display: "inline" }}>{this.props.username}</div>
+              <div style={{ padding: "0px 20px" }}>
+                <>
+                  {this.props.isMine ? (
+                    <LabelEditable
+                      className="desc"
+                      value={this.state.description}
+                      emptyString={"add a description"}
+                      onChange={this.handleBoardDescriptionChange}
+                    />
+                  ) : (
+                    <p>{this.state.description}</p>
+                  )}
+                </>
+              </div>
+              <div className="filter-item">
+                {!this.props.isMine && (
+                  <button
+                    className={this.state.isFollowing ? "unfollow" : "follow"}
+                    onClick={this.handleToggleFollow}
+                  >
+                    {this.state.isFollowing ? "unfollow" : "follow"}
+                  </button>
+                )}
+              </div>
+              <div className="filter-item">
+                {this.state.followers} followers
+              </div>
             </div>
-            <div style={{ padding: "0px 20px" }}>
-              <p>Explore and follow boards created by users</p>
-            </div>
-            <div className="filter-item">
-              <button
-                className={this.state.isFollowing ? "unfollow" : "follow"}
-                onClick={() => this.handleToggleFollow(this.props.brandName)}
-              >
-                {this.state.isFollowing ? "unfollow" : "follow"}
-              </button>
-            </div>
-            <div className="filter-item">{this.state.followers} followers</div>
           </div>
         </div>
 

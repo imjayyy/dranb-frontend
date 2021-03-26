@@ -25,7 +25,7 @@ class MyFollowing extends React.Component {
             fullyMounted: false,
             isLoadingData: false,
 
-            isShowBrowse: false, 
+            isShowBrowse: false,
             isShowManage: false,
 
             hasMore: true,
@@ -131,26 +131,26 @@ class MyFollowing extends React.Component {
 
     handleBrowseClose = (value) => {
         this.setState({
-          isShowBrowse: value,
-          isShowFilterButton: true
-        })
-      }
-    
-    handleManageClose = (value) => {
-        this.setState({
-          isShowManage: value,
-          isShowFilterButton: true
+            isShowBrowse: value,
+            isShowFilterButton: true
         })
     }
-    
+
+    handleManageClose = (value) => {
+        this.setState({
+            isShowManage: value,
+            isShowFilterButton: true
+        })
+    }
+
     handleBottomBarSelect = (value) => {
-        this.setState({isShowBrowse: false, isShowManage: false}, ()=>{
+        this.setState({ isShowBrowse: false, isShowManage: false }, () => {
             if (value === 1) {
                 this.props.setSiteType(1)
                 this.props.router.push('/')
             } else if (value === 2) {
                 this.setState({
-                  isShowBrowse: !this.state.isShowBrowse
+                    isShowBrowse: !this.state.isShowBrowse
                 })
             } else if (value === 4) {
                 this.setState({
@@ -187,7 +187,10 @@ class MyFollowing extends React.Component {
         return (
             <Profile headTitle="I follow" headIcon="dashboard">
                 <div className="navbar is-fixed-top navbar-d-none mobile-top-bar">
-                    <div>I follow</div>
+                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                        <img src="/icons/dashboard.svg" />
+                        <p style={{ marginLeft: "7px" }}>I follow</p>
+                    </div>
                 </div>
                 <div className='following-body'>
                     <div id="page-content">
@@ -207,20 +210,20 @@ class MyFollowing extends React.Component {
                                         ref={instance => this.instance = instance}
                                         id="masonry-layout"
                                         sizes={[
-                                            { 
+                                            {
                                                 mq: '500px',
-                                                columns: 2, 
-                                                gutter: 7 
-                                            }, 
+                                                columns: 2,
+                                                gutter: 7
+                                            },
                                             {
                                                 mq: '769px',
                                                 columns: 3,
                                                 gutter: 20
-                                            }, 
-                                            { 
-                                                mq: '1025px', 
-                                                columns: 11, 
-                                                gutter: 20 
+                                            },
+                                            {
+                                                mq: '1025px',
+                                                columns: 11,
+                                                gutter: 20
                                             }
                                         ]}
                                         infiniteScroll={async () => {
@@ -242,9 +245,9 @@ class MyFollowing extends React.Component {
                         </div>
                     </div>
                 </div>
-                {this.state.isShowBrowse ? <Browse onClose={this.handleBrowseClose}/> : null}
-                {this.state.isShowManage ? <Manage onClose={this.handleManageClose}/> : null}
-                <BottomBar onSelect={this.handleBottomBarSelect}/>
+                {this.state.isShowBrowse ? <Browse onClose={this.handleBrowseClose} /> : null}
+                {this.state.isShowManage ? <Manage onClose={this.handleManageClose} /> : null}
+                <BottomBar onSelect={this.handleBottomBarSelect} />
             </Profile>
         )
     }

@@ -1,16 +1,16 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import MasonryLayout from 'react-masonry-layout'
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
 
 const repackDebounced = AwesomeDebouncePromise(() => (true), 50);
-import {getMyLoves} from "../services";
-import {connect} from "react-redux";
-import {withRouter} from "next/router";
+import { getMyLoves } from "../services";
+import { connect } from "react-redux";
+import { withRouter } from "next/router";
 
 import styles from '../styles/Home.module.scss'
 import Product from "../components/Product";
 import Profile from "../components/layout/Profile";
-import {setAuth, setSiteType} from "../redux/actions";
+import { setAuth, setSiteType } from "../redux/actions";
 
 import Browse from "../components/bottom_nav/Browse"
 import Manage from "../components/bottom_nav/Manage"
@@ -26,7 +26,7 @@ class MyLoves extends Component {
             stickyNav: true,
             fullyMounted: false,
 
-            isShowBrowse: false, 
+            isShowBrowse: false,
             isShowManage: false,
         }
     }
@@ -64,7 +64,7 @@ class MyLoves extends Component {
     loadMoreProducts = async () => {
         if (this.state.isLoadingData)
             return
-        this.setState({isLoadingData: true}, this.mount)
+        this.setState({ isLoadingData: true }, this.mount)
         try {
             const response = await getMyLoves(this.props.auth.meta.token, this.state.dataPage)
             let data = response.data
@@ -86,14 +86,14 @@ class MyLoves extends Component {
             const event = new Event('load');
             window.dispatchEvent(event)
             this.props.toggleLoaded(true)
-            this.setState({fullyMounted: true}, this.handleResize)
+            this.setState({ fullyMounted: true }, this.handleResize)
         }
     }
 
-    handleToggleSaved = ({productId, saved}) => {
+    handleToggleSaved = ({ productId, saved }) => {
         let products = [...this.state.data]
         let index = this.state.data.findIndex(p => p.id === productId)
-        let product = {...products[index]}
+        let product = { ...products[index] }
         product.saved = saved
         products[index] = product
         this.setState({
@@ -121,7 +121,7 @@ class MyLoves extends Component {
             width = (parentWidth - 115) / 6
         }
 
-        this.setState({width})
+        this.setState({ width })
     }
 
     repackItems = () => {
@@ -138,30 +138,30 @@ class MyLoves extends Component {
 
     handleBrowseClose = (value) => {
         this.setState({
-          isShowBrowse: value,
-          isShowFilterButton: true
-        })
-      }
-    
-    handleManageClose = (value) => {
-        this.setState({
-          isShowManage: value,
-          isShowFilterButton: true
+            isShowBrowse: value,
+            isShowFilterButton: true
         })
     }
-    
+
+    handleManageClose = (value) => {
+        this.setState({
+            isShowManage: value,
+            isShowFilterButton: true
+        })
+    }
+
     handleBottomBarSelect = (value) => {
-        this.setState({isShowFilterButton: false, isShowFilter: false, isShowBrowse: false, isShowManage: false}, ()=>{
+        this.setState({ isShowFilterButton: false, isShowFilter: false, isShowBrowse: false, isShowManage: false }, () => {
             if (value === 1) {
                 this.props.setSiteType(1)
                 this.props.router.push('/')
             } else if (value === 2) {
                 this.setState({
-                  isShowBrowse: true
+                    isShowBrowse: true
                 })
             } else if (value === 4) {
                 this.setState({
-                  isShowManage: true
+                    isShowManage: true
                 })
             }
         })
@@ -170,14 +170,17 @@ class MyLoves extends Component {
     render() {
         if (!this.props.loaded) {
             return <div id="page-loader" className="show-logo">
-                <span className="loader-icon bullets-jump"><span/><span/><span/></span>
+                <span className="loader-icon bullets-jump"><span /><span /><span /></span>
             </div>
         }
 
         return (
             <Profile headTitle="I love" headIcon="favorite" onToggleSaved={this.handleToggleSaved}>
                 <div className="navbar is-fixed-top navbar-d-none mobile-top-bar">
-                    <div>I love</div>
+                    <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                        <img src="/icons/favorite.svg" />
+                        <p style={{ marginLeft: "7px" }}>I love</p>
+                    </div>
                 </div>
                 <div className='love-body'>
                     <div id="page-content">
@@ -186,34 +189,34 @@ class MyLoves extends Component {
                             {this.props.loaded && ((this.state.data.length === 0 && this.props.loaded && this.state.fullyMounted) &&
                                 <div className={styles.afterRegister}>
                                     <p className="has-text-centered">
-                                        You have no items yet in this section. <br/>
-                                        Just explore and click on the love icon for items you wish to buy soon or later. <br/>
-                                        Be aware that this section is not an archive. <br/>
-                                        When the item is not anymore available on the brand site <br/>
+                                        You have no items yet in this section. <br />
+                                        Just explore and click on the love icon for items you wish to buy soon or later. <br />
+                                        Be aware that this section is not an archive. <br />
+                                        When the item is not anymore available on the brand site <br />
                                         it will be removed from our site and this section.
                                     </p>
                                 </div>)}
                             <section id="page-body">
-                                <div className="is-hidden-tablet" style={{height: '20px'}}/>
+                                <div className="is-hidden-tablet" style={{ height: '20px' }} />
                                 <div className="wrapper">
 
                                     <MasonryLayout
                                         ref={instance => this.instance = instance}
                                         id="masonry-layout"
-                                        sizes={[{columns: 1, gutter: 20}, {
+                                        sizes={[{ columns: 1, gutter: 20 }, {
                                             mq: '769px',
                                             columns: 3,
                                             gutter: 20
-                                        }, {mq: '1025px', columns: 6, gutter: 20}]}
+                                        }, { mq: '1025px', columns: 6, gutter: 20 }]}
                                         infiniteScroll={async () => {
                                             await this.loadMoreProducts()
                                         }}
                                         infiniteScrollDistance={400}
                                     >
                                         {this.state.data.map((product, i) => <Product width={this.state.width}
-                                                                                      product={product} key={i}
-                                                                                      onLoad={() => this.debounce()}
-                                                                                      isBrand={false}/>)}
+                                            product={product} key={i}
+                                            onLoad={() => this.debounce()}
+                                            isBrand={false} />)}
                                     </MasonryLayout>
                                     {/*</div>*/}
                                 </div>
@@ -224,9 +227,9 @@ class MyLoves extends Component {
 
                     </div>
                 </div>
-                {this.state.isShowBrowse ? <Browse onClose={this.handleBrowseClose}/> : null}
-                {this.state.isShowManage ? <Manage onClose={this.handleManageClose}/> : null}
-                <BottomBar onSelect={this.handleBottomBarSelect}/>
+                {this.state.isShowBrowse ? <Browse onClose={this.handleBrowseClose} /> : null}
+                {this.state.isShowManage ? <Manage onClose={this.handleManageClose} /> : null}
+                <BottomBar onSelect={this.handleBottomBarSelect} />
             </Profile>
 
         )

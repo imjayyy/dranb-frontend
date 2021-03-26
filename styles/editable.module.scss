@@ -18,6 +18,13 @@
         font-weight: 400;
         font-family: Poppins, serif;
     }
+
+    @media only screen and (max-width: 500px) {
+        .input-editable {
+            font-size: 15px;
+            font-weight: 100;
+        }   
+    }
 }
 
 .editable.desc {

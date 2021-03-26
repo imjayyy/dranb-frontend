@@ -12,10 +12,10 @@ import Sticky from "react-stickynode";
 import { getBrandInfo, toggleFollowBrand } from "../../services";
 import BoardModal from "../BoardModal";
 
-import Filter from "../Filter/BrandFilter"
-import Browse from "../bottom_nav/Browse"
-import Manage from "../bottom_nav/Manage"
-import BottomBar from "../bottom_nav/BottomBar"
+import Filter from "../Filter/BrandFilter";
+import Browse from "../bottom_nav/Browse";
+import Manage from "../bottom_nav/Manage";
+import BottomBar from "../bottom_nav/BottomBar";
 
 import PropTypes from "prop-types";
 import TopNavCommon from "../TopNavCommon";
@@ -34,7 +34,13 @@ class Brand extends React.Component {
       isShowFilterButton: true,
       isShowFilter: false,
       isShowBrowse: false,
-      isShowManage: false
+      isShowManage: false,
+
+      scrollDirection: "scroll up",
+
+      threshold: 0,
+      isTicking: false,
+      lastScrollY: window.pageYOffset,
     };
   }
 
@@ -49,9 +55,44 @@ class Brand extends React.Component {
         is_following: data.is_following,
         genders: data.genders,
       });
+
+      window.addEventListener("scroll", this.onScroll);
     } catch (e) {
       this.props.setAuth(false);
       await this.props.router.push("/login");
+    }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.onScroll);
+  }
+
+  updateScrollDir = () => {
+    const scrollY = window.pageYOffset;
+
+    if (Math.abs(scrollY - this.state.lastScrollY) < this.state.threshold) {
+      this.setState({ isTicking: false });
+      return;
+    }
+
+    this.handleScrollDownUp(
+      scrollY > this.state.lastScrollY ? "scroll down" : "scroll up"
+    );
+    this.setState({ lastScrollY: scrollY > 0 ? scrollY : 0 });
+    this.setState({ isTicking: false });
+  };
+
+  onScroll = () => {
+    if (!this.state.isTicking) {
+      window.requestAnimationFrame(this.updateScrollDir);
+      this.setState({ isTicking: true });
+    }
+  };
+
+  handleScrollDownUp(scrollDirection) {
+    if (scrollDirection !== this.state.scrollDirection) {
+      console.log("-------------------", scrollDirection);
+      this.setState({ scrollDirection: scrollDirection });
     }
   }
 
@@ -73,44 +114,53 @@ class Brand extends React.Component {
 
   handleFilterClose = (value) => {
     this.setState({
-      isShowFilter: value
-    })
-  }
+      isShowFilter: value,
+      isShowFilterButton: true,
+    });
+  };
 
   handleBrowseClose = (value) => {
     this.setState({
-      isShowBrowse: value
-    })
-  }
+      isShowBrowse: value,
+    });
+  };
 
   handleManageClose = (value) => {
     this.setState({
-      isShowManage: value
-    })
-  }
+      isShowManage: value,
+    });
+  };
 
   handleBottomBarSelect = (value) => {
-    this.setState({isShowFilterButton: false, isShowFilter: false, isShowBrowse: false, isShowManage: false}, ()=>{
-      if (value === 1) {
-        this.props.setSiteType(1)
-        this.props.router.push('/')
-        this.setState({isShowFilterButton: true})
-      } else if (value === 2) {
-        this.setState({
-          isShowBrowse: true
-        })
-      } else if (value === 4) {
-        this.setState({
-          isShowManage: true
-        })
+    this.setState(
+      {
+        isShowFilterButton: false,
+        isShowFilter: false,
+        isShowBrowse: false,
+        isShowManage: false,
+      },
+      () => {
+        if (value === 1) {
+          this.props.setSiteType(1);
+          this.props.router.push("/");
+          this.setState({ isShowFilterButton: true });
+        } else if (value === 2) {
+          this.setState({
+            isShowBrowse: true,
+          });
+        } else if (value === 4) {
+          this.setState({
+            isShowManage: true,
+          });
+        }
       }
-    })
-  }
+    );
+  };
 
   render() {
     return (
       <>
-      {/* Top Bar */}
+        {/* Top Bar */}
         <div className="navbar is-fixed-top is-transparent navbar-d-none">
           <div className="mobile-top-bar">
             <button
@@ -121,42 +171,54 @@ class Brand extends React.Component {
             {this.props.brandName}
           </div>
           {/* Follow Bar */}
-          <div className="brand-top-bar filter">
-            <div className="filter-item">
-              <a
-                onClick={() => this.props.setBrandSiteType(1)}
-                className={`${
-                  this.props.brandSiteType === 1 ? "is-active" : ""
-                }`}>
-                new arrivals
-              </a>
-              <a
-                onClick={() => this.props.setBrandSiteType(2)}
-                className={`${
-                  this.props.brandSiteType === 2 ? "is-active" : ""
-                }`}>
-                sale
-              </a>
+          <div className={this.state.scrollDirection === "scroll down" ? "scroll-down" : "scroll-up"}>
+            <div className="brand-top-bar filter">
+              <div className="filter-item">
+                <a
+                  onClick={() => this.props.setBrandSiteType(1)}
+                  className={`${
+                    this.props.brandSiteType === 1 ? "is-active" : ""
+                  }`}
+                >
+                  new arrivals
+                </a>
+                <a
+                  onClick={() => this.props.setBrandSiteType(2)}
+                  className={`${
+                    this.props.brandSiteType === 2 ? "is-active" : ""
+                  }`}
+                >
+                  sale
+                </a>
+              </div>
+              <div className="filter-item">
+                <button
+                  className={this.state.is_following ? "unfollow" : "follow"}
+                  onClick={() => this.toggleFollow(this.props.brandName)}>
+                  {this.state.is_following ? "unfollow" : "follow"}
+                </button>
+              </div>
+              <div className="filter-item">
+                {this.state.followers} followers
+              </div>
             </div>
-            <div className="filter-item">
-              <button
-                className={this.state.is_following ? "unfollow" : "follow"}
-                onClick={() => this.toggleFollow(this.props.brandName)}
-              >
-                {this.state.is_following ? "unfollow" : "follow"}
-              </button>
-            </div>
-            <div className="filter-item">{this.state.followers} followers</div>
           </div>
           {/* Filter Button */}
-          {this.state.isShowFilterButton ? 
-            <button 
-              className="btn-filter" 
-              onClick={() => this.setState({isShowFilter: !this.state.isShowFilter, isShowFilterButton: false})}>
-                  <img src="/icons/filter.svg" />
-                  <p>Filter</p>
+          {this.state.isShowFilterButton ? (
+            <button
+              style={{position:"absolute", left: 0, top: '203px'}}
+              className="btn-filter"
+              onClick={() =>
+                this.setState({
+                  isShowFilter: !this.state.isShowFilter,
+                  isShowFilterButton: false,
+                })
+              }
+            >
+              <img src="/icons/filter.svg" />
+              <p>Filter</p>
             </button>
-          : null}
+          ) : null}
         </div>
 
         <Sticky
@@ -256,14 +318,18 @@ class Brand extends React.Component {
           </section>
         </Sticky>
 
-        <div className="brand-body">
-            {this.props.children}
-        </div>
+        <div className="brand-body">{this.props.children}</div>
 
-        {this.state.isShowFilter ? <Filter onClose={this.handleFilterClose}/> : null}
-        {this.state.isShowBrowse ? <Browse onClose={this.handleBrowseClose}/> : null}
-        {this.state.isShowManage ? <Manage onClose={this.handleManageClose}/> : null}
-        <BottomBar onSelect={this.handleBottomBarSelect}/>
+        {this.state.isShowFilter ? (
+          <Filter onClose={this.handleFilterClose} />
+        ) : null}
+        {this.state.isShowBrowse ? (
+          <Browse onClose={this.handleBrowseClose} />
+        ) : null}
+        {this.state.isShowManage ? (
+          <Manage onClose={this.handleManageClose} />
+        ) : null}
+        <BottomBar onSelect={this.handleBottomBarSelect} />
 
         <BoardModal onToggleSaved={this.props.onToggleSaved} />
       </>
