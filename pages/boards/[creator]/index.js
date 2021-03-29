@@ -172,7 +172,7 @@ class BoardsByCreator extends React.Component {
                             <section id="page-body">
                                 <div className="is-hidden-tablet" style={{height: '20px'}}/>
                                 <div className="wrapper">
-                                    <section className="create-by-breadcrumb">
+                                    <section className="create-by-breadcrumb navbar-d-none">
                                         <div style={{textAlign: 'center'}}>
                                             <div style={{display: 'inline', fontSize: '12px', color: 'gray', marginRight: '5px'}}>by</div> 
                                             <div style={{display: 'inline'}}>{this.props.creator}</div>

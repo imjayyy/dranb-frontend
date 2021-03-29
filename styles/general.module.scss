@@ -73,6 +73,8 @@ header {
         font-size: 12px;
         margin-left: 12px;
         margin-right: 12px;
+        text-align: center;
+        width: 85%;
 
         a {
             padding: 6px 25px;
@@ -392,4 +394,11 @@ header {
             padding: unset;
         }
     }
+}
+
+button.btn-no-border {
+    border: unset;
+    background: unset;
+    cursor: pointer;
+    color: #666565;
 }

@@ -300,19 +300,32 @@ class BoardHome extends React.Component {
             }
           >
             <div className="board-top-bar filter">
-              <div>
-                <div
-                  style={{
-                    display: "inline",
-                    fontSize: "12px",
-                    color: "gray",
-                    marginRight: "5px",
-                  }}>
-                  by
-                </div>
-                <div style={{ display: "inline" }}>{this.props.username}</div>
-              </div>
-              <div style={{ padding: "0px 20px" }}>
+              <>
+                {!this.props.isMine ? (
+                  <div>
+                    <div
+                      style={{
+                        display: "inline",
+                        fontSize: "12px",
+                        color: "gray",
+                        marginRight: "5px",
+                      }}
+                    >
+                      by
+                    </div>
+                    <div style={{ display: "inline" }}>
+                      {this.props.username}
+                    </div>
+                  </div>
+                ) : null}
+              </>
+              <div
+                style={{
+                  padding: "0px 10px",
+                  fontSize: "13px",
+                  fontWeight: 500,
+                }}
+              >
                 <>
                   {this.props.isMine ? (
                     <LabelEditable
@@ -326,19 +339,62 @@ class BoardHome extends React.Component {
                   )}
                 </>
               </div>
-              <div className="filter-item">
-                {!this.props.isMine && (
-                  <button
-                    className={this.state.isFollowing ? "unfollow" : "follow"}
-                    onClick={this.handleToggleFollow}
+              {!this.props.isMine ? (
+                <div className="filter-item">
+                  <div>
+                    <button
+                      className={this.state.isFollowing ? "unfollow" : "follow"}
+                      onClick={this.handleToggleFollow}
+                    >
+                      {this.state.isFollowing ? "unfollow" : "follow"}
+                    </button>
+                  </div>
+                  <div style={{ textAlign: "center" }}>
+                    {this.state.followers} followers
+                  </div>
+                </div>
+              ) : (
+                <div className="filter-item">
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
                   >
-                    {this.state.isFollowing ? "unfollow" : "follow"}
-                  </button>
-                )}
-              </div>
-              <div className="filter-item">
-                {this.state.followers} followers
-              </div>
+                    <button
+                      className="hidden-sticky-active btn-no-border"
+                      onClick={() => {
+                        document.getElementsByTagName(
+                          "html"
+                        )[0].style.overflowY = "hidden";
+                        this.showImageModal();
+                      }}
+                    >
+                      Change board image
+                    </button>
+                    <div
+                      className="hidden-sticky-active"
+                      style={{ display: "inline-block", width: "120px" }}>
+                      <Select
+                        options={this.options}
+                        value={this.options[this.state.optionIndex]}
+                        styles={customStyles}
+                        components={{ Option, SingleValue, IndicatorSeparator }}
+                        onChange={this.handleOptionChange}
+                      />
+                    </div>
+                  </div>
+                  <div style={{textAlign: "center"}}>
+                    <button
+                      className="btn-no-border"
+                      onClick={this.handleDeleteClicked}>
+                      delete board
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -444,6 +500,7 @@ class BoardHome extends React.Component {
         <BottomBar onSelect={this.handleBottomBarSelect} />
 
         {this.props.children}
+
         <BoardModal onToggleSaved={this.props.onToggleSaved} />
         {this.state.imageFilename && (
           <BoardImageModal

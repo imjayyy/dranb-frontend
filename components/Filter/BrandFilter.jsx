@@ -25,7 +25,7 @@ class BrandFilter extends React.Component {
             <img src="/icons/slider.svg" />
             <p style={{ marginLeft: "7px", fontSize: "11px" }}>filters</p>
           </div>
-          <div className="filter-item" style={{ marginBottom: "25px" }}>
+          <div className="filter-item" style={{ marginTop: "20px", marginBottom: "25px" }}>
             <a
               onClick={() => this.props.setBrandGender(0)}
               className={`${this.props.gender === 0 ? "is-active" : ""}`}

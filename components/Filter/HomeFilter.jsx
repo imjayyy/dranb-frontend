@@ -24,7 +24,7 @@ class HomeFilter extends React.Component {
             <img src="/icons/slider.svg" />
             <p style={{ marginLeft: "7px", fontSize: "11px" }}>filters</p>
           </div>
-          <div className="filter-item" style={{ marginBottom: "25px" }}>
+          <div className="filter-item" style={{ marginTop: "25px", marginBottom: "25px" }}>
             <a
               onClick={() => this.props.setExploreType(true)}
               className={`${this.props.exploreType ? "is-active" : ""}`}>
@@ -72,7 +72,6 @@ class HomeFilter extends React.Component {
           </div>
           <div 
             className="filter-item" 
-            style={{ marginBottom: "25px" }}
             onClick={() => this.props.onClose(false)}
             >
             <p style={{ fontSize: "20px", textAlign: "center" }}>X</p>

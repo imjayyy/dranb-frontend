@@ -152,7 +152,7 @@ class MyProfile extends Component {
                 <div className="navbar is-fixed-top navbar-d-none mobile-top-bar">
                     <div>my profile</div>
                 </div>
-                <div className="container" style={{padding: '20px'}}>
+                <div className="container is-mobile-profile">
                     <div id="page-content">
                         <div id="hero-and-body">
                             <div id="page-body">
