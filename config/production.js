@@ -1,5 +1,5 @@
 const config = {
-    domain: `https://bigaray.com`,
+    domain: `https://dranbs.com`,
 };
 
 export default config;
