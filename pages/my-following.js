@@ -147,7 +147,7 @@ class MyFollowing extends React.Component {
         this.setState({ isShowBrowse: false, isShowManage: false }, () => {
             if (value === 1) {
                 this.props.setSiteType(1)
-                this.props.router.push('/')
+                this.props.router.push('/home')
             } else if (value === 2) {
                 this.setState({
                     isShowBrowse: !this.state.isShowBrowse

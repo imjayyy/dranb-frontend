@@ -59,7 +59,7 @@ class HomeLayout extends React.Component {
 
       if (value === 1) {
         this.props.setSiteType(1)
-        this.props.router.push('/')
+        this.props.router.push('/home')
         this.setState({isShowFilterButton:true})
       } else if (value === 2) {
         this.setState({

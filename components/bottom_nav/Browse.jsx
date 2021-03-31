@@ -27,7 +27,7 @@ class Browse extends React.Component {
               }}
               onClick={() => {
                 this.props.setSiteType(1)
-                router.push('/')
+                router.push('/home')
               }}
             >
               new arrival
@@ -41,7 +41,7 @@ class Browse extends React.Component {
               }}
               onClick={() => {
                 this.props.setSiteType(2)
-                router.push('/')
+                router.push('/home')
               }}
             >
               sales

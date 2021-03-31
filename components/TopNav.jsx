@@ -18,21 +18,21 @@ class TopNav extends React.Component {
             <nav className="navbar">
                 <div className="navbar-menu">
                     <div className="navbar-start is-flex-direction-column">
-                        <Link href={"/"}>
+                        <Link href={"/home"}>
                             <h1 className="brand">DRANBS<small> / inspire your styles</small></h1>
                         </Link>
                         <div className="is-flex">
                             <a className={`navbar-item p-0 ${this.props.siteType == 1 ? 'is-active' : ''}`}
                                onClick={() => {
                                    this.props.setSiteType(1)
-                                   router.push('/')
+                                   router.push('/home')
                                }}>
                                 new arrivals
                             </a>
                             <a className={`navbar-item p-0 ${this.props.siteType == 2 ? 'is-active' : ''}`}
                                onClick={() => {
                                    this.props.setSiteType(2)
-                                   router.push('/')
+                                   router.push('/home')
                                }}>sale</a>
                             <Link href="/boards">
                                 <a className={`navbar-item p-0 ${router.pathname == '/boards' ? 'is-active' : ''}`}>boards</a>

@@ -47,7 +47,7 @@ class MyDocument extends Document {
                     <link rel="stylesheet" id="responsive-css" href="/css/mqueries.css" type="text/css"
                           media="all"/>
 
-                    <link rel="shortcut icon" href="/static/uploads/favicon.png"/>
+                    <link rel="shortcut icon" href="/static/favicon.png"/>
                 </Head>
                 <body>
                 <Main/>

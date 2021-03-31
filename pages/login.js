@@ -55,7 +55,7 @@ class Login extends Component {
                 loginError: null,
             })
             this.props.setAuth(response.data)
-            await this.props.router.push("/")
+            await this.props.router.push("/home")
         } catch (error) {
             this.setState({
                 loginError: error.response.data
@@ -97,7 +97,7 @@ class Login extends Component {
             }
             let response = await registerUser(payload)
             this.props.setAuth(response.data)
-            await this.props.router.push("/")
+            await this.props.router.push("/home")
         } catch (error) {
             this.setState({
                 registerError: error.response.data
