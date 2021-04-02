@@ -923,7 +923,7 @@ h6 small {
   margin: 0;
   min-width: 1200px;
   max-width: 100%;
-  min-height: 100vh;
+  /*min-height: 100vh;*/
 }
 
 .loading-end #page-content {
