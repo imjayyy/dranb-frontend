@@ -6,7 +6,7 @@ import {withRouter} from "next/router";
 import {setAuth} from "../../redux/actions";
 import Sticky from "react-stickynode";
 import BoardModal from "../BoardModal";
-import {changeBoardInfo, deleteBoard, getBoardInfo, toggleFollowBoard} from "../../services";
+import {changeBoardInfo, deleteBoard, getBoardInfo, toggleFollowBoard} from "../../utils/api";
 import Select from "react-select";
 import {IndicatorSeparator, SingleValue, Option} from "../custom-select";
 import BoardImageModal from "../BoardImageModal";

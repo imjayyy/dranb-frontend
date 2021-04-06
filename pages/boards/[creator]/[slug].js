@@ -1,5 +1,5 @@
 import React from 'react'
-import {getProductsByBoard} from "../../../services";
+import {getProductsByBoard} from "../../../utils/api";
 import MasonryLayout from "react-masonry-layout";
 import {connect} from "react-redux";
 import {setAuth} from "../../../redux/actions";

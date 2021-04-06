@@ -1,17 +1,19 @@
 import React from 'react'
-import Profile from "../components/layout/Profile";
-import { getMyFollowings } from "../services";
-import { connect } from "react-redux";
-import { setAuth, setSiteType } from "../redux/actions";
 import { withRouter } from "next/router";
 import MasonryLayout from "react-masonry-layout";
-import Board from "../components/Board";
 import AwesomeDebouncePromise from "awesome-debounce-promise";
-import styles from "../styles/Home.module.scss";
+import { connect } from "react-redux";
 
+import Board from "../components/Board";
 import Browse from "../components/bottom_nav/Browse"
 import Manage from "../components/bottom_nav/Manage"
 import BottomBar from "../components/bottom_nav/BottomBar"
+import Profile from "../components/layout/Profile";
+
+import { getMyFollowings } from "../utils/api";
+import { setAuth, setSiteType } from "../redux/actions";
+
+import styles from "../styles/Home.module.scss";
 
 const repackDebounced = AwesomeDebouncePromise(() => (true), 50);
 

@@ -4,7 +4,7 @@ import config from "../config";
 import styles from "./product.module.scss";
 import Link from "next/link";
 import {Dashboard, DashboardOutlined, Favorite, FavoriteBorderOutlined} from "@material-ui/icons";
-import {toggleLoveProduct} from "../services";
+import {toggleLoveProduct} from "../utils/api";
 import {connect} from "react-redux";
 import {withRouter} from "next/router";
 import {setAuth, setModalActive, setProductIdForBoard} from "../redux/actions";

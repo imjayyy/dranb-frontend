@@ -10,7 +10,8 @@
 }
 
 .login {
-    padding-top: 122px;
+    padding-top: 90px;
+    padding-bottom: 90px;
     width: 343px;
 }
 
@@ -29,19 +30,19 @@
 }
 
 .input {
-    input {
-        border-radius: 5px;
-        border: solid 1px #ebf0ff;
-        font-size: 12px;
-        padding: 13px 16px 13px 50px;
-        padding-left: 50px !important;
-        height: 48px;
-    }
-
-    span {
-        height: 48px !important;
-        width: 48px !important;
-    }
+    //input {
+    //    border-radius: 5px;
+    //    border: solid 1px #ebf0ff;
+    //    font-size: 12px;
+    //    padding: 13px 16px 13px 50px;
+    //    padding-left: 50px !important;
+    //    height: 48px;
+    //}
+    //
+    //span {
+    //    height: 48px !important;
+    //    width: 48px !important;
+    //}
 
     i {
         color: #9098b1;
@@ -49,13 +50,13 @@
 }
 
 .button {
-    button {
-        border-radius: 5px;
-        padding: 16px;
-        height: 57px;
-        font-weight: bold;
-        font-size: 14px;
-    }
+    //button {
+    //    border-radius: 5px;
+    //    padding: 16px;
+    //    height: 57px;
+    //    font-weight: bold;
+    //    font-size: 14px;
+    //}
 }
 
 .divider {
@@ -88,18 +89,19 @@
 .socialButton {
     button {
         border: 1px solid #EBF0FF;
-        border-radius: 5px;
-        padding: 16px;
-        height: 57px;
+        //border-radius: 5px;
+        //padding: 16px;
+        //height: 57px;
         font-weight: bold;
-        font-size: 14px;
+        //font-size: 14px;
         color: #9098b1;
         position: relative;
     }
 
     span {
         position: absolute;
-        left: 25px;
+        //left: 25px;
+        left: 15px;
     }
 }
 

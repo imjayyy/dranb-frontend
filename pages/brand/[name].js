@@ -4,7 +4,7 @@ import AwesomeDebouncePromise from 'awesome-debounce-promise';
 
 const repackDebounced = AwesomeDebouncePromise(() => (true), 50);
 import Brand from '../../components/layout/Brand'
-import {getBrandInfo, getProductsByBrand} from "../../services";
+import {getBrandInfo, getProductsByBrand} from "../../utils/api";
 import {connect} from "react-redux";
 import {withRouter} from "next/router";
 import Product from "../../components/Product";

@@ -1,13 +1,13 @@
 import {Component} from 'react'
 import React from "react";
 import Link from "next/link";
-
 import {connect} from "react-redux";
-
 import {withRouter} from "next/router";
 import {
     setAuth,
 } from "../redux/actions";
+
+import styles from '../styles/Landing.module.scss'
 
 class Login extends Component {
     componentDidMount() {
@@ -18,24 +18,19 @@ class Login extends Component {
 
     render() {
         return (
-            <div>
-                <div className="navbar-start is-flex-direction-column">
-                    <Link href={"/login"}>
-                        <div className="landing-body">
-                            <div style={{height: '40%', display: 'flex', alignItems: 'center'}}>
-                                <div style={{textAlign: 'center'}}>
-                                    <h1 className="brand">DRANBS</h1>
-                                    <div>inspire your styles</div>
-                                </div>
-                            </div>
-                            <div style={{height: '60%'}}>
-                                <button className="button is-primary login-btn-d-none" style={{marginTop: '-55px'}}
-                                        type='submit'>
-                                    Login / Sign up
-                                </button>
-                            </div>
-                        </div>
-                    </Link>
+            <div className="navbar-start is-flex-direction-column">
+                <div className="landing-body">
+                    <div className={styles.heading}>
+                        <h1>DRANBS</h1>
+                        <p>inspire your styles</p>
+                    </div>
+                    <div className="has-text-centered">
+                        <Link href={"/login"}>
+                            <a className={`button is-black ${styles.login}`}>
+                                Login / Sign up
+                            </a>
+                        </Link>
+                    </div>
                 </div>
             </div>
         )

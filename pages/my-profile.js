@@ -1,14 +1,10 @@
 import {Component} from 'react'
 import React from "react";
-import {Radio} from 'pretty-checkbox-react';
-
-const countriesNames = require('countries-names');
 import Select from 'react-select';
-
-const countries = countriesNames.all().map(x => ({value: x.name, label: x.name}))
-import {getProfile, patchProfile} from "../services";
 import {connect} from "react-redux";
 import {withRouter} from "next/router";
+
+import {getProfile, patchProfile} from "../utils/api";
 import Default from "../components/layout/Default";
 import { setAuth, setSiteType } from "../redux/actions";
 
@@ -27,7 +23,6 @@ class MyProfile extends Component {
             birthdayMM: '',
             birthdayDD: '',
             birthdayYYYY: '',
-            country: '',
             email: '',
             password: '',
             passwordAgain: '',
@@ -56,7 +51,6 @@ class MyProfile extends Component {
                 firstName: data.data.first_name,
                 lastName: data.data.last_name,
                 gender: gender,
-                country: {label: data.data.country, value: data.data.country},
                 email: data.data.email,
                 username: data.data.username,
                 birthdayMM: month,
@@ -124,7 +118,6 @@ class MyProfile extends Component {
                 first_name: this.state.firstName,
                 last_name: this.state.lastName,
                 gender: parseInt(this.state.gender),
-                country: this.state.country.value,
                 email: this.state.email,
                 username: this.state.username,
             }
@@ -274,23 +267,6 @@ class MyProfile extends Component {
                                                 </div>
                                                 {this.state.error && this.state.error.birthday && (
                                                     this.state.error.birthday.map((message, index) => (
-                                                        <p className="help is-danger" key={index}>
-                                                            {message}
-                                                        </p>
-                                                    ))
-                                                )}
-                                            </div>
-                                            <div className="field">
-                                                <label className="label">Country</label>
-                                                <Select
-                                                    // style={{width: '100%'}}
-                                                    value={this.state.country}
-                                                    onChange={e => this.setState({country: e})}
-                                                    options={countries}
-                                                    instanceId="key"
-                                                />
-                                                {this.state.error && this.state.error.country && (
-                                                    this.state.error.country.map((message, index) => (
                                                         <p className="help is-danger" key={index}>
                                                             {message}
                                                         </p>

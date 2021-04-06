@@ -12,7 +12,7 @@ import Browse from "../components/bottom_nav/Browse"
 import Manage from "../components/bottom_nav/Manage"
 import BottomBar from "../components/bottom_nav/BottomBar"
 
-import { submitTicket } from "../services";
+import { submitTicket } from "../utils/api";
 
 class Contact extends React.Component {
     constructor(props) {

@@ -2,7 +2,7 @@ import React from 'react'
 import AwesomeDebouncePromise from "awesome-debounce-promise";
 import MasonryLayout from "react-masonry-layout";
 import Board from "../../components/Board";
-import { getBoards } from "../../services";
+import { getBoards } from "../../utils/api";
 import { connect } from "react-redux";
 import { setAuth } from "../../redux/actions";
 import { withRouter } from "next/router";

@@ -3,7 +3,7 @@ import MasonryLayout from 'react-masonry-layout'
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
 
 const repackDebounced = AwesomeDebouncePromise(() => (true), 50);
-import { getMyLoves } from "../services";
+import { getMyLoves } from "../utils/api";
 import { connect } from "react-redux";
 import { withRouter } from "next/router";
 

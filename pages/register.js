@@ -4,15 +4,13 @@ import Select from 'react-select';
 import DatePicker from 'react-datepicker'
 import {connect} from "react-redux";
 import {withRouter} from "next/router";
-import {registerUser} from "../services";
+import Link from 'next/link'
+import {registerUser} from "../utils/api";
 import {setAuth} from "../redux/actions";
 import Default from "../components/layout/Default";
 
-import "react-datepicker/dist/react-datepicker.css";
 import styles from '../styles/Register.module.scss'
-
-const countriesNames = require('countries-names');
-const countries = countriesNames.all().map(x => ({value: x.name, label: x.name}))
+import {formatDate} from "../utils";
 
 const genders = [
     {value: 2, label: 'Male'},
@@ -26,21 +24,14 @@ class Register extends Component {
         this.state = {
             firstName: '',
             lastName: '',
-            gender: 1,
-            birthDay: new Date(),
+            gender: {value: 2, label: 'Male'},
+            birthDay: undefined,
             country: '',
             email: '',
-            username: '',
             password: '',
             passwordConfirm: '',
             error: null
         }
-    }
-
-    validator = () => {
-        return Object.keys(this.state)
-            .filter(x => x.startsWith("register"))
-            .find(x => this.state[x].length === 0)
     }
 
     handleChange = (event) => {
@@ -61,20 +52,18 @@ class Register extends Component {
             let payload = {
                 first_name: this.state.firstName,
                 last_name: this.state.lastName,
-                gender: parseInt(this.state.gender),
-                country: this.state.country.value,
+                gender: this.state.gender.value,
                 email: this.state.email,
-                username: this.state.username,
                 password: this.state.password,
                 password_confirm: this.state.passwordConfirm,
-                birthday: this.state.birthDay
+                birthday: formatDate(this.state.birthDay)
             }
             let response = await registerUser(payload)
             this.props.setAuth(response.data)
             await this.props.router.push("/home")
         } catch (error) {
             this.setState({
-                registerError: error.response.data
+                error: error.response.data
             })
         }
     }
@@ -85,8 +74,8 @@ class Register extends Component {
                 <div className="container">
                     <div className="is-flex is-justify-content-center">
                         <div className={styles.register}>
-                            <h4 className={styles.heading}>You forgot your password</h4>
-                            <p className={styles.subTitle}>enter your email</p>
+                            <h4 className={styles.heading}>Let's Get Started</h4>
+                            <p className={styles.subTitle}>Create a new account</p>
                             <form onSubmit={this.handleRegister}>
                                 <div className="field">
                                     <div className="control has-icons-left">
@@ -131,27 +120,38 @@ class Register extends Component {
                                     )}
                                 </div>
                                 <div className="field">
-                                    <label className="label">Gender</label>
+                                    <label className="label">Choose gender</label>
                                     <div className="control">
-                                        <Select options={genders} onChange={e => this.setState({gender: e})} instanceId="gender" />
+                                        <Select options={genders} value={this.state.gender} onChange={option => this.setState({gender: option})} instanceId="gender" />
                                     </div>
                                 </div>
                                 <div className="field">
-                                    <label className="label">Birthday</label>
-                                    <div className="control">
-                                        <DatePicker className="input" selected={this.state.birthDay} onChange={date => this.setState({birthDay: date})} />
+                                    <label className="label">Your birthday</label>
+                                    <div className="control has-icons-right">
+                                        <DatePicker
+                                            className="input"
+                                            wrapperClassName="is-block"
+                                            placeholderText="MM/DD/YYYY"
+                                            dateFormat="MM/dd/yyyy"
+                                            selected={this.state.birthDay}
+                                            onChange={date => this.setState({birthDay: date})}
+                                        />
+                                        <span className="icon is-right"><i className="fal fa-calendar"/></span>
                                     </div>
                                 </div>
                                 <div className="field">
-                                    <input
-                                        type="email"
-                                        className="input"
-                                        name="email"
-                                        value={this.state.email}
-                                        placeholder={"Email"}
-                                        onChange={this.handleChange}
-                                        required
-                                    />
+                                    <div className="control has-icons-left">
+                                        <input
+                                            type="email"
+                                            className="input"
+                                            name="email"
+                                            value={this.state.email}
+                                            placeholder={"Email"}
+                                            onChange={this.handleChange}
+                                            required
+                                        />
+                                        <span className="icon is-left"><i className="fal fa-envelope"/></span>
+                                    </div>
                                     {this.state.error && this.state.error.email && (
                                         this.state.error.email.map((message, index) => (
                                             <p className="help is-danger" key={index}>
@@ -161,14 +161,17 @@ class Register extends Component {
                                     )}
                                 </div>
                                 <div className="field">
-                                    <input
-                                        className="input"
-                                        type="password"
-                                        name="password"
-                                        value={this.state.password}
-                                        placeholder={"Password"}
-                                        onChange={this.handleChange}
-                                    />
+                                    <div className="control has-icons-left">
+                                        <input
+                                            className="input"
+                                            type="password"
+                                            name="password"
+                                            value={this.state.password}
+                                            placeholder={"Password"}
+                                            onChange={this.handleChange}
+                                        />
+                                        <span className="icon is-left"><i className="fal fa-lock-alt" /></span>
+                                    </div>
                                     {this.state.error && this.state.error.password && (
                                         this.state.error.password.map((message, index) => (
                                             <p className="help is-danger" key={index}>
@@ -178,14 +181,17 @@ class Register extends Component {
                                     )}
                                 </div>
                                 <div className="field">
-                                    <input
-                                        className="input"
-                                        type="password"
-                                        name="passwordConfirm"
-                                        value={this.state.passwordConfirm}
-                                        placeholder={"Password Confirmation"}
-                                        onChange={this.handleChange}
-                                    />
+                                    <div className="control has-icons-left">
+                                        <input
+                                            className="input"
+                                            type="password"
+                                            name="passwordConfirm"
+                                            value={this.state.passwordConfirm}
+                                            placeholder={"Password Again"}
+                                            onChange={this.handleChange}
+                                        />
+                                        <span className="icon is-left"><i className="fal fa-lock-alt"/></span>
+                                    </div>
                                     {this.state.error && this.state.error.password_confirm && (
                                         this.state.error.password_confirm.map((message, index) => (
                                             <p className="help is-danger" key={index}>
@@ -194,8 +200,11 @@ class Register extends Component {
                                         ))
                                     )}
                                 </div>
-                                <div className="signup field">
-                                    <button className="button is-primary">Sign Up</button>
+                                <div className="field">
+                                    <button className="button is-black is-block is-fullwidth">Sign Up</button>
+                                </div>
+                                <div className="field">
+                                    <p className={styles.footer}>have an account?<Link href="/login">Sign in</Link></p>
                                 </div>
                             </form>
                         </div>

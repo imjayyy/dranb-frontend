@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styles from './modal.module.scss'
 import config from "../config";
-import {uploadBoardImage} from "../services";
+import {uploadBoardImage} from "../utils/api";
 import {connect} from "react-redux";
 import {setAuth} from "../redux/actions";
 import {withRouter} from "next/router";

@@ -3,7 +3,7 @@ import { withRouter } from "next/router";
 import Default from "../components/layout/Default";
 
 import styles from '../styles/ResetPassword.module.scss'
-import { sendResetPasswordLink } from '../services';
+import { sendResetPasswordLink } from '../utils/api';
 
 class ForgotPassword extends React.Component {
     constructor(props) {
@@ -46,7 +46,7 @@ class ForgotPassword extends React.Component {
                                 {this.state.message && (
                                     <div className="notification is-success">{this.state.message}</div>
                                 )}
-                                <div className={`field ${styles.input}`}>
+                                <div className={`field`}>
                                     <div className="control has-icons-left">
                                         <input 
                                             type="email" className="input" 
@@ -60,7 +60,7 @@ class ForgotPassword extends React.Component {
                                         <p className="help is-danger">{errorMsg}</p>
                                     ))}
                                 </div>
-                                <div className={`field ${styles.button}`}>
+                                <div className={`field`}>
                                     <button className="button is-black is-block is-fullwidth">Send</button>
                                 </div>
                             </form>

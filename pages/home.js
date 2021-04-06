@@ -4,7 +4,7 @@ import AwesomeDebouncePromise from 'awesome-debounce-promise';
 
 const repackDebounced = AwesomeDebouncePromise(() => (true), 50);
 import HomeLayout from '../components/layout/HomeLayout'
-import {getProducts} from "../services";
+import {getProducts} from "../utils/api";
 import {connect} from "react-redux";
 import {withRouter} from "next/router";
 

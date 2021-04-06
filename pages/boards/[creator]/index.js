@@ -1,5 +1,5 @@
 import React from 'react'
-import {getBoardsByCreator} from "../../../services";
+import {getBoardsByCreator} from "../../../utils/api";
 import AwesomeDebouncePromise from "awesome-debounce-promise";
 import MasonryLayout from "react-masonry-layout";
 import Board from "../../../components/Board";

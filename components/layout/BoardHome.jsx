@@ -11,7 +11,7 @@ import {
   deleteBoard,
   getBoardInfo,
   toggleFollowBoard,
-} from "../../services";
+} from "../../utils/api";
 import Select from "react-select";
 import { IndicatorSeparator, SingleValue, Option } from "../custom-select";
 import BoardImageModal from "../BoardImageModal";

@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from "react-redux";
 import {setModalActive} from "../redux/actions";
 import Select, {components} from "react-select";
-import {createBoard, getBoards, toggleProductSaved} from "../services";
+import {createBoard, getBoards, toggleProductSaved} from "../utils/api";
 import BoardCheckbox from "./BoardCheckbox";
 
 import {IndicatorSeparator, SingleValue, Option} from "./custom-select";

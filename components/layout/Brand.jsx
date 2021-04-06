@@ -9,7 +9,7 @@ import {
   setSiteType,
 } from "../../redux/actions";
 import Sticky from "react-stickynode";
-import { getBrandInfo, toggleFollowBrand } from "../../services";
+import { getBrandInfo, toggleFollowBrand } from "../../utils/api";
 import BoardModal from "../BoardModal";
 
 import Filter from "../Filter/BrandFilter";
