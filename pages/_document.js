@@ -48,14 +48,15 @@ class MyDocument extends Document {
                           media="all"/>
 
                     <link rel="shortcut icon" href="/static/favicon.png"/>
+
+                    <script src="https://apis.google.com/js/api:client.js"></script>
+                    <script async defer crossOrigin="anonymous"
+                            src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0&appId=497881364907817&autoLogAppEvents=1"
+                            nonce="m4L90t2X"></script>
                 </Head>
                 <body>
                 <Main/>
                 <NextScript/>
-                <script src="https://apis.google.com/js/api:client.js"></script>
-                <script async defer crossOrigin="anonymous"
-                        src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0&appId=497881364907817&autoLogAppEvents=1"
-                        nonce="m4L90t2X"></script>
                 <script src="/jquery/jquery.min.js"></script>
                 <script src="/js/plugins.js" type="text/javascript"></script>
                 <script src="/js/jquery.sticky-kit.min.js" type="text/javascript"></script>
