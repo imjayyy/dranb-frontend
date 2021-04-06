@@ -38,7 +38,8 @@ class Login extends Component {
                 token: authObj.id_token
             })
                 .then(data => {
-                    console.log(data)
+                    this.props.setAuth(data)
+                    this.props.router.push("/home")
                 })
                 .catch(error => console.error(error))
         }, (error) => {
@@ -55,7 +56,8 @@ class Login extends Component {
             const token = response.authResponse.accessToken
             socialLogin('facebook', {token})
                 .then(data => {
-                    console.log(data)
+                    this.props.setAuth(data)
+                    this.props.router.push("/home")
                 })
                 .catch(error => console.error(error))
         }
