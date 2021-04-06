@@ -9,6 +9,11 @@ export const loginUser = async (payload) => {
     return await axios.post(`${config.domain}/api/sessions`, payload)
 }
 
+export const sendResetPasswordLink = async (payload) => {
+    const response = await axios.post(`${config.domain}/api/send-reset-password-link`, payload);
+    return response.data
+}
+
 export const getProfile = async (token) => {
     const response = await axios.get(`${config.domain}/api/profile`, {
         headers: {

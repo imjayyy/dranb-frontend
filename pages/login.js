@@ -81,6 +81,13 @@ class Login extends Component {
                                                     />
                                                     <span className="icon is-small is-left"><i className="fal fa-envelope" /></span>
                                                 </div>
+                                                {this.state.error && this.state.error.email && (
+                                                    this.state.error.email.map((message, index) => (
+                                                        <p className="help is-danger" key={index}>
+                                                            {message}
+                                                        </p>
+                                                    ))
+                                                )}
                                             </div>
                                             <div className={`field ${styles.input}`}>
                                                 <div className="control has-icons-left">
@@ -93,6 +100,13 @@ class Login extends Component {
                                                     />
                                                     <span className="icon is-small is-left"><i className="fal fa-lock-alt" /></span>
                                                 </div>
+                                                {this.state.error && this.state.error.password && (
+                                                    this.state.error.password.map((message, index) => (
+                                                        <p className="help is-danger" key={index}>
+                                                            {message}
+                                                        </p>
+                                                    ))
+                                                )}
                                             </div>
                                             <div className={`field ${styles.button}`}>
                                                 <button className="button is-black is-block is-fullwidth">Sign In</button>
