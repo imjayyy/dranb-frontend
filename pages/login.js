@@ -2,8 +2,9 @@ import { Component } from 'react'
 import React from "react";
 import { connect } from "react-redux";
 import Link from "next/link";
+import Head from 'next/head'
 import { withRouter } from "next/router";
-import { loginUser } from "../utils/api";
+import {loginUser, socialLogin} from "../utils/api";
 import { setAuth } from "../redux/actions";
 import Default from "../components/layout/Default";
 
@@ -16,6 +17,48 @@ class Login extends Component {
             email: '',
             password: '',
             error: null,
+        }
+        this.gRef = React.createRef();
+        this.auth2 = null
+    }
+
+    componentDidMount() {
+        gapi.load('auth2', () => {
+            this.auth2 = gapi.auth2.init({
+                client_id: '793656763682-nll8aftu395dt107uakbqnv3tu0fib19.apps.googleusercontent.com',
+                cookiepolicy: 'single_host_origin',
+            });
+            this.attachSignin(this.gRef.current)
+        })
+    }
+
+    attachSignin = (element) => {
+        this.auth2.attachClickHandler(element, {}, (googleUser) => {
+            let authObj = googleUser.getAuthResponse()
+            socialLogin('google', {
+                token: authObj.id_token
+            })
+                .then(data => {
+                    console.log(data)
+                })
+                .catch(error => console.error(error))
+        }, (error) => {
+            console.log(JSON.stringify(error, undefined, 2));
+        })
+    }
+
+    handleFbClicked = () => {
+        FB.login(this.statusChangeCallback, {scope: 'email,public_profile', return_scopes: true});
+    }
+
+    statusChangeCallback = (response) => {
+        if (response.status === 'connected') {
+            const token = response.authResponse.accessToken
+            socialLogin('facebook', {token})
+                .then(data => {
+                    console.log(data)
+                })
+                .catch(error => console.error(error))
         }
     }
 
@@ -45,6 +88,12 @@ class Login extends Component {
     render() {
         return (
             <Default>
+                <Head>
+                    <script src="https://apis.google.com/js/api:client.js"></script>
+                    <script async defer crossOrigin="anonymous"
+                            src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0&appId=497881364907817&autoLogAppEvents=1"
+                            nonce="m4L90t2X"></script>
+                </Head>
                 <div className="container">
                     <div className="is-flex is-justify-content-center">
                         <div className={styles.login}>
@@ -104,12 +153,12 @@ class Login extends Component {
                                 <p>OR</p>
                             </div>
                             <div className={`field ${styles.socialButton}`}>
-                                <button className="button is-block is-fullwidth">
+                                <button className="button is-block is-fullwidth" ref={this.gRef}>
                                     <span className="icon"><img src="/icons/Google.svg"/></span> Login with Google
                                 </button>
                             </div>
                             <div className={`field ${styles.socialButton}`}>
-                                <button className="button is-block is-fullwidth">
+                                <button className="button is-block is-fullwidth" onClick={this.handleFbClicked}>
                                     <span className="icon"><img src="/icons/Facebook.svg"/></span> Login with facebook
                                 </button>
                             </div>
