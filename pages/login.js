@@ -2,7 +2,6 @@ import { Component } from 'react'
 import React from "react";
 import { connect } from "react-redux";
 import Link from "next/link";
-import Head from 'next/head'
 import { withRouter } from "next/router";
 import {loginUser, socialLogin} from "../utils/api";
 import { setAuth } from "../redux/actions";
@@ -88,12 +87,6 @@ class Login extends Component {
     render() {
         return (
             <Default>
-                <Head>
-                    <script src="https://apis.google.com/js/api:client.js"></script>
-                    <script async defer crossOrigin="anonymous"
-                            src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0&appId=497881364907817&autoLogAppEvents=1"
-                            nonce="m4L90t2X"></script>
-                </Head>
                 <div className="container">
                     <div className="is-flex is-justify-content-center">
                         <div className={styles.login}>
