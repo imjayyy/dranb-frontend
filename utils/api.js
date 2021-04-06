@@ -14,6 +14,11 @@ export const sendResetPasswordLink = async (payload) => {
     return response.data
 }
 
+export const resetPassword = async (payload) => {
+    const response = await axios.post(`${config.domain}/api/reset-password`, payload)
+    return response.data
+}
+
 export const getProfile = async (token) => {
     const response = await axios.get(`${config.domain}/api/profile`, {
         headers: {
