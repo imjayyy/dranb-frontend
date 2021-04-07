@@ -75,7 +75,7 @@ class TopNavCommon extends React.Component {
                                                 My boards
                                             </a>
                                         </Link>
-                                        <Link href="/my-profile">
+                                        <Link href="/settings">
                                             <a className="navbar-item">
                                                 my profile
                                             </a>

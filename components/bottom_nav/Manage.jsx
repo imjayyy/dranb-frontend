@@ -32,7 +32,7 @@ class Manage extends React.Component {
               }}>
               <a className="navbar-item">my boards</a>
             </Link>
-            <Link href={`/my-profile`}
+            <Link href={`/settings`}
               style={{
                 display: "flex",
                 flexDirection: "row",
