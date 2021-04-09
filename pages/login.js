@@ -24,7 +24,7 @@ class Login extends Component {
     componentDidMount() {
         gapi.load('auth2', () => {
             this.auth2 = gapi.auth2.init({
-                client_id: '47360952636-aapi1cm6n0o3013iugf9d97d761c4n2o.apps.googleusercontent.com',
+                client_id: '1088245675677-0n50acbl70dsehpdr89f636ucmf1qa37.apps.googleusercontent.com',
                 cookiepolicy: 'single_host_origin',
             });
             this.attachSignin(this.gRef.current)
