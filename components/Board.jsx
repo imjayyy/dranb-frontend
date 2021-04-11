@@ -5,6 +5,16 @@ import config from "../config";
 import styles from './board.module.scss'
 
 class Board extends React.Component {
+    displayNewCount = (newest) => {
+        if (newest > 99) {
+            return '99 +'
+        } else if(newest <= 99 && newest >= 10) {
+            return `+ ${newest}`
+        } else {
+            return `+ 0${newest}`
+        }
+    }
+
     render() {
         const board = this.props.board
         return (
@@ -17,6 +27,9 @@ class Board extends React.Component {
                             onLoad={this.props.onLoad}
                             src={`${config.domain}/images/${board.image_filename}`}
                             alt=""/>
+                        {board.newest && (
+                            <span className="new-count">{this.displayNewCount(board.newest)}</span>
+                        )}
                     </a>
                 </Link>
                 <div className="blog-info" style={{paddingLeft: '10px'}}>

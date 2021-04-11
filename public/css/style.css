@@ -4485,6 +4485,18 @@ div .column-section:first-child,
     padding: 0;
 }
 
+.thumb-hover .new-count {
+    position: absolute;
+    top: 0;
+    left: 15px;
+    background: #FA9805;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    font-size: 12px;
+    line-height: 12px;
+    color: white;
+    padding: 4px;
+}
+
 /* overlay caption */
 .thumb-hover .overlay-caption {
     position: absolute;

@@ -27,16 +27,16 @@
 .board {
     a {
         position: relative;
-        padding-top: 132%;
+        padding-top: calc(132% + 5px);
     }
 
     img {
         position: absolute;
-        top: 50%;
+        top: calc(50% + 5px);
         left: 50%;
         transform: translate(-50%, -50%);
         border-radius: 10px;
-        height: 100%;
+        height: calc(100% - 2px);
         width: 100%;
         object-fit: cover;
     }
