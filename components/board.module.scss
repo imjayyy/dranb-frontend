@@ -2,6 +2,9 @@
     font-weight: 300;
     font-size: 14px;
     line-height: 21px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .creator {
@@ -10,6 +13,7 @@
     line-height: 22px;
     color: #939393;
     margin-bottom: 7px;
+    white-space: nowrap;
 
     strong {
         font-weight: 400;
