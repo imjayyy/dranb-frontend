@@ -25,7 +25,7 @@ class BoardsPage extends React.Component {
 
     getInitialBoards = async () => {
         try {
-            const response = await getBoards(this.props.auth.meta.token, 0, '')
+            const response = await getBoards(this.props.auth.meta.token, 0, '', this.props.sortType.value)
             if (response.data.length === 0) {
                 this.setState({
                     hasMore: false
@@ -55,7 +55,7 @@ class BoardsPage extends React.Component {
             return
         this.setState({ isLoadingData: true }, this.mount)
         try {
-            const response = await getBoards(this.props.auth.meta.token, this.state.dataPage, '')
+            const response = await getBoards(this.props.auth.meta.token, this.state.dataPage, '', this.props.sortType.value)
             let data = response.data
             if (data.length === 0) {
                 this.setState({
@@ -133,6 +133,10 @@ class BoardsPage extends React.Component {
         if ((prevState.width !== this.state.width)) {
             this.repackItems()
         }
+        if (this.props.sortType !== prevProps.sortType) {
+            this.props.toggleLoaded(false)
+            await this.getInitialBoards()
+        }
     }
 
     render() {
@@ -197,6 +201,7 @@ class BoardsPage extends React.Component {
 const mapStateToProps = state => {
     return {
         auth: state.auth.auth,
+        sortType: state.boardFilter.sortType
     }
 }
 

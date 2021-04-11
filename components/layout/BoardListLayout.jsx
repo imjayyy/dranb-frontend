@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Link from "next/link";
 import {connect} from "react-redux";
 import {withRouter} from "next/router";
-import {setAuth, setSiteType} from "../../redux/actions";
+import {setAuth, setBoardSortType, setSiteType} from "../../redux/actions";
 import Sticky from "react-stickynode";
 
 import Browse from "../bottom_nav/Browse";
@@ -12,6 +12,89 @@ import BottomBar from "../bottom_nav/BottomBar";
 
 import TopNavCommon from "../TopNavCommon";
 import Select from "react-select";
+
+const customStyles = {
+    container: (provided, state) => {
+        return {
+            ...provided,
+            width: '143px',
+        }
+    },
+    control: (provided, state) => {
+        return {
+            ...provided,
+            minHeight: '24px',
+            height: '24px',
+            border: 0,
+            backgroundColor: '#F7F7F7',
+            borderRadius: 0
+        }
+    },
+    indicatorSeparator: (provided, state) => {
+        return {
+            display: 'none'
+        }
+    },
+    menu: (provided, state) => {
+        return {
+            ...provided,
+            backgroundColor: '#F7F7F7',
+            borderRadius: 0,
+            paddingTop: 0,
+            paddingBottom: 0,
+            top: 0,
+            marginTop: 0,
+            marginBottom: 0
+        }
+    },
+    valueContainer: (provided, state) => {
+        return {
+            ...provided,
+            height: '24px',
+        }
+    },
+    singleValue: (provided) => {
+        return {
+            ...provided,
+            fontSize: '12px'
+        }
+    },
+    dropdownIndicator: (provided, state) => {
+        return {
+            ...provided,
+            color: 'black',
+            height: '24px',
+            padding: 0,
+            alignItems: 'center'
+        }
+    },
+    input: (provided, state) => {
+        return {
+
+        }
+    },
+    menuList: (provided, state) => {
+        return {
+            ...provided,
+            paddingBottom: 0,
+            paddingTop: 0
+        }
+    },
+    option: (provided) => {
+        return {
+            ...provided,
+            fontSize: '12px',
+            color: 'black',
+            padding: '4px 12px'
+        }
+    },
+    placeholder: (provided) => {
+        return {
+            ...provided,
+            fontSize: '12px'
+        }
+    }
+}
 
 class BoardListLayout extends React.Component {
     constructor(props) {
@@ -24,6 +107,12 @@ class BoardListLayout extends React.Component {
             isShowManage: false,
         };
     }
+
+    options = [
+        {value: 0, label: 'random'},
+        {value: 1, label: '#followers'},
+        {value: 2, label: 'newest'}
+    ]
 
     handleBrowseClose = (value) => {
         this.setState({
@@ -100,13 +189,21 @@ class BoardListLayout extends React.Component {
                                 </ul>
                             </>
                         ) : (
-                            <>
-                                <h3>all boards</h3>
-                                <p>Explore and follow boards created by users</p>
-                                <div className="hidden-sticky-active">
-                                    <Select options={}/>
+                            <div className="is-flex is-align-items-flex-end is-justify-content-space-between">
+                                <div>
+                                    <h3>all boards</h3>
+                                    <p>Explore and follow boards created by users</p>
                                 </div>
-                            </>
+                                <div className="hidden-sticky-active is-flex is-align-items-center">
+                                    <label style={{marginRight: '10px'}}>sort by</label>
+                                    <Select
+                                        options={this.options}
+                                        styles={customStyles}
+                                        value={this.props.sortType}
+                                        onChange={(option) => this.props.setBoardSortType(option)}
+                                        instanceId="sortBy" />
+                                </div>
+                            </div>
                         )}
                     </section>
                 </Sticky>
@@ -132,11 +229,13 @@ BoardListLayout.propTypes = {
 const mapStateToProps = (state) => {
     return {
         auth: state.auth.auth,
-        setSiteType: state.homeFilter.siteType,
+        siteType: state.homeFilter.siteType,
+        sortType: state.boardFilter.sortType
     };
 };
 
 export default connect(mapStateToProps, {
     setAuth,
     setSiteType,
+    setBoardSortType
 })(withRouter(BoardListLayout));

@@ -1,5 +1,5 @@
 import {
-    SET_AUTH,
+    SET_AUTH, SET_BOARD_SORT_TYPE,
     SET_BRAND_GENDER,
     SET_BRAND_PERIOD,
     SET_BRAND_SITE_TYPE,
@@ -56,5 +56,10 @@ export const setModalActive = payload => ({
 
 export const setProductIdForBoard = payload => ({
     type: SET_PRODUCT_ID_FOR_BOARD,
+    payload: payload
+})
+
+export const setBoardSortType = payload => ({
+    type: SET_BOARD_SORT_TYPE,
     payload: payload
 })

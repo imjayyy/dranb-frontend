@@ -119,8 +119,8 @@ export const createBoard = async (token, payload) => {
     return response.data
 }
 
-export const getBoards = async (token, page, productId) => {
-    const response = await axios.get(`${config.domain}/api/boards?page=${page}&product_id=${productId}`, {
+export const getBoards = async (token, page, productId, sortType) => {
+    const response = await axios.get(`${config.domain}/api/boards?page=${page}&product_id=${productId}&order=${sortType}`, {
         headers: {
             'Authorization': `Token ${token}`
         }
