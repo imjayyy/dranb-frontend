@@ -27,7 +27,7 @@ class Board extends React.Component {
                             onLoad={this.props.onLoad}
                             src={`${config.domain}/images/${board.image_filename}`}
                             alt=""/>
-                        {board.newest && (
+                        {board.newest > 0 && (
                             <span className="new-count">{this.displayNewCount(board.newest)}</span>
                         )}
                     </a>
