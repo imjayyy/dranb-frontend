@@ -4,8 +4,33 @@ import {Dashboard, Favorite} from "@material-ui/icons";
 import {withRouter} from "next/router";
 import {connect} from "react-redux";
 import {setAuth, setSiteType} from "../redux/actions";
+import {getNewCount} from "../utils/api";
 
 class TopNav extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            totalNewCount: 0
+        }
+    }
+
+    async componentDidMount() {
+        const data = await getNewCount(this.props.auth.meta.token)
+        const totalNewCount = data.new_count
+        this.setState({totalNewCount})
+    }
+
+    displayNewCount = (newCount) => {
+        if (newCount > 99) {
+            return '99 +'
+        } else if(newCount <= 99 && newCount >= 10) {
+            return `+ ${newCount}`
+        } else {
+            return `+ 0${newCount}`
+        }
+    }
+
     handleLogout = async () => {
         this.props.setAuth(false)
         await this.props.router.push('/login')
@@ -62,6 +87,9 @@ class TopNav extends React.Component {
                                     <a className="navbar-item">
                                         <Dashboard style={{fontSize: 16, marginRight: '8px', color: '#FA9805'}}/>
                                         I follow
+                                        {this.state.totalNewCount > 0 && (
+                                            <span className="new-count">{this.displayNewCount(this.state.totalNewCount)}</span>
+                                        )}
                                     </a>
                                 </Link>
                                 <div className="navbar-item has-dropdown is-hoverable">

@@ -209,3 +209,12 @@ export const submitTicket = async (payload) => {
     const response = await axios.post(`${config.domain}/api/tickets`, payload)
     return response.data
 }
+
+export const getNewCount = async (token) => {
+    const response = await axios.get(`${config.domain}/api/new-count`, {
+        headers: {
+            'Authorization': `Token ${token}`
+        }
+    })
+    return response.data
+}

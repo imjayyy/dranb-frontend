@@ -408,3 +408,14 @@ button.btn-no-border {
     cursor: pointer;
     color: #666565;
 }
+
+.navbar-item .new-count {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    font-size: 12px;
+    line-height: 18px;
+    color: #FA9805;
+    font-weight: 700;
+}
