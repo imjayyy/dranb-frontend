@@ -237,7 +237,8 @@ header {
 
                 &.is-active {
                     font-size: 20px;
-                    width: 320px;
+                    width: auto;
+                    max-width: 320px;
                     white-space: nowrap;
                     text-overflow: ellipsis;
                     overflow: hidden;
