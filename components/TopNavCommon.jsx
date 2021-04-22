@@ -16,9 +16,13 @@ class TopNavCommon extends React.Component {
     }
 
     async componentDidMount() {
-        const data = await getNewCount(this.props.auth.meta.token)
-        const totalNewCount = data.new_count
-        this.setState({totalNewCount})
+        try {
+            const data = await getNewCount(this.props.auth.meta.token)
+            const totalNewCount = data.new_count
+            this.setState({totalNewCount})
+        } catch (e) {
+            console.error(e)
+        }
     }
 
     displayNewCount = (newCount) => {

@@ -2,7 +2,7 @@ import axios from "axios";
 import config from "../config";
 
 export const registerUser = async (payload) => {
-    return await axios.post(`${config.domain}/api/users`, payload)
+    return await axios.post(`${config.domain}/api/auth/signup/`, payload)
 }
 
 export const loginUser = async (payload) => {
