@@ -6294,9 +6294,15 @@ div .socialmedia-widget:first-child {
     background-image: url('/icons/landing.png');
     background-repeat: no-repeat;
     background-position: bottom;
-    background-size: 500px;
+    background-size: 650px;
 }
 
 .landing-body .brand {
     line-height: 55px;
 }
+
+.landing-body-right {
+    background-color: #F7F7F7;
+}
+
+.columns {margin: 0; }
