@@ -1,5 +1,5 @@
 const config = {
-    domain: `https://dranbs.com`,
+    domain: `https://www.nju.fashion.com`,
 };
 
 export default config;
